@@ -3,7 +3,7 @@ const sqlDbFactory = require('knex');
 let sqlDb;
 
 let {bookSetup} = require("./BookService");
-let {authorSetup} = require("./AuthorService");
+//let {authorSetup} = require("./AuthorService");
 
 exports.initSqlDb = function(){
   console.log("DEBUG --> CREATING DB");
@@ -15,5 +15,5 @@ exports.initSqlDb = function(){
     });
 
     console.log("DEBUG --> CREATING TABLES");
-    return Promise.all([bookSetup(sqlDb), authorSetup(sqlDb)]);
+    //return Promise.all([bookSetup(sqlDb), authorSetup(sqlDb)]);
 }
