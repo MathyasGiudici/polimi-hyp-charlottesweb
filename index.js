@@ -39,7 +39,10 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi());
 
-  // Serve initialization
+  //Serve-Static folder
+  app.use(serveStatic(__dirname + "/www"));
+
+  // Serve Knex initialization
   //initSqlDb();
 
   // Start the server
