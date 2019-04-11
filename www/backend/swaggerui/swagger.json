@@ -1,0 +1,1328 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Book API",
+    "description": "API | Hypermedia Project Criscuolo-Franzini-Giudici",
+    "version": "1.3.0"
+  },
+  "host": "polimi-hyp-charlottesweb.herokuapp.com",
+  "schemes": [
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "Books",
+      "description": "All about our books"
+    },
+    {
+      "name": "Authors",
+      "description": "All about our authors"
+    },
+    {
+      "name": "Users",
+      "description": "All about our users"
+    },
+    {
+      "name": "Reviews",
+      "description": "All about reviews of books"
+    },
+    {
+      "name": "Events",
+      "description": "All about the events"
+    }
+  ],
+  "basePath": "/api",
+  "paths": {
+    "/books": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get all books",
+        "operationId": "getBooks",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "required": false,
+            "description": "Pagination offset. Default is 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "required": false,
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/books/findBy": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get all books with a specific criterion",
+        "operationId": "getBooksFindBy",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "attribute",
+            "type": "string",
+            "required": true,
+            "description": "Attribute to search on. For example: author, type, genre, ... "
+          },
+          {
+            "in": "query",
+            "name": "key",
+            "type": "string",
+            "required": true,
+            "description": "Key of the attribute to the search for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/books/{isbn}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get a specific book",
+        "operationId": "getBooksByIsbn",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "isbn",
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 13,
+            "required": true,
+            "description": "ISBN of the book to look for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/books/{isbn}/similar": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get similars book of a specific one",
+        "operationId": "getSimilarBooksByIsbn",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "isbn",
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 13,
+            "required": true,
+            "description": "ISBN of the book to look for its similars"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Get all reviews",
+        "operationId": "getReviews",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "required": false,
+            "description": "Pagination offset. Default is 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "required": false,
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Review"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Post a review",
+        "operationId": "postReviews",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Review to add",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Review"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/review/findBy": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Get all reviews with a specific criterion",
+        "operationId": "getReviewsFindBy",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "attribute",
+            "type": "string",
+            "required": true,
+            "description": "Attribute to search on. For example: author(user), book, ... "
+          },
+          {
+            "in": "query",
+            "name": "key",
+            "type": "string",
+            "required": true,
+            "description": "Key of the attribute for the search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Review"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Get a specific review",
+        "operationId": "getReviewsById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true,
+            "description": "Id of the review to look for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Update a specific review",
+        "operationId": "putReviewsById",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true,
+            "description": "Id of the review to modify"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Body of the review to modify",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Delete a specific review",
+        "operationId": "deleteReviewsById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true,
+            "description": "Id of the review to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string",
+              "description": "ID of the review just deleted"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Login with a form",
+        "operationId": "postUsersLogin",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "email"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "password"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Login"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Logout",
+        "operationId": "postUsersLogout",
+        "responses": {
+          "200": {
+            "description": "Successful Logout"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Register into the store",
+        "operationId": "postUsersRegister",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "User to sign-up",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get my user",
+        "operationId": "getUsersMe",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update my user profile",
+        "operationId": "putUsersMe",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "My User updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete my user",
+        "operationId": "deleteUsersMe",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string",
+              "format": "email",
+              "description": "Email of the user"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/me/cart": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get my user's cart",
+        "operationId": "getCart",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update my user's cart",
+        "operationId": "putCart",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "Updated Cart of my User",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/author": {
+      "get": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Get all authors",
+        "operationId": "getAuthors",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "required": false,
+            "description": "Pagination offset. Default is 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "required": false,
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Author"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/authors/{id}": {
+      "get": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Get a specific author",
+        "operationId": "getAuthorsById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true,
+            "description": "Id of the author to look for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Get all events",
+        "operationId": "getEvents",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "required": false,
+            "description": "Pagination offset. Default is 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "required": false,
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/events/findBy": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Get all events with a specific criterion",
+        "operationId": "getEventsFindBy",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "attribute",
+            "type": "string",
+            "required": true,
+            "description": "Attribute to search on. For example: author, book, date, ... "
+          },
+          {
+            "in": "query",
+            "name": "key",
+            "type": "string",
+            "required": true,
+            "description": "Key of the attribute for the search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Get a specific event",
+        "operationId": "getEventsById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true,
+            "description": "Id of the event to look for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Book": {
+      "type": "object",
+      "properties": {
+        "isbn": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 13,
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "interview": {
+          "type": "string"
+        },
+        "numOfPages": {
+          "type": "integer"
+        },
+        "author": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Author"
+          }
+        },
+        "photo": {
+          "type": "string",
+          "format": "binary"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "paper",
+            "ebook"
+          ]
+        },
+        "pubbDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "genre": {
+          "type": "string",
+          "enum": [
+            "fantasy",
+            "science",
+            "western",
+            "romance",
+            "thriller",
+            "biography",
+            "horror",
+            "children",
+            "detective",
+            "poetry"
+          ]
+        },
+        "theme": {
+          "type": "string",
+          "enum": [
+            "love",
+            "war",
+            "friendship",
+            "death",
+            "freedom",
+            "justice",
+            "power",
+            "discovery",
+            "security"
+          ]
+        },
+        "similarTo": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 13
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "out of stock"
+          ]
+        },
+        "ourFavorite": {
+          "type": "boolean"
+        },
+        "bestSelling": {
+          "type": "boolean"
+        },
+        "price": {
+          "$ref": "#/definitions/Amount"
+        }
+      },
+      "required": [
+        "isbn"
+      ],
+      "example": {
+        "isbn": "9788804666639",
+        "title": "La solitudine dei numeri primi",
+        "description": "La solitudine dei numeri primi description",
+        "interview": "Il primo best seller sulla matematica",
+        "numOfPages": 266,
+        "author": {
+          "id": "authorA001",
+          "name": "Paolo",
+          "surname": "Giordano",
+          "bio": "il fisico romanziere"
+        },
+        "photo": "",
+        "type": "paper",
+        "pubbDate": "2016-5-26",
+        "genre": "romance",
+        "theme": "love",
+        "similarTo": [
+          "9788867024766",
+          "9788804606246"
+        ],
+        "status": "available",
+        "ourFavorite": false,
+        "bestSelling": true,
+        "price": {
+          "value": "14,00",
+          "currency": "euro"
+        }
+      }
+    },
+    "Review": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "isbn": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 13
+        },
+        "userId": {
+          "type": "string",
+          "format": "email"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "isbn",
+        "userId",
+        "title",
+        "timestamp"
+      ],
+      "example": {
+        "id": "userR001",
+        "isbn": "9788804666639",
+        "userId": "user@mail.polimi.it",
+        "title": "Need to be read",
+        "description": "Beautiful italin book.",
+        "timestamp": "2017-07-21T17:32:28Z"
+      }
+    },
+    "Amount": {
+      "type": "object",
+      "required": [
+        "currency",
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "euro",
+            "dollar"
+          ]
+        }
+      },
+      "example": {
+        "value": "11,0",
+        "currency": "euro"
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "uniqueItems": true
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "female",
+            "male"
+          ]
+        },
+        "birthDay": {
+          "type": "integer",
+          "format": "date"
+        },
+        "userType": {
+          "type": "string",
+          "enum": [
+            "user",
+            "admin"
+          ]
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ],
+      "example": {
+        "email": "user@mail.polimi.it",
+        "firstName": "Mario",
+        "lastName": "Rossi",
+        "password": "1234",
+        "gender": "female",
+        "birthDay": "1990-07-21",
+        "userType": "user"
+      }
+    },
+    "Cart": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "email",
+          "uniqueItems": true
+        },
+        "total": {
+          "$ref": "#/definitions/Amount"
+        },
+        "books": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 13
+          }
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "example": {
+        "id": "user@mail.polimi.it",
+        "total": {
+          "value": "14,00",
+          "currency": "euro"
+        },
+        "books": [
+          "9788867024766",
+          "9788804606246"
+        ]
+      }
+    },
+    "Author": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "bio": {
+          "type": "string"
+        },
+        "photo": {
+          "type": "string",
+          "format": "binary"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "example": {
+        "id": "authorA001",
+        "name": "Fred",
+        "surname": "Vargas",
+        "bio": " pseudonym of Frédérique Audoin-Rouzeau"
+      }
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "book": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 13
+        },
+        "author": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "place": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "example": {
+        "id": "EVENT001",
+        "book": "9788804666639",
+        "author": [
+          "AUTH112467"
+        ],
+        "place": "Aula De Donato @Polimi",
+        "timestamp": "2019-10-01T10:30:00"
+      }
+    }
+  }
+}
