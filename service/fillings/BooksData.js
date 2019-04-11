@@ -19,7 +19,7 @@ exports.giveMeData = function() {
       ourFavorite : false,
       bestSelling : true,
       value : 14.00,
-      currency" : "euro"
+      currency : "euro"
     },
   ];
 }
