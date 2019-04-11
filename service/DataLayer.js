@@ -2,7 +2,7 @@ const sqlDbFactory = require('knex');
 
 let sqlDb;
 
-let {bookSetup} = require("./BookService");
+let {bookSetup} = require("./BooksService");
 //let {authorSetup} = require("./AuthorService");
 
 exports.initSqlDb = function(){
