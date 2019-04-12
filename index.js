@@ -5,7 +5,7 @@ var fs = require('fs'),
     http = require('http'),
     cookieSession= require('cookie-session');
 
-var {initSqlDb} = require("./service/DataLayer");
+var {initSqlDb} = require("./other/service/DataLayer");
 
 var app = require('connect')();
 var swaggerTools = require('swagger-tools');
@@ -16,12 +16,12 @@ let serveStatic = require("serve-static");
 // swaggerRouter configuration
 var options = {
   swaggerUi: path.join(__dirname, '/swagger.json'),
-  controllers: path.join(__dirname, './controllers'),
+  controllers: path.join(__dirname, './other/controllers'),
   useStubs: process.env.NODE_ENV === 'development' // Conditionally turn on stubs (mock mode)
 };
 
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
-var spec = fs.readFileSync(path.join(__dirname,'api/swagger.yaml'), 'utf8');
+var spec = fs.readFileSync(path.join(__dirname,'other/api/swagger.yaml'), 'utf8');
 var swaggerDoc = jsyaml.safeLoad(spec);
 
 // Initialize the Swagger middleware
@@ -40,7 +40,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   app.use(middleware.swaggerUi());
 
   //Serve-Static folder
-  app.use(serveStatic(__dirname + "/www"));
+  app.use(serveStatic(__dirname + "/public"));
 
   // Serve Knex initialization
   //initSqlDb();
