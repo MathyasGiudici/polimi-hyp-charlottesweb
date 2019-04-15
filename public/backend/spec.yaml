@@ -924,6 +924,9 @@ definitions:
       timestamp:
         type: "string"
         format: "date-time"
+      photo:
+        type: "string"
+        format: "binary"
     example:
       id: "EVENT001"
       book: "9788804666639"

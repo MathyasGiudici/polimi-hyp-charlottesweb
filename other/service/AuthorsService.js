@@ -1,5 +1,33 @@
 'use strict';
 
+let sqlDb;
+
+let {giveMeData} = require("./fillings/AuthorsData");
+
+exports.authorsSetup = function(database){
+    console.log("DEBUG --> CREATING AUTHORS' TABLE");
+    sqlDb = database;
+    sqlDb.schema.hasTable("authors").then( exists => {
+        if(!exists){
+            sqlDb.schema.createTable("authors", table => {
+                table.increment("id").primary();
+                table.string("name");
+                table.string("surname");
+                table.string("bio");
+                table.binary("photo");
+            }).then( () => {
+             console.log("DEBUG --> FILLING AUTHORS' TABLE");
+             return Promise.all(giveMeData()).then( obj => {
+               console.log("DEBUG --> FILLING AUTHORS' TABLE: ONE ENTRY");
+               return sqlDb("authors").insert(obj);
+             });
+            });
+        }
+        else{
+          return true;
+        }
+    });
+}
 
 /**
  * Get all authors
@@ -9,25 +37,7 @@
  * returns List
  **/
 exports.getAuthors = function(offset,limit) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "id" : "authorA001",
-  "name" : "Fred",
-  "surname" : "Vargas",
-  "bio" : " pseudonym of Frédérique Audoin-Rouzeau"
-}, {
-  "id" : "authorA001",
-  "name" : "Fred",
-  "surname" : "Vargas",
-  "bio" : " pseudonym of Frédérique Audoin-Rouzeau"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  return sqlDb("authors").limit(limit).offset(offset).select();
 }
 
 
@@ -38,19 +48,6 @@ exports.getAuthors = function(offset,limit) {
  * returns Author
  **/
 exports.getAuthorsById = function(id) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "id" : "authorA001",
-  "name" : "Fred",
-  "surname" : "Vargas",
-  "bio" : " pseudonym of Frédérique Audoin-Rouzeau"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  let parsedId = id.slice(1, isbn.length -1);
+  return sqlDb("authors").where("id",parsedId).select();
 }
-

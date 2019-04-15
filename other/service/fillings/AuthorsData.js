@@ -23,15 +23,3 @@ exports.giveMeData = function() {
     },
   ];
 }
-
-exports.giveMeSimilars = function() {
-  return [
-
-  ];
-}
-
-exports.giveMeAuthors = function() {
-  return [
-
-  ];
-}
