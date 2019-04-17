@@ -43,7 +43,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   app.use(serveStatic(__dirname + "/public"));
 
   // Serve Knex initialization
-  //initSqlDb();
+  initSqlDb();
 
   // Start the server
   http.createServer(app).listen(serverPort, function () {

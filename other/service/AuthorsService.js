@@ -10,7 +10,7 @@ exports.authorsSetup = function(database){
     sqlDb.schema.hasTable("authors").then( exists => {
         if(!exists){
             sqlDb.schema.createTable("authors", table => {
-                table.increment("id").primary();
+                table.string("id").primary();
                 table.string("name");
                 table.string("surname");
                 table.string("bio");

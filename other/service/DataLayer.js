@@ -3,7 +3,7 @@ const sqlDbFactory = require('knex');
 let sqlDb;
 
 let {booksSetup,similarsSetup,books_authorsSetup} = require("./BooksService");
-let {authorsSetup} = require("./AuthorService");
+let {authorsSetup} = require("./AuthorsService");
 
 exports.initSqlDb = function(){
   console.log("DEBUG --> CREATING DB");
