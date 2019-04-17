@@ -1,5 +1,30 @@
 'use strict';
 
+let sqlDb = 0;
+let {dataEvents} = require("./fillings/eventData")
+
+exports.eventSetup = function(datatbase){
+  sqlDb = datatbase;
+  sqlDb.schema.hasTable("events").then( exists => {
+    if(!exists){
+      sqlDb.schema.createTable("events", table => {
+        table.string("id").primary();
+        table.string("book");
+        table.string("author");
+        table.string("place");
+        table.string("timestamp");
+      }).then(() => {
+        return Promise.all(dataEvents()).then(obj => {
+          return sqlDb("events").insert(obj);
+        });
+      });
+    }
+    else {
+      return true;
+    } 
+
+  });
+}
 
 /**
  * Get all events
@@ -9,29 +34,8 @@
  * returns List
  **/
 exports.getEvents = function(offset,limit) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "id" : "EVENT001",
-  "book" : "9788804666639",
-  "author" : [ "AUTH112467" ],
-  "place" : "Aula De Donato @Polimi",
-  "timestamp" : "2019-10-01T10:30:00"
-}, {
-  "id" : "EVENT001",
-  "book" : "9788804666639",
-  "author" : [ "AUTH112467" ],
-  "place" : "Aula De Donato @Polimi",
-  "timestamp" : "2019-10-01T10:30:00"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  return sqlDb("events").limit(limit).offset(offset).select();
 }
-
 
 /**
  * Get a specific event
@@ -40,21 +44,8 @@ exports.getEvents = function(offset,limit) {
  * returns Event
  **/
 exports.getEventsById = function(id) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "id" : "EVENT001",
-  "book" : "9788804666639",
-  "author" : [ "AUTH112467" ],
-  "place" : "Aula De Donato @Polimi",
-  "timestamp" : "2019-10-01T10:30:00"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  let parsedId = id.slice(1, id.length -1);
+  return sqlDb("events").where("id",parsedId).select();
 }
 
 
@@ -66,26 +57,6 @@ exports.getEventsById = function(id) {
  * returns List
  **/
 exports.getEventsFindBy = function(attribute,key) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "id" : "EVENT001",
-  "book" : "9788804666639",
-  "author" : [ "AUTH112467" ],
-  "place" : "Aula De Donato @Polimi",
-  "timestamp" : "2019-10-01T10:30:00"
-}, {
-  "id" : "EVENT001",
-  "book" : "9788804666639",
-  "author" : [ "AUTH112467" ],
-  "place" : "Aula De Donato @Polimi",
-  "timestamp" : "2019-10-01T10:30:00"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  return sqlDb("events").where(attribute, key).select();
 }
 
