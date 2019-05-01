@@ -3,15 +3,18 @@
 var utils = require('../utils/writer.js');
 var Users = require('../service/UsersService');
 
-
 module.exports.deleteUsersMe = function deleteUsersMe (req, res, next) {
+  if(!(req.session.isLoggedIn)){
+    return utils.unauthorizeAction(res);
+  }
+
   Users.deleteUsersMe(req.session.email)
     .then(function (response) {
       if(response){
         req.session.isLoggedIn = false;
         req.session.email = "";
-      }else{
-        res.end("Problem with User's deletion");
+      } else{
+        res.end("Something has gone wrong");
       }
     })
     .catch(function (response) {
@@ -20,7 +23,10 @@ module.exports.deleteUsersMe = function deleteUsersMe (req, res, next) {
 };
 
 module.exports.getCart = function getCart (req, res, next) {
-  if(req.session.isLoggedIn){
+  if(!(req.session.isLoggedIn)){
+    return utils.unauthorizeAction(res);
+  }
+
   Users.getCart(req.session.email)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -28,25 +34,20 @@ module.exports.getCart = function getCart (req, res, next) {
     .catch(function (response) {
       utils.writeJson(res, response);
     });
-  }
-  else {
-    res.end("You have to be logged-in");
-  }
 };
 
 module.exports.getUsersMe = function getUsersMe (req, res, next) {
-  if(req.session.isLoggedIn){
-    Users.getUsersMe(req.session.email)
-      .then(function (response) {
-        utils.writeJson(res, response);
-      })
-      .catch(function (response) {
-        utils.writeJson(res, response);
-      });
+  if(!(req.session.isLoggedIn)){
+    return utils.unauthorizeAction(res);
   }
-  else {
-    res.end("You have to be logged-in");
-  }
+
+  Users.getUsersMe(req.session.email)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.postUsersLogin = function postUsersLogin (req, res, next) {
@@ -95,6 +96,8 @@ module.exports.putCart = function putCart (req, res, next) {
       .catch(function (response) {
         utils.writeJson(res, response);
       });
+  } else {
+    utils.unauthorizeAction(res);
   }
 };
 
@@ -109,5 +112,7 @@ module.exports.putUsersMe = function putUsersMe (req, res, next) {
       .catch(function (response) {
         utils.writeJson(res, response);
       });
+  } else {
+    utils.unauthorizeAction(res);
   }
 };

@@ -3,6 +3,11 @@ var ResponsePayload = function(code, payload) {
   this.payload = payload;
 }
 
+exports.unauthorizeAction = function(res){
+  res.status(401);
+  res.end("Unauthorized");
+}
+
 exports.respondWithCode = function(code, payload) {
   return new ResponsePayload(code, payload);
 }

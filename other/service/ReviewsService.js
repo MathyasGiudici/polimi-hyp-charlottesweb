@@ -1,5 +1,34 @@
 'use strict';
 
+let sqlDb;
+let {giveMeData} = require("./fillings/ReviewsData")
+
+exports.reviewsSetup = function(datatbase){
+  console.log("DEBUG --> CREATING REVIEWS' TABLE");
+  sqlDb = datatbase;
+  sqlDb.schema.hasTable("reviews").then( exists => {
+    if(!exists){
+      sqlDb.schema.createTable("reviews", table => {
+        table.string("id").primary();
+        table.string("isbn");
+        table.string("userId");
+        table.string("title");
+        table.text("description");
+        table.datetime("timestamp");
+      }).then(() => {
+        console.log("DEBUG --> FILLING REVIEWS' TABLE");
+        return Promise.all(giveMeData()).then(obj => {
+          console.log("DEBUG --> FILLING REVIEWS' TABLE: ONE ENTRY");
+          return sqlDb("reviews").insert(obj);
+        });
+      });
+    }
+    else {
+      return true;
+    }
+  });
+}
+
 
 /**
  * Delete a specific review
@@ -7,15 +36,10 @@
  * id String Id of the review to delete
  * returns String
  **/
-exports.deleteReviewsById = function(id) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+exports.deleteReviewsById = function(id, email) {
+  let parsedId = id.slice(1, isbn.length -1);
+  return sqlDb("reviews").where("email",email).where("id",parsedId).del().then(function(e){
+    return id;
   });
 }
 
@@ -28,29 +52,8 @@ exports.deleteReviewsById = function(id) {
  * returns List
  **/
 exports.getReviews = function(offset,limit) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-}, {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  return sqlDb("reviews").limit(limit).offset(offset).select();
+
 }
 
 
@@ -61,56 +64,20 @@ exports.getReviews = function(offset,limit) {
  * returns Review
  **/
 exports.getReviewsById = function(id) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  let parsedId = id.slice(1, isbn.length -1);
+  return sqlDb("reviews").where("id",parsedId).select();
 }
 
 
 /**
  * Get all reviews with a specific criterion
  *
- * attribute String Attribute to search on. For example: author(user), book, ... 
+ * attribute String Attribute to search on. For example: author(user), book, ...
  * key String Key of the attribute for the search
  * returns List
  **/
 exports.getReviewsFindBy = function(attribute,key) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-}, {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  return sqlDb("reviews").where(attribute, key).select();
 }
 
 
@@ -121,29 +88,9 @@ exports.getReviewsFindBy = function(attribute,key) {
  * returns List
  **/
 exports.postReviews = function(body) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-}, {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  parseEmail = body.email.replace(/[^a-zA-Z0-9]/g, "");
+  body.id = parseEmail + Date.now().toString();
+  return sqlDb("reviews").insert(body);
 }
 
 
@@ -155,21 +102,6 @@ exports.postReviews = function(body) {
  * returns Review
  **/
 exports.putReviewsById = function(id,body) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "id" : "userR001",
-  "isbn" : "9788804666639",
-  "userId" : "user@mail.polimi.it",
-  "title" : "Need to be read",
-  "description" : "Beautiful italin book.",
-  "timestamp" : "2017-07-21T17:32:28Z"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  let parsedId = id.slice(1, isbn.length -1);
+  return sqlDb("reviews").where("email", body.email).where("id",parsedId).update(body);
 }
-

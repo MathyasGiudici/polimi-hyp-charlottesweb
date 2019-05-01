@@ -5,7 +5,12 @@ var Reviews = require('../service/ReviewsService');
 
 module.exports.deleteReviewsById = function deleteReviewsById (req, res, next) {
   var id = req.swagger.params['id'].value;
-  Reviews.deleteReviewsById(id)
+
+  if(!(req.session.isLoggedIn)){
+    return utils.unauthorizeAction(res);
+  }
+
+  Reviews.deleteReviewsById(id, req.session.email)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -51,23 +56,33 @@ module.exports.getReviewsFindBy = function getReviewsFindBy (req, res, next) {
 
 module.exports.postReviews = function postReviews (req, res, next) {
   var body = req.swagger.params['body'].value;
-  Reviews.postReviews(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+
+  if(req.session.isLoggedIn && req.session.email == body.email){
+    Reviews.postReviews(body)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+    } else {
+      utils.unauthorizeAction(res);
+    }
 };
 
 module.exports.putReviewsById = function putReviewsById (req, res, next) {
   var id = req.swagger.params['id'].value;
   var body = req.swagger.params['body'].value;
-  Reviews.putReviewsById(id,body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+
+  if(req.session.isLoggedIn && req.session.email == body.email){
+    Reviews.putReviewsById(id,body)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+   } else {
+     utils.unauthorizeAction(res);
+   }
 };

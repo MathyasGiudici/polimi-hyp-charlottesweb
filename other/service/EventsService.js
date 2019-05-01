@@ -1,6 +1,6 @@
 'use strict';
 
-let sqlDb = 0;
+let sqlDb;
 let {giveMeData, giveMeAuthor} = require("./fillings/EventsData")
 
 exports.eventsSetup = function(datatbase){
@@ -56,6 +56,28 @@ exports.events_authorsSetup = function(database){
     });
 }
 
+let eventMapping = function (obj){
+  //Looking for authors
+  let authors = [];
+  sqlDb("events_authors").where("event",obj.event).select().then(
+     data => {
+       return data.forEach( e => {
+         authors.push(e.author1);
+         if(e.author2)
+          authors.push(e.author2);
+         if(e.author3)
+          authors.push(e.author3);
+         if(e.author4)
+          authors.push(e.author4);
+       });
+     });
+
+  obj.authors = authors;
+
+  return obj;
+}
+
+
 /**
  * Get all events
  *
@@ -64,7 +86,11 @@ exports.events_authorsSetup = function(database){
  * returns List
  **/
 exports.getEvents = function(offset,limit) {
-  return sqlDb("events").limit(limit).offset(offset).select();
+  return sqlDb("events").limit(limit).offset(offset).select().then( data => {
+    return data.map( obj => {
+      return eventMapping(obj);
+    });
+  });
 }
 
 /**
@@ -75,9 +101,12 @@ exports.getEvents = function(offset,limit) {
  **/
 exports.getEventsById = function(id) {
   let parsedId = id.slice(1, id.length -1);
-  return sqlDb("events").where("id",parsedId).select();
+  return sqlDb("events").where("id",parsedId).select().then( data => {
+    return data.map( obj => {
+      return eventMapping(obj);
+    });
+  });
 }
-
 
 /**
  * Get all events with a specific criterion
@@ -87,5 +116,9 @@ exports.getEventsById = function(id) {
  * returns List
  **/
 exports.getEventsFindBy = function(attribute,key) {
-  return sqlDb("events").where(attribute, key).select();
+  return sqlDb("events").where(attribute, key).select().then( data => {
+    return data.map( obj => {
+      return eventMapping(obj);
+    });
+  });
 }

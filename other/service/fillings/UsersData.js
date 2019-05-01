@@ -19,6 +19,15 @@ exports.giveMeData = function() {
       gender: "male",
       birthDay: "1990-07-21",
       userType: "user"
+    },
+    {
+      email: "laura.gatti@mail.polimi.it",
+      firstName: "Laura",
+      lastName: "Gatti",
+      password: "superSECRETEpassword123",
+      gender: "female",
+      birthDay: "1994-05-30",
+      userType: "user"
     }
   ];
 }
@@ -27,8 +36,8 @@ exports.giveMeCartData = function() {
   return [
     {
       email: "mario.rossi@mail.polimi.it",
-      book: "9780061124952",
-      value : 8.04,
+      book: "9780300039504",
+      value : 10.03,
       currency : "euro"
     }
   ];

@@ -57,7 +57,7 @@ exports.cartsSetup = function(database){
 }
 
 
-let getCart = function(email){
+let getCartHandler = function(email){
   let tBooks = [];
   let tValue = 0;
   let tCurrency;
@@ -97,7 +97,7 @@ exports.deleteUsersMe = function(email) {
  * returns Cart
  **/
 exports.getCart = function(email) {
-  return getCart(email);
+  return getCartHandler(email);
 }
 
 
@@ -182,7 +182,7 @@ exports.putCart = function(body) {
           }
         });
 
-        return getCart(body.email);
+        return getCartHandler(body.email);
       }
     );
   }
