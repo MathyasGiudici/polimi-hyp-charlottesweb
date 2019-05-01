@@ -1,14 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Book API",
     "description": "API | Hypermedia Project Criscuolo-Franzini-Giudici",
-    "version": "1.3.0"
+    "version": "1.3.0",
+    "title": "Book API"
   },
   "host": "polimi-hyp-charlottesweb.herokuapp.com",
-  "schemes": [
-    "https"
-  ],
+  "basePath": "/api",
   "tags": [
     {
       "name": "Books",
@@ -31,7 +29,9 @@
       "description": "All about the events"
     }
   ],
-  "basePath": "/api",
+  "schemes": [
+    "https"
+  ],
   "paths": {
     "/books": {
       "get": {
@@ -45,18 +45,22 @@
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "offset",
-            "type": "integer",
+            "in": "query",
+            "description": "Pagination offset. Default is 0",
             "required": false,
-            "description": "Pagination offset. Default is 0"
+            "type": "integer",
+            "default": 0,
+            "minimum": 0
           },
           {
-            "in": "query",
             "name": "limit",
-            "type": "integer",
+            "in": "query",
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500",
             "required": false,
-            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+            "type": "integer",
+            "default": 20,
+            "maximum": 500
           }
         ],
         "responses": {
@@ -78,7 +82,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Books"
       }
     },
     "/books/findBy": {
@@ -93,18 +98,18 @@
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "attribute",
-            "type": "string",
+            "in": "query",
+            "description": "Attribute to search on. For example: author, type, genre, ... ",
             "required": true,
-            "description": "Attribute to search on. For example: author, type, genre, ... "
+            "type": "string"
           },
           {
-            "in": "query",
             "name": "key",
-            "type": "string",
+            "in": "query",
+            "description": "Key of the attribute to the search for",
             "required": true,
-            "description": "Key of the attribute to the search for"
+            "type": "string"
           }
         ],
         "responses": {
@@ -126,7 +131,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Books"
       }
     },
     "/books/{isbn}": {
@@ -141,13 +147,13 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "isbn",
-            "type": "string",
-            "minLength": 10,
-            "maxLength": 13,
+            "in": "path",
+            "description": "ISBN of the book to look for",
             "required": true,
-            "description": "ISBN of the book to look for"
+            "type": "string",
+            "maxLength": 13,
+            "minLength": 10
           }
         ],
         "responses": {
@@ -166,7 +172,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Books"
       }
     },
     "/books/{isbn}/similar": {
@@ -181,13 +188,13 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "isbn",
-            "type": "string",
-            "minLength": 10,
-            "maxLength": 13,
+            "in": "path",
+            "description": "ISBN of the book to look for its similars",
             "required": true,
-            "description": "ISBN of the book to look for its similars"
+            "type": "string",
+            "maxLength": 13,
+            "minLength": 10
           }
         ],
         "responses": {
@@ -209,7 +216,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Books"
       }
     },
     "/reviews": {
@@ -224,18 +232,22 @@
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "offset",
-            "type": "integer",
+            "in": "query",
+            "description": "Pagination offset. Default is 0",
             "required": false,
-            "description": "Pagination offset. Default is 0"
+            "type": "integer",
+            "default": 0,
+            "minimum": 0
           },
           {
-            "in": "query",
             "name": "limit",
-            "type": "integer",
+            "in": "query",
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500",
             "required": false,
-            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+            "type": "integer",
+            "default": 20,
+            "maximum": 500
           }
         ],
         "responses": {
@@ -257,7 +269,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Reviews"
       },
       "post": {
         "tags": [
@@ -275,8 +288,8 @@
           {
             "in": "body",
             "name": "body",
-            "required": true,
             "description": "Review to add",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/Review"
             }
@@ -301,7 +314,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Reviews"
       }
     },
     "/review/findBy": {
@@ -316,18 +330,18 @@
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "attribute",
-            "type": "string",
+            "in": "query",
+            "description": "Attribute to search on. For example: author(user), book, ... ",
             "required": true,
-            "description": "Attribute to search on. For example: author(user), book, ... "
+            "type": "string"
           },
           {
-            "in": "query",
             "name": "key",
-            "type": "string",
+            "in": "query",
+            "description": "Key of the attribute for the search",
             "required": true,
-            "description": "Key of the attribute for the search"
+            "type": "string"
           }
         ],
         "responses": {
@@ -349,7 +363,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Reviews"
       }
     },
     "/reviews/{id}": {
@@ -364,11 +379,11 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "id",
-            "type": "string",
+            "in": "path",
+            "description": "Id of the review to look for",
             "required": true,
-            "description": "Id of the review to look for"
+            "type": "string"
           }
         ],
         "responses": {
@@ -387,7 +402,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Reviews"
       },
       "put": {
         "tags": [
@@ -403,17 +419,17 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "id",
-            "type": "string",
+            "in": "path",
+            "description": "Id of the review to modify",
             "required": true,
-            "description": "Id of the review to modify"
+            "type": "string"
           },
           {
             "in": "body",
             "name": "body",
-            "required": true,
             "description": "Body of the review to modify",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/Review"
             }
@@ -435,7 +451,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Reviews"
       },
       "delete": {
         "tags": [
@@ -445,11 +462,11 @@
         "operationId": "deleteReviewsById",
         "parameters": [
           {
-            "in": "path",
             "name": "id",
-            "type": "string",
+            "in": "path",
+            "description": "Id of the review to delete",
             "required": true,
-            "description": "Id of the review to delete"
+            "type": "string"
           }
         ],
         "responses": {
@@ -469,7 +486,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Reviews"
       }
     },
     "/users/login": {
@@ -511,7 +529,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       }
     },
     "/users/logout": {
@@ -521,6 +540,7 @@
         ],
         "summary": "Logout",
         "operationId": "postUsersLogout",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful Logout"
@@ -534,7 +554,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       }
     },
     "/users/register": {
@@ -554,8 +575,8 @@
           {
             "in": "body",
             "name": "body",
-            "required": true,
             "description": "User to sign-up",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/User"
             }
@@ -580,7 +601,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       }
     },
     "/users/me": {
@@ -593,6 +615,7 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful",
@@ -609,7 +632,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       },
       "put": {
         "tags": [
@@ -627,8 +651,8 @@
           {
             "in": "body",
             "name": "body",
-            "required": true,
             "description": "My User updated",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/User"
             }
@@ -650,7 +674,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       },
       "delete": {
         "tags": [
@@ -658,6 +683,7 @@
         ],
         "summary": "Delete my user",
         "operationId": "deleteUsersMe",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful",
@@ -676,7 +702,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       }
     },
     "/users/me/cart": {
@@ -689,6 +716,7 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful",
@@ -705,7 +733,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       },
       "put": {
         "tags": [
@@ -723,8 +752,8 @@
           {
             "in": "body",
             "name": "body",
-            "required": true,
             "description": "Updated Cart of my User",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/Cart"
             }
@@ -746,10 +775,11 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Users"
       }
     },
-    "/author": {
+    "/authors": {
       "get": {
         "tags": [
           "Authors"
@@ -761,18 +791,22 @@
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "offset",
-            "type": "integer",
+            "in": "query",
+            "description": "Pagination offset. Default is 0",
             "required": false,
-            "description": "Pagination offset. Default is 0"
+            "type": "integer",
+            "default": 0,
+            "minimum": 0
           },
           {
-            "in": "query",
             "name": "limit",
-            "type": "integer",
+            "in": "query",
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500",
             "required": false,
-            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+            "type": "integer",
+            "default": 20,
+            "maximum": 500
           }
         ],
         "responses": {
@@ -794,7 +828,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Authors"
       }
     },
     "/authors/{id}": {
@@ -809,11 +844,11 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "id",
-            "type": "string",
+            "in": "path",
+            "description": "Id of the author to look for",
             "required": true,
-            "description": "Id of the author to look for"
+            "type": "string"
           }
         ],
         "responses": {
@@ -832,7 +867,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Authors"
       }
     },
     "/events": {
@@ -847,18 +883,22 @@
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "offset",
-            "type": "integer",
+            "in": "query",
+            "description": "Pagination offset. Default is 0",
             "required": false,
-            "description": "Pagination offset. Default is 0"
+            "type": "integer",
+            "default": 0,
+            "minimum": 0
           },
           {
-            "in": "query",
             "name": "limit",
-            "type": "integer",
+            "in": "query",
+            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500",
             "required": false,
-            "description": "Maximum number of items per page. Default is 20 and cannot exceed 500"
+            "type": "integer",
+            "default": 20,
+            "maximum": 500
           }
         ],
         "responses": {
@@ -880,7 +920,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Events"
       }
     },
     "/events/findBy": {
@@ -895,18 +936,18 @@
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "attribute",
-            "type": "string",
+            "in": "query",
+            "description": "Attribute to search on. For example: author, book, date, ... ",
             "required": true,
-            "description": "Attribute to search on. For example: author, book, date, ... "
+            "type": "string"
           },
           {
-            "in": "query",
             "name": "key",
-            "type": "string",
+            "in": "query",
+            "description": "Key of the attribute for the search",
             "required": true,
-            "description": "Key of the attribute for the search"
+            "type": "string"
           }
         ],
         "responses": {
@@ -928,7 +969,8 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Events"
       }
     },
     "/events/{id}": {
@@ -943,11 +985,11 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "id",
-            "type": "string",
+            "in": "path",
+            "description": "Id of the event to look for",
             "required": true,
-            "description": "Id of the event to look for"
+            "type": "string"
           }
         ],
         "responses": {
@@ -966,19 +1008,22 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "x-swagger-router-controller": "Events"
       }
     }
   },
   "definitions": {
     "Book": {
       "type": "object",
+      "required": [
+        "isbn"
+      ],
       "properties": {
         "isbn": {
           "type": "string",
           "minLength": 10,
-          "maxLength": 13,
-          "uniqueItems": true
+          "maxLength": 13
         },
         "title": {
           "type": "string"
@@ -992,7 +1037,7 @@
         "numOfPages": {
           "type": "integer"
         },
-        "author": {
+        "authors": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Author"
@@ -1067,16 +1112,13 @@
           "$ref": "#/definitions/Amount"
         }
       },
-      "required": [
-        "isbn"
-      ],
       "example": {
         "isbn": "9788804666639",
         "title": "La solitudine dei numeri primi",
         "description": "La solitudine dei numeri primi description",
         "interview": "Il primo best seller sulla matematica",
         "numOfPages": 266,
-        "author": {
+        "authors": {
           "id": "authorA001",
           "name": "Paolo",
           "surname": "Giordano",
@@ -1102,10 +1144,16 @@
     },
     "Review": {
       "type": "object",
+      "required": [
+        "id",
+        "isbn",
+        "timestamp",
+        "title",
+        "userId"
+      ],
       "properties": {
         "id": {
-          "type": "string",
-          "uniqueItems": true
+          "type": "string"
         },
         "isbn": {
           "type": "string",
@@ -1127,13 +1175,6 @@
           "format": "date-time"
         }
       },
-      "required": [
-        "id",
-        "isbn",
-        "userId",
-        "title",
-        "timestamp"
-      ],
       "example": {
         "id": "userR001",
         "isbn": "9788804666639",
@@ -1170,11 +1211,14 @@
     },
     "User": {
       "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
       "properties": {
         "email": {
           "type": "string",
-          "format": "email",
-          "uniqueItems": true
+          "format": "email"
         },
         "firstName": {
           "type": "string"
@@ -1205,10 +1249,6 @@
           ]
         }
       },
-      "required": [
-        "email",
-        "password"
-      ],
       "example": {
         "email": "user@mail.polimi.it",
         "firstName": "Mario",
@@ -1221,11 +1261,13 @@
     },
     "Cart": {
       "type": "object",
+      "required": [
+        "id"
+      ],
       "properties": {
         "id": {
           "type": "string",
-          "format": "email",
-          "uniqueItems": true
+          "format": "email"
         },
         "total": {
           "$ref": "#/definitions/Amount"
@@ -1239,9 +1281,6 @@
           }
         }
       },
-      "required": [
-        "id"
-      ],
       "example": {
         "id": "user@mail.polimi.it",
         "total": {
@@ -1256,10 +1295,12 @@
     },
     "Author": {
       "type": "object",
+      "required": [
+        "id"
+      ],
       "properties": {
         "id": {
-          "type": "string",
-          "uniqueItems": true
+          "type": "string"
         },
         "name": {
           "type": "string"
@@ -1275,9 +1316,6 @@
           "format": "binary"
         }
       },
-      "required": [
-        "id"
-      ],
       "example": {
         "id": "authorA001",
         "name": "Fred",
@@ -1289,8 +1327,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "uniqueItems": true
+          "type": "string"
         },
         "title": {
           "type": "string"
@@ -1300,7 +1337,7 @@
           "minLength": 10,
           "maxLength": 13
         },
-        "author": {
+        "authors": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1320,11 +1357,12 @@
       },
       "example": {
         "id": "EVENT001",
+        "title": "Evento @POLIMI",
         "book": "9788804666639",
-        "author": [
+        "authors": [
           "AUTH112467"
         ],
-        "place": "Aula De Donato @Polimi",
+        "place": "Aula De Donato @POLIMI",
         "timestamp": "2019-10-01T10:30:00"
       }
     }

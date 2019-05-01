@@ -1,7 +1,6 @@
 'use strict';
 
 let sqlDb;
-
 let {giveMeData} = require("./fillings/AuthorsData");
 
 exports.authorsSetup = function(database){
@@ -13,7 +12,7 @@ exports.authorsSetup = function(database){
                 table.string("id").primary();
                 table.string("name");
                 table.string("surname");
-                table.string("bio");
+                table.text("bio");
                 table.binary("photo");
             }).then( () => {
              console.log("DEBUG --> FILLING AUTHORS' TABLE");

@@ -3,10 +3,16 @@
 var utils = require('../utils/writer.js');
 var Users = require('../service/UsersService');
 
+
 module.exports.deleteUsersMe = function deleteUsersMe (req, res, next) {
-  Users.deleteUsersMe()
+  Users.deleteUsersMe(req.session.email)
     .then(function (response) {
-      utils.writeJson(res, response);
+      if(response){
+        req.session.isLoggedIn = false;
+        req.session.email = "";
+      }else{
+        res.end("Problem with User's deletion");
+      }
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -14,31 +20,47 @@ module.exports.deleteUsersMe = function deleteUsersMe (req, res, next) {
 };
 
 module.exports.getCart = function getCart (req, res, next) {
-  Users.getCart()
+  if(req.session.isLoggedIn){
+  Users.getCart(req.session.email)
     .then(function (response) {
       utils.writeJson(res, response);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
     });
+  }
+  else {
+    res.end("You have to be logged-in");
+  }
 };
 
 module.exports.getUsersMe = function getUsersMe (req, res, next) {
-  Users.getUsersMe()
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  if(req.session.isLoggedIn){
+    Users.getUsersMe(req.session.email)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  }
+  else {
+    res.end("You have to be logged-in");
+  }
 };
 
 module.exports.postUsersLogin = function postUsersLogin (req, res, next) {
   var email = req.swagger.params['email'].value;
   var password = req.swagger.params['password'].value;
+
   Users.postUsersLogin(email,password)
     .then(function (response) {
-      utils.writeJson(res, response);
+      if(response.size()>0){
+        res.session.email = email;
+        res.session.isLoggedIn = true;
+      }else{
+        res.end("You have to be logged-in");
+      }
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -46,17 +68,13 @@ module.exports.postUsersLogin = function postUsersLogin (req, res, next) {
 };
 
 module.exports.postUsersLogout = function postUsersLogout (req, res, next) {
-  Users.postUsersLogout()
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  req.session.isLoggedIn = false;
+  req.session.email = " ";
 };
 
 module.exports.postUsersRegister = function postUsersRegister (req, res, next) {
   var body = req.swagger.params['body'].value;
+
   Users.postUsersRegister(body)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -68,22 +86,28 @@ module.exports.postUsersRegister = function postUsersRegister (req, res, next) {
 
 module.exports.putCart = function putCart (req, res, next) {
   var body = req.swagger.params['body'].value;
-  Users.putCart(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+
+  if(req.session.isLoggedIn && req.session.email == body.email){
+    Users.putCart(body)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  }
 };
 
 module.exports.putUsersMe = function putUsersMe (req, res, next) {
   var body = req.swagger.params['body'].value;
-  Users.putUsersMe(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+
+  if(req.session.isLoggedIn && req.session.email == body.email){
+    Users.putUsersMe(body)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  }
 };

@@ -1,7 +1,6 @@
 'use strict';
 
 let sqlDb;
-
 let {giveMeData, giveMeSimilars, giveMeAuthors} = require("./fillings/BooksData");
 
 exports.booksSetup = function(database){
@@ -111,7 +110,7 @@ let bookMapping = function (obj){
   let authors = [];
   sqlDb("books_authors").where("isbn",obj.isbn).select().then(
      data => {
-       return data.map( e => {
+       return data.forEach( e => {
          authors.push(e.author1);
          if(e.author2)
           authors.push(e.author2);
@@ -121,7 +120,17 @@ let bookMapping = function (obj){
           authors.push(e.author4);
        });
      });
-  obj.author = authors;
+
+  obj.authors = [];
+
+  authors.forEach( auth => { return sqlDb("authors").where("id",auth).select().then(
+    data =>{
+      return data.forEach( e => {
+        return obj.authors.push(e);
+      });
+    });
+  });
+
   return obj;
 }
 

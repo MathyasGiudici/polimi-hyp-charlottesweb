@@ -5,13 +5,17 @@ var fs = require('fs'),
     http = require('http'),
     cookieSession= require('cookie-session');
 
-var {initSqlDb} = require("./other/service/DataLayer");
-
 var app = require('connect')();
+
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var serverPort = process.env.PORT || 8080;
+
+var cookieParser = require("cookie-parser");
+var cookieSession = require("cookie-session");
 let serveStatic = require("serve-static");
+
+var {initSqlDb} = require("./other/service/DataLayer");
 
 // swaggerRouter configuration
 var options = {
@@ -23,6 +27,16 @@ var options = {
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
 var spec = fs.readFileSync(path.join(__dirname,'other/api/swagger.yaml'), 'utf8');
 var swaggerDoc = jsyaml.safeLoad(spec);
+
+//Cookie-Session
+app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['Hypermedi@SuperKey1996'],
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
 
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {

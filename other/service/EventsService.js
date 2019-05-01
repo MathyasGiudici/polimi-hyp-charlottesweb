@@ -1,29 +1,59 @@
 'use strict';
 
 let sqlDb = 0;
-let {dataEvents} = require("./fillings/eventData")
+let {giveMeData, giveMeAuthor} = require("./fillings/EventsData")
 
-exports.eventSetup = function(datatbase){
+exports.eventsSetup = function(datatbase){
+  console.log("DEBUG --> CREATING EVENTS' TABLE");
   sqlDb = datatbase;
   sqlDb.schema.hasTable("events").then( exists => {
     if(!exists){
       sqlDb.schema.createTable("events", table => {
         table.string("id").primary();
+        table.string("title");
         table.string("book");
-        table.string("author");
         table.string("place");
-        table.string("timestamp");
+        table.datetime("timestamp");
+        table.binary("photo");
       }).then(() => {
-        return Promise.all(dataEvents()).then(obj => {
+        console.log("DEBUG --> FILLING EVENTS' TABLE");
+        return Promise.all(giveMeData()).then(obj => {
+          console.log("DEBUG --> FILLING EVENTS' TABLE: ONE ENTRY");
           return sqlDb("events").insert(obj);
         });
       });
     }
     else {
       return true;
-    } 
+    }
 
   });
+}
+
+exports.events_authorsSetup = function(database){
+    console.log("DEBUG --> CREATING EVENTS_AUTHORS' TABLE");
+    sqlDb = database;
+    sqlDb.schema.hasTable("events_authors").then( exists => {
+        if(!exists){
+            sqlDb.schema.createTable("events_authors", table => {
+                table.string("event");
+                table.string("author1");
+                table.string("author2");
+                table.string("author3");
+                table.string("author4");
+                table.unique(["event","author1"]);
+            }).then( () => {
+             console.log("DEBUG --> FILLING EVENTS_AUTHORS' TABLE");
+             return Promise.all(giveMeAuthor()).then( obj => {
+               console.log("DEBUG --> FILLING EVENTS_AUTHORS' TABLE: ONE ENTRY");
+               return sqlDb("events_authors").insert(obj);
+             });
+            });
+        }
+        else{
+          return true;
+        }
+    });
 }
 
 /**
@@ -52,11 +82,10 @@ exports.getEventsById = function(id) {
 /**
  * Get all events with a specific criterion
  *
- * attribute String Attribute to search on. For example: author, book, date, ... 
+ * attribute String Attribute to search on. For example: author, book, date, ...
  * key String Key of the attribute for the search
  * returns List
  **/
 exports.getEventsFindBy = function(attribute,key) {
   return sqlDb("events").where(attribute, key).select();
 }
-

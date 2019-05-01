@@ -183,7 +183,7 @@ exports.giveMeSimilars = function() {
       isbn2: "9780156012195"
     },
     { //symmetric relation
-      isbn2: "9780061124952", 
+      isbn2: "9780061124952",
       isbn1: "9780156012195"
     },
     {
@@ -257,63 +257,63 @@ exports.giveMeAuthors = function() {
   return [
     {
       isbn: "9780061124952",
-      author1: "E.B. White",
+      author1: "author001",
       author2: "",
       author3: "",
       author4: ""
     },
     {
       isbn: "9780156012195",
-      author1: "Antoine de Saint-Exupéry",
+      author1: "author002",
       author2: "",
       author3: "",
       author4: ""
     },
     {
       isbn: "9780120420476",
-      author1: "Francesca Cavallo",
-      author2: "Elena Favilli",
+      author1: "author003",
+      author2: "author004",
       author3: "",
       author4: ""
     },
      {
       isbn: "9781538728529",
-      author1: "Nicholas Sparks",
+      author1: "author005",
       author2: "",
       author3: "",
       author4: ""
     },
     {
       isbn: "9788491051329",
-      author1: "Jane Austen",
+      author1: "author006",
       author2: "",
       author3: "",
       author4: ""
     },
     {
       isbn: "9780300039504",
-      author1: "Robert J. Sternberg",
-      author2: "Michael L. Barnes",
+      author1: "author007",
+      author2: "author008",
       author3: "",
       author4: ""
     },
     {
       isbn: "9781943818839",
-      author1: "Steph Post",
+      author1: "author009",
       author2: "",
       author3: "",
       author4: ""
     },
     {
       isbn: "9780316327626",
-      author1: "Richard Lange",
+      author1: "author010",
       author2: "",
       author3: "",
       author4: ""
     },
     {
       isbn: "9781786498229",
-      author1: "Stina Jackson",
+      author1: "author011",
       author2: "",
       author3: "",
       author4: ""

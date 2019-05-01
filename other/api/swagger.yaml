@@ -33,12 +33,16 @@ paths:
         description: "Pagination offset. Default is 0"
         required: false
         type: "integer"
+        default: 0
+        minimum: 0
       - name: "limit"
         in: "query"
         description: "Maximum number of items per page. Default is 20 and cannot exceed\
           \ 500"
         required: false
         type: "integer"
+        default: 20
+        maximum: 500
       responses:
         200:
           description: "Successful"
@@ -158,12 +162,16 @@ paths:
         description: "Pagination offset. Default is 0"
         required: false
         type: "integer"
+        default: 0
+        minimum: 0
       - name: "limit"
         in: "query"
         description: "Maximum number of items per page. Default is 20 and cannot exceed\
           \ 500"
         required: false
         type: "integer"
+        default: 20
+        maximum: 500
       responses:
         200:
           description: "Successful"
@@ -519,7 +527,7 @@ paths:
         404:
           description: "Not Found"
       x-swagger-router-controller: "Users"
-  /author:
+  /authors:
     get:
       tags:
       - "Authors"
@@ -533,12 +541,16 @@ paths:
         description: "Pagination offset. Default is 0"
         required: false
         type: "integer"
+        default: 0
+        minimum: 0
       - name: "limit"
         in: "query"
         description: "Maximum number of items per page. Default is 20 and cannot exceed\
           \ 500"
         required: false
         type: "integer"
+        default: 20
+        maximum: 500
       responses:
         200:
           description: "Successful"
@@ -593,12 +605,16 @@ paths:
         description: "Pagination offset. Default is 0"
         required: false
         type: "integer"
+        default: 0
+        minimum: 0
       - name: "limit"
         in: "query"
         description: "Maximum number of items per page. Default is 20 and cannot exceed\
           \ 500"
         required: false
         type: "integer"
+        default: 20
+        maximum: 500
       responses:
         200:
           description: "Successful"
@@ -690,7 +706,7 @@ definitions:
         type: "string"
       numOfPages:
         type: "integer"
-      author:
+      authors:
         type: "array"
         items:
           $ref: "#/definitions/Author"
@@ -753,7 +769,7 @@ definitions:
       description: "La solitudine dei numeri primi description"
       interview: "Il primo best seller sulla matematica"
       numOfPages: 266
-      author:
+      authors:
         id: "authorA001"
         name: "Paolo"
         surname: "Giordano"
@@ -915,7 +931,7 @@ definitions:
         type: "string"
         minLength: 10
         maxLength: 13
-      author:
+      authors:
         type: "array"
         items:
           type: "string"
@@ -929,8 +945,9 @@ definitions:
         format: "binary"
     example:
       id: "EVENT001"
+      title: "Evento @POLIMI"
       book: "9788804666639"
-      author:
+      authors:
       - "AUTH112467"
-      place: "Aula De Donato @Polimi"
+      place: "Aula De Donato @POLIMI"
       timestamp: "2019-10-01T10:30:00"
