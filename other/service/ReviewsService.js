@@ -37,8 +37,7 @@ exports.reviewsSetup = function(datatbase){
  * returns String
  **/
 exports.deleteReviewsById = function(id, email) {
-  let parsedId = id.slice(1, isbn.length -1);
-  return sqlDb("reviews").where("email",email).where("id",parsedId).del().then(function(e){
+  return sqlDb("reviews").where("email",email).where("id",id).del().then(function(e){
     return id;
   });
 }
@@ -64,8 +63,7 @@ exports.getReviews = function(offset,limit) {
  * returns Review
  **/
 exports.getReviewsById = function(id) {
-  let parsedId = id.slice(1, isbn.length -1);
-  return sqlDb("reviews").where("id",parsedId).select();
+  return sqlDb("reviews").where("id",id).select();
 }
 
 
@@ -102,6 +100,5 @@ exports.postReviews = function(body) {
  * returns Review
  **/
 exports.putReviewsById = function(id,body) {
-  let parsedId = id.slice(1, isbn.length -1);
-  return sqlDb("reviews").where("email", body.email).where("id",parsedId).update(body);
+  return sqlDb("reviews").where("email", body.email).where("id",id).update(body);
 }

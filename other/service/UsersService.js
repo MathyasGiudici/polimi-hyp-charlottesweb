@@ -64,7 +64,7 @@ let getCartHandler = function(email){
   sqlDb("carts").where("email",email).select().then(
      data => {
        return data.map( e => {
-          tValue+ = e.value;
+          tValue = tValue + e.value;
           tCurrency = e.currency;
           return tBooks.push(e.book);
        });

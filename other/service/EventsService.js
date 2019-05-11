@@ -1,7 +1,7 @@
 'use strict';
 
 let sqlDb;
-let {giveMeData, giveMeAuthor} = require("./fillings/EventsData")
+let {giveMeData, giveMeAuthors} = require("./fillings/EventsData")
 
 exports.eventsSetup = function(datatbase){
   console.log("DEBUG --> CREATING EVENTS' TABLE");
@@ -44,7 +44,7 @@ exports.events_authorsSetup = function(database){
                 table.unique(["event","author1"]);
             }).then( () => {
              console.log("DEBUG --> FILLING EVENTS_AUTHORS' TABLE");
-             return Promise.all(giveMeAuthor()).then( obj => {
+             return Promise.all(giveMeAuthors()).then( obj => {
                console.log("DEBUG --> FILLING EVENTS_AUTHORS' TABLE: ONE ENTRY");
                return sqlDb("events_authors").insert(obj);
              });
@@ -100,8 +100,7 @@ exports.getEvents = function(offset,limit) {
  * returns Event
  **/
 exports.getEventsById = function(id) {
-  let parsedId = id.slice(1, id.length -1);
-  return sqlDb("events").where("id",parsedId).select().then( data => {
+  return sqlDb("events").where("id",id).select().then( data => {
     return data.map( obj => {
       return eventMapping(obj);
     });

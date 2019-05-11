@@ -32,23 +32,15 @@ exports.giveMeAuthors = function() {
     {
       event: "event001",
       author1: "author003",
-      author2: "author004",
-      author3: "",
-      author4: ""
+      author2: "author004"
     },
     {
       event: "event002",
-      author1: "author004",
-      author2: "",
-      author3: "",
-      author4: ""
+      author1: "author004"
     },
     {
       event: "event003",
-      author1: "author005",
-      author2: "",
-      author3: "",
-      author4: ""
+      author1: "author005"
     }
   ];
 }

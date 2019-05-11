@@ -14,13 +14,11 @@ exports.booksSetup = function(database){
                 table.text("description");
                 table.text("interview");
                 table.integer("numOfPages");
-                //author
                 table.binary("photo");
                 table.enum("type",["paper","ebook"]);
                 table.date("pubbDate");
                 table.enum("genre",["fantasy","science","western","romance","thriller","biography","horror","children","detective","poetry"]);
                 table.enum("theme",["love","war","friendship","death","freedom","justice","power","discovery","security"]);
-                //similarTo
                 table.enum("status",["available","out of stock"]);
                 table.boolean("ourFavorite");
                 table.boolean("bestSelling");
@@ -51,7 +49,7 @@ exports.similarsSetup = function(database){
                 table.unique(["isbn1","isbn2"]);
             }).then( () => {
              console.log("DEBUG --> FILLING SIMILARS' TABLE");
-             return Promise.all(giveMeSimilar()).then( obj => {
+             return Promise.all(giveMeSimilars()).then( obj => {
                console.log("DEBUG --> FILLING SIMILARS' TABLE: ONE ENTRY");
                return sqlDb("similars").insert(obj);
              });
@@ -77,7 +75,7 @@ exports.books_authorsSetup = function(database){
                 table.unique(["isbn","author1"]);
             }).then( () => {
              console.log("DEBUG --> FILLING BOOKS_AUTHORS' TABLE");
-             return Promise.all(giveMeAuthor()).then( obj => {
+             return Promise.all(giveMeAuthors()).then( obj => {
                console.log("DEBUG --> FILLING BOOKS_AUTHORS' TABLE: ONE ENTRY");
                return sqlDb("books_authors").insert(obj);
              });
@@ -157,8 +155,7 @@ exports.getBooks = function(offset,limit) {
  * returns Book
  **/
 exports.getBooksByIsbn = function(isbn) {
-  let parsedIsbn = isbn.slice(1, isbn.length -1);
-  return sqlDb("books").where("isbn",parsedIsbn).select().then( data => {
+  return sqlDb("books").where("isbn",isbn).select().then( data => {
     return data.map( obj => {
       return bookMapping(obj);
     });
@@ -189,10 +186,8 @@ exports.getBooksFindBy = function(attribute,key) {
  * returns List
  **/
 exports.getSimilarBooksByIsbn = function(isbn) {
-  let parsedIsbn = isbn.slice(1, isbn.length -1);
-
   let similars = [];
-  sqlDb("similars").where("isbn1",parsedIsbn).select().then(
+  sqlDb("similars").where("isbn1",isbn).select().then(
      data => {
        return data.map( obj => {
          return sqlDb("books").where("isbn",obj.isbn2).select().then( data => {

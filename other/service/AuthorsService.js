@@ -47,6 +47,5 @@ exports.getAuthors = function(offset,limit) {
  * returns Author
  **/
 exports.getAuthorsById = function(id) {
-  let parsedId = id.slice(1, isbn.length -1);
-  return sqlDb("authors").where("id",parsedId).select();
+  return sqlDb("authors").where("id",id).select();
 }

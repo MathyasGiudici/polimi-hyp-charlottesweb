@@ -6,7 +6,7 @@ let {booksSetup,similarsSetup,books_authorsSetup} = require("./BooksService");
 let {authorsSetup} = require("./AuthorsService");
 let {eventsSetup, events_authorsSetup} = require("./EventsService");
 let {reviewsSetup} = require("./ReviewsService");
-let {usersSetup, cartsSetup} = require("./EventsService");
+let {usersSetup, cartsSetup} = require("./UsersService");
 
 exports.initSqlDb = function(){
   console.log("DEBUG --> CREATING DB");
