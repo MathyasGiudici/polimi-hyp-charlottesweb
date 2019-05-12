@@ -1,7 +1,7 @@
 'use strict';
 
 let sqlDb;
-let {giveMeData, giveMeSimilars, giveMeAuthors} = require("./fillings/BooksData");
+let {giveMeData, giveMeSimilars} = require("./fillings/BooksData");
 
 exports.booksSetup = function(database){
     console.log("DEBUG --> CREATING BOOKS' TABLE");
@@ -10,6 +10,10 @@ exports.booksSetup = function(database){
         if(!exists){
             sqlDb.schema.createTable("books", table => {
                 table.string("isbn").primary();
+                table.string("author1");
+                table.string("author2");
+                table.string("author3");
+                table.string("author4");
                 table.string("title");
                 table.text("description");
                 table.text("interview");
@@ -22,8 +26,8 @@ exports.booksSetup = function(database){
                 table.enum("status",["available","out of stock"]);
                 table.boolean("ourFavorite");
                 table.boolean("bestSelling");
-                table.enum("currency",["euro","dollar"]);
                 table.float("value");
+                table.enum("currency",["euro","dollar"]);
             }).then( () => {
              console.log("DEBUG --> FILLING BOOKS' TABLE");
              return Promise.all(giveMeData()).then( obj => {
@@ -61,77 +65,63 @@ exports.similarsSetup = function(database){
     });
 }
 
-exports.books_authorsSetup = function(database){
-    console.log("DEBUG --> CREATING BOOKS_AUTHORS' TABLE");
-    sqlDb = database;
-    sqlDb.schema.hasTable("books_authors").then( exists => {
-        if(!exists){
-            sqlDb.schema.createTable("books_authors", table => {
-                table.string("isbn");
-                table.string("author1");
-                table.string("author2");
-                table.string("author3");
-                table.string("author4");
-                table.unique(["isbn","author1"]);
-            }).then( () => {
-             console.log("DEBUG --> FILLING BOOKS_AUTHORS' TABLE");
-             return Promise.all(giveMeAuthors()).then( obj => {
-               console.log("DEBUG --> FILLING BOOKS_AUTHORS' TABLE: ONE ENTRY");
-               return sqlDb("books_authors").insert(obj);
-             });
-            });
-        }
-        else{
-          return true;
-        }
-    });
-}
 
+let bookMapping = function(obj){
 
-let bookMapping = function (obj){
-  //Amount creation
-  obj.price = { value: obj.value, currency: obj.currency };
+  //Creating authors' array of ids
+  obj.authorsIDs = [];
+
+  obj.authorsIDs.push(obj.author1);
+  if(obj.author2)
+    obj.authorsIDs.push(obj.author2);
+
+  if(obj.author3)
+    obj.authorsIDs.push(obj.author3);
+
+  if(obj.author4)
+    obj.authorsIDs.push(obj.author4);
+
+  delete obj.author1;
+  delete obj.author2;
+  delete obj.author3;
+  delete obj.author4;
+
+  //Creating price
+  obj.price = { value: obj.value, currency: obj.currency};
   delete obj.value;
   delete obj.currency;
-
-  //Looking for similars
-  let similars = [];
-  sqlDb("similars").where("isbn1",obj.isbn).select().then(
-     data => {
-       return data.map( e => {
-          return similars.push(e.isbn2);
-       });
-     });
-  obj.similarTo = similars;
-
-  //Looking for authors
-  let authors = [];
-  sqlDb("books_authors").where("isbn",obj.isbn).select().then(
-     data => {
-       return data.forEach( e => {
-         authors.push(e.author1);
-         if(e.author2)
-          authors.push(e.author2);
-         if(e.author3)
-          authors.push(e.author3);
-         if(e.author4)
-          authors.push(e.author4);
-       });
-     });
-
-  obj.authors = [];
-
-  authors.forEach( auth => { return sqlDb("authors").where("id",auth).select().then(
-    data =>{
-      return data.forEach( e => {
-        return obj.authors.push(e);
-      });
-    });
-  });
 
   return obj;
 }
 
+let bookUpdating = function(container){
+  let books = container.books;
+
+  //Book scanning
+  books.forEach( b => {
+    //Inits
+    b.similarTo = [];
+    b.authors = [];
+
+    //Similars creation
+    container.similars.forEach( s => {
+      if(s.isbn1 == b.isbn)
+        b.similarTo.push(s.isbn2);
+    });
+
+    //Authors linking
+    container.authors.forEach( a => {
+      b.authorsIDs.forEach( i => {
+        if (i == a.id)
+          b.authors.push(a);
+      });
+    });
+
+    delete b.authorsIDs;
+  });
+
+  return books;
+}
 
 /**
  * Get all books
@@ -143,8 +133,26 @@ let bookMapping = function (obj){
 exports.getBooks = function(offset,limit) {
   return sqlDb("books").limit(limit).offset(offset).select().then( data => {
     return data.map( obj => {
+      //Mapping books
       return bookMapping(obj);
     });
+  }).then( books => {
+    //Retreving similars
+    return sqlDb("similars").select().then( similars => {
+      let container = {};
+      container.books = books;
+      container.similars = similars;
+      return container;
+    });
+  }).then( container => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    //Recreating correct object books
+    return bookUpdating(container);
   });
 }
 
@@ -157,8 +165,26 @@ exports.getBooks = function(offset,limit) {
 exports.getBooksByIsbn = function(isbn) {
   return sqlDb("books").where("isbn",isbn).select().then( data => {
     return data.map( obj => {
+      //Mapping books
       return bookMapping(obj);
     });
+  }).then( books => {
+    //Retreving similars
+    return sqlDb("similars").select().then( similars => {
+      let container = {};
+      container.books = books;
+      container.similars = similars;
+      return container;
+    });
+  }).then( container => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    //Recreating correct object books
+    return bookUpdating(container);
   });
 }
 
@@ -173,8 +199,26 @@ exports.getBooksByIsbn = function(isbn) {
 exports.getBooksFindBy = function(attribute,key) {
   return sqlDb("books").where(attribute,key).select().then( data => {
     return data.map( obj => {
+      //Mapping books
       return bookMapping(obj);
     });
+  }).then( books => {
+    //Retreving similars
+    return sqlDb("similars").select().then( similars => {
+      let container = {};
+      container.books = books;
+      container.similars = similars;
+      return container;
+    });
+  }).then( container => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    //Recreating correct object books
+    return bookUpdating(container);
   });
 }
 
@@ -186,17 +230,43 @@ exports.getBooksFindBy = function(attribute,key) {
  * returns List
  **/
 exports.getSimilarBooksByIsbn = function(isbn) {
-  let similars = [];
-  sqlDb("similars").where("isbn1",isbn).select().then(
-     data => {
-       return data.map( obj => {
-         return sqlDb("books").where("isbn",obj.isbn2).select().then( data => {
-           return data.map( obj => {
-             let newObj = bookMapping(obj);
-             return similars.push(newObj);
-           });
-         });
-       });
-     });
-    return similars;
+  return sqlDb("similars").where("isbn1",isbn).select().then( data => {
+    return data.map( e => { return e.isbn2 });
+  }).then( similarsIDs => {
+    let container = {};
+    container.similarsIDs = similarsIDs;
+    return container;
+  }).then( container => {
+    //Retriving books
+    return sqlDb("books").select().then( books => {
+      books.forEach(b => {return bookMapping(b);});
+      container.books = books;
+      return container;
+    });
+  }).then( container => {
+    //Retreving similars
+    return sqlDb("similars").select().then( similars => {
+      container.similars = similars;
+      return container;
+    });
+  }).then( container => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    //Recreating correct object books
+    let books = bookUpdating(container);
+    let toBeRet = [];
+
+    container.similarsIDs.forEach( i => {
+      books.forEach( b => {
+        if(b.isbn == i)
+          toBeRet.push(b);
+      });
+    });
+
+    return toBeRet;
+  });
 }

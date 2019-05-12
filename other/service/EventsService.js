@@ -1,7 +1,7 @@
 'use strict';
 
 let sqlDb;
-let {giveMeData, giveMeAuthors} = require("./fillings/EventsData")
+let {giveMeData} = require("./fillings/EventsData")
 
 exports.eventsSetup = function(datatbase){
   console.log("DEBUG --> CREATING EVENTS' TABLE");
@@ -10,6 +10,10 @@ exports.eventsSetup = function(datatbase){
     if(!exists){
       sqlDb.schema.createTable("events", table => {
         table.string("id").primary();
+        table.string("author1");
+        table.string("author2");
+        table.string("author3");
+        table.string("author4");
         table.string("title");
         table.string("book");
         table.string("place");
@@ -30,53 +34,49 @@ exports.eventsSetup = function(datatbase){
   });
 }
 
-exports.events_authorsSetup = function(database){
-    console.log("DEBUG --> CREATING EVENTS_AUTHORS' TABLE");
-    sqlDb = database;
-    sqlDb.schema.hasTable("events_authors").then( exists => {
-        if(!exists){
-            sqlDb.schema.createTable("events_authors", table => {
-                table.string("event");
-                table.string("author1");
-                table.string("author2");
-                table.string("author3");
-                table.string("author4");
-                table.unique(["event","author1"]);
-            }).then( () => {
-             console.log("DEBUG --> FILLING EVENTS_AUTHORS' TABLE");
-             return Promise.all(giveMeAuthors()).then( obj => {
-               console.log("DEBUG --> FILLING EVENTS_AUTHORS' TABLE: ONE ENTRY");
-               return sqlDb("events_authors").insert(obj);
-             });
-            });
-        }
-        else{
-          return true;
-        }
-    });
-}
-
 let eventMapping = function (obj){
-  //Looking for authors
-  let authors = [];
-  sqlDb("events_authors").where("event",obj.event).select().then(
-     data => {
-       return data.forEach( e => {
-         authors.push(e.author1);
-         if(e.author2)
-          authors.push(e.author2);
-         if(e.author3)
-          authors.push(e.author3);
-         if(e.author4)
-          authors.push(e.author4);
-       });
-     });
 
-  obj.authors = authors;
+  //Creating authors' array of ids
+  obj.authorsIDs = [];
+
+  obj.authorsIDs.push(obj.author1);
+  if(obj.author2)
+    obj.authorsIDs.push(obj.author2);
+
+  if(obj.author3)
+    obj.authorsIDs.push(obj.author3);
+
+  if(obj.author4)
+    obj.authorsIDs.push(obj.author4);
+
+  delete obj.author1;
+  delete obj.author2;
+  delete obj.author3;
+  delete obj.author4;
 
   return obj;
 }
 
+let eventUpdating = function(container){
+  let events = container.events;
+
+  events.forEach ( e => {
+    //Inits
+    e.authors = [];
+
+    //Authors linking
+    container.authors.forEach( a => {
+      e.authorsIDs.forEach( i => {
+        if (i == a.id)
+          e.authors.push(a);
+      });
+    });
+
+    delete e.authorsIDs;
+  });
+
+  return events;
+}
 
 /**
  * Get all events
@@ -90,6 +90,16 @@ exports.getEvents = function(offset,limit) {
     return data.map( obj => {
       return eventMapping(obj);
     });
+  }).then( events => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      let container = {};
+      container.events = events;
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    return eventUpdating(container);
   });
 }
 
@@ -104,6 +114,16 @@ exports.getEventsById = function(id) {
     return data.map( obj => {
       return eventMapping(obj);
     });
+  }).then( events => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      let container = {};
+      container.events = events;
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    return eventUpdating(container);
   });
 }
 
@@ -119,5 +139,15 @@ exports.getEventsFindBy = function(attribute,key) {
     return data.map( obj => {
       return eventMapping(obj);
     });
+  }).then( events => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      let container = {};
+      container.events = events;
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    return eventUpdating(container);
   });
 }

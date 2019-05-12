@@ -4,7 +4,6 @@ var ResponsePayload = function(code, payload) {
 }
 
 exports.unauthorizeAction = function(res){
-  res.status(401);
   res.end("Unauthorized");
 }
 
