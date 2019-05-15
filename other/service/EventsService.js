@@ -124,7 +124,7 @@ exports.getEventsById = function(id) {
     });
   }).then( container => {
     return eventUpdating(container);
-  });
+  }).then( data => { return data[0];});
 }
 
 /**

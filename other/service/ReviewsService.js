@@ -36,10 +36,8 @@ exports.reviewsSetup = function(datatbase){
  * id String Id of the review to delete
  * returns String
  **/
-exports.deleteReviewsById = function(id, email) {
-  return sqlDb("reviews").where("email",email).where("id",id).del().then(function(e){
-    return id;
-  });
+exports.deleteReviewsById = function(id) {
+  return sqlDb("reviews").where("id",id).del().then( data => {return {response: id};});
 }
 
 
@@ -63,7 +61,7 @@ exports.getReviews = function(offset,limit) {
  * returns Review
  **/
 exports.getReviewsById = function(id) {
-  return sqlDb("reviews").where("id",id).select();
+  return sqlDb("reviews").where("id",id).select().then( data => { return data[0];});
 }
 
 
@@ -86,9 +84,11 @@ exports.getReviewsFindBy = function(attribute,key) {
  * returns List
  **/
 exports.postReviews = function(body) {
-  parseEmail = body.email.replace(/[^a-zA-Z0-9]/g, "");
+  let parseEmail = body.userId.replace(/[^a-zA-Z0-9]/g, "");
   body.id = parseEmail + Date.now().toString();
-  return sqlDb("reviews").insert(body);
+  return sqlDb("reviews").insert(body).then( data => {
+    return sqlDb("reviews").where("id",body.id).select().then( data => { return data[0];});
+  });
 }
 
 
@@ -100,5 +100,7 @@ exports.postReviews = function(body) {
  * returns Review
  **/
 exports.putReviewsById = function(id,body) {
-  return sqlDb("reviews").where("email", body.email).where("id",id).update(body);
+  return sqlDb("reviews").where("id",id).update(body).then( data => {
+    return sqlDb("reviews").where("id",id).select().then( data => { return data[0];});
+  });
 }

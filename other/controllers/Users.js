@@ -8,14 +8,9 @@ module.exports.deleteUsersMe = function deleteUsersMe (req, res, next) {
     return utils.unauthorizeAction(res);
   }
 
-  Users.deleteUsersMe(req.session.email)
+  Users.deleteUsersMe(req.session.email,req)
     .then(function (response) {
-      if(response){
-        req.session.isLoggedIn = false;
-        req.session.email = "";
-      } else{
-        res.end("Something has gone wrong");
-      }
+      utils.writeJson(res, response);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -54,14 +49,9 @@ module.exports.postUsersLogin = function postUsersLogin (req, res, next) {
   var email = req.swagger.params['email'].value;
   var password = req.swagger.params['password'].value;
 
-  Users.postUsersLogin(email,password)
+  Users.postUsersLogin(email,password,req)
     .then(function (response) {
-      if(response.size()>0){
-        res.session.email = email;
-        res.session.isLoggedIn = true;
-      }else{
-        res.end("You have to be logged-in");
-      }
+      utils.writeJson(res, response);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
@@ -71,6 +61,7 @@ module.exports.postUsersLogin = function postUsersLogin (req, res, next) {
 module.exports.postUsersLogout = function postUsersLogout (req, res, next) {
   req.session.isLoggedIn = false;
   req.session.email = " ";
+  utils.writeJson(res, {response: "Successful Logout"});
 };
 
 module.exports.postUsersRegister = function postUsersRegister (req, res, next) {
@@ -88,7 +79,7 @@ module.exports.postUsersRegister = function postUsersRegister (req, res, next) {
 module.exports.putCart = function putCart (req, res, next) {
   var body = req.swagger.params['body'].value;
 
-  if(req.session.isLoggedIn && req.session.email == body.email){
+  if(req.session.isLoggedIn && req.session.email == body.id){
     Users.putCart(body)
       .then(function (response) {
         utils.writeJson(res, response);

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "API | Hypermedia Project Criscuolo-Franzini-Giudici",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "title": "Book API"
   },
   "host": "polimi-hyp-charlottesweb.herokuapp.com",
@@ -299,10 +299,7 @@
           "200": {
             "description": "Successful",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Review"
-              }
+              "$ref": "#/definitions/Review"
             }
           },
           "400": {
@@ -473,8 +470,7 @@
           "200": {
             "description": "Successful",
             "schema": {
-              "type": "string",
-              "description": "ID of the review just deleted"
+              "$ref": "#/definitions/ApiResponse"
             }
           },
           "400": {
@@ -518,7 +514,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful Login"
+            "description": "Successful Login",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -543,7 +542,10 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Successful Logout"
+            "description": "Successful Logout",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -586,10 +588,7 @@
           "200": {
             "description": "Successful",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              }
+              "$ref": "#/definitions/User"
             }
           },
           "400": {
@@ -688,9 +687,7 @@
           "200": {
             "description": "Successful",
             "schema": {
-              "type": "string",
-              "format": "email",
-              "description": "Email of the user"
+              "$ref": "#/definitions/ApiResponse"
             }
           },
           "400": {
@@ -1275,9 +1272,18 @@
         "books": {
           "type": "array",
           "items": {
-            "type": "string",
-            "minLength": 10,
-            "maxLength": 13
+            "type": "object",
+            "properties": {
+              "book": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 13
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
           }
         }
       },
@@ -1288,8 +1294,14 @@
           "currency": "euro"
         },
         "books": [
-          "9788867024766",
-          "9788804606246"
+          {
+            "book": "9788867024766",
+            "quantity": 1
+          },
+          {
+            "book": "9788804606246",
+            "quantity": 10
+          }
         ]
       }
     },
@@ -1325,6 +1337,9 @@
     },
     "Event": {
       "type": "object",
+      "required": [
+        "id"
+      ],
       "properties": {
         "id": {
           "type": "string"
@@ -1340,7 +1355,7 @@
         "authors": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/Author"
           }
         },
         "place": {
@@ -1359,11 +1374,28 @@
         "id": "EVENT001",
         "title": "Evento @POLIMI",
         "book": "9788804666639",
-        "authors": [
-          "AUTH112467"
-        ],
+        "authors": {
+          "id": "authorA001",
+          "name": "Fred",
+          "surname": "Vargas",
+          "bio": " pseudonym of Frédérique Audoin-Rouzeau"
+        },
         "place": "Aula De Donato @POLIMI",
         "timestamp": "2019-10-01T10:30:00"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "required": [
+        "response"
+      ],
+      "properties": {
+        "response": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "response": "Successful Login"
       }
     }
   }

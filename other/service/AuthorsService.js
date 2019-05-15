@@ -47,5 +47,5 @@ exports.getAuthors = function(offset,limit) {
  * returns Author
  **/
 exports.getAuthorsById = function(id) {
-  return sqlDb("authors").where("id",id).select();
+  return sqlDb("authors").where("id",id).select().then( data => { return data[0];});
 }

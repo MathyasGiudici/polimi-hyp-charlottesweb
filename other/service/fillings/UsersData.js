@@ -37,6 +37,7 @@ exports.giveMeCartData = function() {
     {
       email: "mario.rossi@mail.polimi.it",
       book: "9780300039504",
+      quantity: 1,
       value : 10.03,
       currency : "euro"
     }

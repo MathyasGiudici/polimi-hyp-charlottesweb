@@ -19,6 +19,6 @@ exports.initSqlDb = function(){
 
     console.log("DEBUG --> CREATING TABLES");
     return Promise.all([booksSetup(sqlDb), similarsSetup(sqlDb),
-      authorsSetup(sqlDb), eventsSetup(sqlDb), 
+      authorsSetup(sqlDb), eventsSetup(sqlDb),
       usersSetup(sqlDb), cartsSetup(sqlDb), reviewsSetup(sqlDb) ]);
 }

@@ -10,7 +10,7 @@ module.exports.deleteReviewsById = function deleteReviewsById (req, res, next) {
     return utils.unauthorizeAction(res);
   }
 
-  Reviews.deleteReviewsById(id, req.session.email)
+  Reviews.deleteReviewsById(id)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -57,7 +57,7 @@ module.exports.getReviewsFindBy = function getReviewsFindBy (req, res, next) {
 module.exports.postReviews = function postReviews (req, res, next) {
   var body = req.swagger.params['body'].value;
 
-  if(req.session.isLoggedIn && req.session.email == body.email){
+  if(req.session.isLoggedIn && req.session.email == body.userId){
     Reviews.postReviews(body)
       .then(function (response) {
         utils.writeJson(res, response);
@@ -74,7 +74,7 @@ module.exports.putReviewsById = function putReviewsById (req, res, next) {
   var id = req.swagger.params['id'].value;
   var body = req.swagger.params['body'].value;
 
-  if(req.session.isLoggedIn && req.session.email == body.email){
+  if(req.session.isLoggedIn && req.session.email == body.userId){
     Reviews.putReviewsById(id,body)
       .then(function (response) {
         utils.writeJson(res, response);

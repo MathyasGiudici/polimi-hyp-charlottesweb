@@ -185,7 +185,7 @@ exports.getBooksByIsbn = function(isbn) {
   }).then( container => {
     //Recreating correct object books
     return bookUpdating(container);
-  });
+  }).then(  data => { return data[0];});
 }
 
 
