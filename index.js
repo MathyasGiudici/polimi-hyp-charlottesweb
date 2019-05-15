@@ -54,7 +54,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   app.use(middleware.swaggerUi());
 
   //Serve-Static folder
-  app.use(serveStatic(__dirname + "/public"));
+  app.use(serveStatic(__dirname + "/public/startbootstrap-business-casual"));
 
   // Serve Knex initialization
   initSqlDb();
