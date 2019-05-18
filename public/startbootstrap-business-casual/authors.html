@@ -20,19 +20,16 @@
     <!-- Custom styles for this template -->
     <link href="css/business-casual.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
 </head>
 
 <body>
 
-<h1 class="site-heading text-center text-white d-none d-lg-block">
-    <span class="site-heading-upper text mb-3">An unusual book store</span>
-    <span class="site-heading-lower">Charlotte's Web</span>
-</h1>
-
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+<nav class="navbar navbar-expand-lg navbar-dark py-lg-2 fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Charlotte's Web</a>
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Charlotte's Web <i class="fas fa-spider"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -50,9 +47,10 @@
                 <!-- Book button -->
                 <li class="dropdown">
 
-                    <div class="dropdown-toggle nav-item"id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown-toggle nav-item" id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <a class="nav-link px-lg-4 text-uppercase text-expanded icon">
                             Book
+                            <i class="fas fa-chevron-down"></i>
                         </a>
                     </div>
 
@@ -81,7 +79,7 @@
                 </li>
 
                 <!-- Author -->
-                <li class="nav-item px-lg-4 active">
+                <li class="nav-item active px-lg-4">
                     <a class="nav-link text-uppercase text-expanded icon" href="authors.html">Authors</a>
                 </li>
 
@@ -91,6 +89,7 @@
                         <a class="nav-link px-lg-4 text-uppercase text-expanded">
                             Info
                             <span class="caret"></span>
+                            <i class="fas fa-chevron-down"></i>
                         </a>
                     </div>
 
@@ -107,19 +106,17 @@
                     <a class="nav-link text-uppercase text-expanded" href="contactUs.html">Contacts</a>
                 </li>
 
-
-                <li class="offset-2"></li>
                 <!-- User -->
                 <li class="nav-item px-lg-4">
                     <a class="nav-link text-uppercase text-expanded" href="login.html" >
-                        <span class="glyphicon glyphicon-user"></span> Login
+                        <i class="fas fa-user"></i>
                     </a>
                 </li>
 
                 <!-- Cart -->
                 <li class="nav-item px-lg-4">
                     <a href="cart.html" class="nav-link text-uppercase text-expanded">
-                        <span class="glyphicon glyphicon-shopping-cart"></span> Cart
+                        <i class="fas fa-shopping-cart"></i>
                     </a>
                 </li>
 
@@ -128,6 +125,7 @@
     </div>
 </nav>
 
+<div class="big-padding"></div>
 
 <!-- Introduction to the page -->
 <section class="page-section about-heading">
@@ -138,8 +136,8 @@
                 <div class="col-xl-9 col-lg-10 ">
                     <div class="bg-faded rounded p-5">
                         <h2 class="section-heading mb-4">
-                            <span class="section-heading-upper" >Our authors, </span>
-                            <span class="section-heading-lower"> Writers that make you dream</span>
+                            <span class="section-heading-upper" >Our books, </span>
+                            <span class="section-heading-lower">Your readings</span>
                         </h2>
 
                     </div>
@@ -151,82 +149,103 @@
 
 
 <!-- Container Books -->
-<!-- Grid of columns -->
-<div class="row align-items-end">
-    <div class="col-md-4">
-        <div class="media">
-            <img class="align-self-start mr-3" src="img/BooksOnFloor.jpg" style="width: 70%" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">Name: </h5>
-                <p>Surname: </p>
-                <p>Books : </p>
-                <p>Bio: </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-xs-12">
-        <div class="media">
-            <img class="align-self-start mr-3" src="img/BooksOnFloor.jpg" style="width: 70%" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">1: The Little Prince</h5>
-                <p>Never too late to read it</p>
-                <p>A story of a little prince</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="media">
-            <img class="align-self-start mr-3" src="img/BooksOnFloor.jpg" style="width: 70%" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">1: The Little Prince</h5>
-                <p>Never too late to read it</p>
-                <p>A story of a little prince</p>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 
-<li class="padding big-padding"></li>
+<div class="row ml-3">
 
-<!-- Second grid -->
-<div class="row align-items-end">
-    <div class="col-md-4">
-        <div class="media">
-            <img class="align-self-start mr-3" src="img/BooksLight.jpg" style="width: 70%" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">1: The Little Prince</h5>
-                <p>Never too late to read it</p>
-                <p>A story of a little prince</p>
+    <!-- TODO: description length is important -->
+    <!-- first possibility-->
+
+    <div class="col-md-4 col-xs-12 bestseller-item">
+        <div class="align-self-center mr-3">
+            <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
+            <div class="cta descr-padding">
+                <div class="cta-inner rounded pt-2 pl-2 pr-2">
+                    <h5 class="mt-0" id="TitleBook">1: The Little Prince</h5>
+                    <p class="description" id="Description">Never too late to read it</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-xs-12">
-        <div class="media">
-            <img class="align-self-start mr-3" src="img/BooksLight.jpg" style="width: 70%" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">1: The Little Prince</h5>
-                <p>Never too late to read it</p>
-                <p>A story of a little prince</p>
+
+    <div class="col-md-4 col-xs-12 bestseller-item">
+        <div class="align-self-center mr-3">
+            <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
+            <div class="cta descr-padding">
+                <div class="cta-inner rounded pt-2 pl-2 pr-2">
+                    <h5 class="mt-0">1: The Little Prince</h5>
+                    <p>Never too late to read it, AHAHAHHAHAHAHAHAHHAHAHAHA HHAHAHAHHAHAHAHHAHAHAHAHAH</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="media">
-            <img class="align-self-start mr-3" src="img/BooksLight.jpg" style="width: 70%" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">1: The Little Prince</h5>
-                <p>Never too late to read it</p>
-                <p>A story of a little prince</p>
+
+
+    <div class="col-md-4 col-xs-12 bestseller-item">
+        <div class="align-self-center mr-3">
+            <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
+            <div class="cta descr-padding">
+                <div class="cta-inner rounded pt-2 pl-2 pr-2">
+                    <h5 class="mt-0">1: The Little Prince</h5>
+                    <p>Never too late to read it</p>
+                    <p>A story of a little prince</p>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 
-<li class="padding big-padding"></li>
+<div class="small-padding"></div>
+<!-- Second row -->
+<div class="row ml-3">
+
+    <!-- TODO: description length is important -->
+    <!-- first possibility-->
+
+    <div class="col-md-4 col-xs-12 bestseller-item">
+        <div class="align-self-center mr-3">
+            <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
+            <div class="cta descr-padding">
+                <div class="cta-inner rounded pt-2 pl-2 pr-2">
+                    <h5 class="mt-0" id="TitleBook">1: The Little Prince</h5>
+                    <p class="description" id="Description">Never too late to read it</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xs-12 bestseller-item">
+        <div class="align-self-center mr-3">
+            <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
+            <div class="cta descr-padding">
+                <div class="cta-inner rounded pt-2 pl-2 pr-2">
+                    <h5 class="mt-0">1: The Little Prince</h5>
+                    <p>Never too late to read it, AHAHAHHAHAHAHAHAHHAHAHAHA HHAHAHAHHAHAHAHHAHAHAHAHAH</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4 col-xs-12 bestseller-item">
+        <div class="align-self-center mr-3">
+            <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
+            <div class="cta descr-padding">
+                <div class="cta-inner rounded pt-2 pl-2 pr-2">
+                    <h5 class="mt-0">1: The Little Prince</h5>
+                    <p>Never too late to read it</p>
+                    <p>A story of a little prince</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 
 <!-- FOOTER -->
-<footer class="footer text-faded text-center py-5 col-12">
+<footer class="footer text-faded text-center py-2 col-12">
     <div class="container">
         <p class="m-0 small">Copyright &copy; Your Website 2019</p>
     </div>
