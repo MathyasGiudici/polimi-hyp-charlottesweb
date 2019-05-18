@@ -335,6 +335,10 @@ p {
   border-radius: 15px;
 }
 
+.carousel {
+  margin: 0 auto;
+}
+
 .row > .col-lg-5.col-xl-3 > .bg-faded.rounded {
   background-color: rgba(0, 25, 51, 0.9);
 }
@@ -347,11 +351,23 @@ p {
   color: #fff;
 }
 
+@media (max-width: 768px) {
+  .bestseller-item {
+    padding-bottom: 5rem;
+  }
+}
 .media-body {
-  background-color: rgba(119, 136, 153, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 .media-body .mt-0 {
   color: #001933;
+}
+.media-body .description {
+  color: #000;
+}
+
+.descr-padding {
+  padding: 0.7rem;
 }
 
 .text-primary {

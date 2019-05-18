@@ -126,7 +126,6 @@
   float: left;
 }*/
 
-
 .carousel-inner >.carousel-item {
   min-height: 400px;
   background-size: cover;
@@ -135,7 +134,11 @@
   border-radius: 15px;
 }
 
-//CARDS
+.carousel {
+  margin: 0 auto;
+}
+
+//TITLE BESTSELLERS
 
 .row > .col-lg-5.col-xl-3 >.bg-faded.rounded {
   background-color: fade_out($secondary, 0.1);
@@ -149,11 +152,29 @@
   color: $white;
 }
 
+
+//CARDS
+
+
+//768 px is the mobile version
+@media (max-width: 768px) {
+  .bestseller-item {
+    padding-bottom: 5rem;
+  }
+}
+
 .media-body{
-  background-color: fade_out($primary, 0.1);
+  background-color: fade_out($white, 0.1);
 
   .mt-0{
     color: $secondary;
   }
+
+  .description{
+    color: $black;
+  }
 }
 
+.descr-padding{
+  padding: 0.7rem;
+}
