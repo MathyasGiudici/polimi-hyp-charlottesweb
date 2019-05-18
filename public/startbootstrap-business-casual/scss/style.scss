@@ -1,125 +1,151 @@
-     //TITLE
+//TITLE
 
 .site-heading-upper{
   color: $secondary;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 4s;
 }
 
 .site-heading-lower{
   color: $white;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 4s;
 }
 
 
 .big-padding {
   padding: 40px;
+
 }
 
-  //NAVBAR
-     #mainNav .navbar-dark .navbar-nav .nav-link {
-       color: lightslategray;
-     }
-
-    #Book.dropdown-toggle {
-      font-family: inherit; /* Important for vertical align on mobile phones */
-      margin: 0; /* Important for vertical align on mobile phones */
-      .nav-link {
-        font-size: 0.9rem;
-        font-weight: 800;
-        color: fade-out($white, 0.3);
-
-        &:hover {
-          color: fade-out($primary, 0.6);
-        }
-      }
-
-      &.active {
-        .nav-link:hover {
-          color: fade-out($primary, 0.6);
-        }
-      }
-    }
-
-     #Book.dropdown-toggle {
-       font-family: inherit; /* Important for vertical align on mobile phones */
-       margin: 0; /* Important for vertical align on mobile phones */
-       .nav-link {
-         font-size: 0.9rem;
-         font-weight: 800;
-         color: fade-out($white, 0.3);
-
-         &:hover {
-           color: fade-out($primary, 0.6);
-         }
-       }
-
-       &.active {
-         .nav-link:hover {
-           color: fade-out($primary, 0.6);
-         }
-       }
-     }
-
-
-
-
-
-  /* Dropdown content (hidden by default) */
-  .dropdown-item {
-    display: none;
-    position: absolute;
-    background-color: $secondary;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-
-  /* Links inside the dropdown */
-  .dropdown-item a {
-    float: none;
-    color: $white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  /* Add a grey background color to dropdown links on hover */
-  .dropdown-item a:hover {
-    background-color: $secondary;
-  }
-
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-item {
-    display: block;
-  }
-
-
-
-
-  // CAROUSEL
-/* Make the image fully responsive */
-.carousel-inner img {
-  width: 100%;
-  height: 100%;
-  min-height: 600px;
-  background-position: center center;
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
-//CARDS
-
-.row > .col-lg-10.col-xl-9 >.bg-faded.rounded.p-5 {
-  background-color: $secondary;
+/* Standard syntax */
+@keyframes example {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
-.row > .col-lg-10.col-xl-9 >.bg-faded.rounded.p-5 > .section-heading > .section-heading-upper {
+.small-padding {
+  padding: 10px;
+}
+
+.xsmall-padding {
+  padding: 5px;
+}
+
+.small-perimeter{
+
+  padding-top: 0.7rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+
+}
+@media (max-width: 990px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+
+//NAVBAR
+#mainNav .navbar-dark .navbar-nav .nav-link {
   color: lightslategray;
 }
 
-.row > .col-lg-10.col-xl-9 >.bg-faded.rounded.p-5 > .section-heading > .section-heading-lower {
+// DO NOT DECOMMENT
+.dropdown-toggle {
+  font-family: inherit;  //Important for vertical align on mobile phones
+  margin: 0;  //Important for vertical align on mobile phones
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: fade-out($white, 0.3);
+    cursor: pointer;
+
+    &:hover {
+      color: fade-out($primary, 0.6);
+    }
+  }
+
+  &.active {
+    .nav-link:hover {
+      color: fade-out($primary, 0.6);
+    }
+  }
+}
+
+//Links inside the dropdown
+.dropdown-item a {
+  float: none;
+  color: $white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+
+
+// Show the dropdown menu on hover
+.dropdown:hover .dropdown-item {
+  display: block;
+}
+
+// Add a grey background color to dropdown links on hover
+.dropdown-item:hover {
+  background-color: fade-out($secondary, 0.6);
+  color: $white;
+}
+
+
+
+// CAROUSEL
+
+.carousel-inner img {
+  width: 100%;
+  height: 40vh;
+  max-width: 900px;
+  max-height: 400px;
+  box-shadow: 0 0 10px #999;
+  border: 10px solid #fff;
+  display: block;
+  margin: 0 20px;
+  float: left;
+}
+
+
+
+//CARDS
+
+.row > .col-lg-5.col-xl-3 >.bg-faded.rounded {
+  background-color: fade_out($secondary, 0.1);
+}
+
+.row > .col-lg-5.col-xl-3 >.bg-faded.rounded > .section-heading > .section-heading-upper {
+  color: lightslategray;
+}
+
+.row > .col-lg-5.col-xl-3 >.bg-faded.rounded > .section-heading > .section-heading-lower {
   color: $white;
 }
 
 .media-body{
-  background-color: lightslategray;
+  background-color: fade_out($primary, 0.1);
 
+  .mt-0{
+    color: $secondary;
+  }
 }
 
