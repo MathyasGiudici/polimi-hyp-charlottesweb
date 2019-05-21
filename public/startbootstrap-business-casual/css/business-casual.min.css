@@ -357,6 +357,7 @@ p {
   padding: 0.7rem;
 }
 
+/* -------BOOK SAMPLE--------- */
 .book-image {
   padding-right: 3rem;
   padding-left: 3rem;
@@ -430,6 +431,20 @@ p {
 
 .row > .col-lg-7.col-xl-5 > .bg-faded.rounded > .section-heading > .section-heading-lower {
   color: #fff;
+}
+
+/* -------AUTHOR SAMPLE--------- */
+#AuthorSurname.section-heading-lower {
+  color: #fff;
+  font-size: 2rem;
+}
+
+#AuthorName.section-heading-upper {
+  color: lightslategray;
+}
+
+#AuthorImage.img-responsive {
+  border: 0.25rem solid rgba(255, 255, 255, 0.85);
 }
 
 .text-primary {

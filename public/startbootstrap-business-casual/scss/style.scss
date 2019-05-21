@@ -166,7 +166,7 @@
   padding: 0.7rem;
 }
 
-//BOOK SAMPLE
+/* -------BOOK SAMPLE--------- */
 
 .book-image{
   padding-right: 3rem;
@@ -250,4 +250,19 @@
 
 .row > .col-lg-7.col-xl-5 >.bg-faded.rounded > .section-heading > .section-heading-lower {
   color: $white;
+}
+
+/* -------AUTHOR SAMPLE--------- */
+#AuthorSurname.section-heading-lower {
+  color: $white;
+  font-size: 2rem;
+}
+
+
+#AuthorName.section-heading-upper {
+  color: lightslategray;
+}
+
+#AuthorImage.img-responsive{
+  border: 0.25rem solid fade-out($white, 0.15);
 }
