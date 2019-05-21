@@ -264,5 +264,15 @@
 }
 
 #AuthorImage.img-responsive{
-  border: 0.25rem solid fade-out($white, 0.15);
+  width: 30rem;
+}
+
+/* -------EVENT SAMPLE--------- */
+#EventName.section-heading-lower {
+  color: $white;
+  font-size: 2rem;
+}
+
+#EventImage.img-responsive{
+  width: 25rem;
 }
