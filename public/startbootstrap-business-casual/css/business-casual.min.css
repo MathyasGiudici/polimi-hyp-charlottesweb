@@ -231,10 +231,6 @@ p {
   animation-duration: 4s;
 }
 
-.big-padding {
-  padding: 40px;
-}
-
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes example {
   from {
@@ -253,14 +249,6 @@ p {
     opacity: 1;
   }
 }
-.small-padding {
-  padding: 10px;
-}
-
-.xsmall-padding {
-  padding: 5px;
-}
-
 .small-perimeter {
   padding-top: 0.7rem;
   padding-bottom: 0.5rem;
@@ -275,6 +263,18 @@ p {
     display: none !important;
   }
 }
+.big-padding {
+  padding: 40px;
+}
+
+.small-padding {
+  padding: 10px;
+}
+
+.xsmall-padding {
+  padding: 5px;
+}
+
 #mainNav .navbar-dark .navbar-nav .nav-link {
   color: lightslategray;
 }
@@ -314,19 +314,6 @@ p {
   color: #fff;
 }
 
-/*
-.carousel-inner img {
-  width: 100%;
-  height: 40vh;
-  max-width: 900px;
-  max-height: 400px;
-  min-height: 400px;
-  box-shadow: 0 0 10px #999;
-  border: 10px solid #fff;
-  display: block;
-  margin: 0 20px;
-  float: left;
-}*/
 .carousel-inner > .carousel-item {
   min-height: 400px;
   background-size: cover;
@@ -368,6 +355,81 @@ p {
 
 .descr-padding {
   padding: 0.7rem;
+}
+
+.book-image {
+  padding-right: 3rem;
+  padding-left: 3rem;
+  padding-bottom: 1rem;
+  margin: 0 auto;
+  width: 20rem;
+}
+
+.book-title {
+  padding-bottom: 5rem;
+}
+
+#BookImage.img-responsive {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.book-item {
+  background-color: rgba(0, 25, 51, 0.9);
+  padding: 2rem;
+}
+@media (max-width: 991px) {
+  .book-item {
+    padding: 1rem;
+  }
+}
+
+#BookTitle.section-heading-upper {
+  color: lightslategray;
+}
+
+#BookAuthor.section-heading-lower {
+  color: #fff;
+  font-size: 2rem;
+}
+
+.cta-inner-border {
+  position: relative;
+  padding: 3rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 0.25rem solid rgba(255, 255, 255, 0.85);
+}
+@media (990px) {
+  .cta-inner-border {
+    padding: 0.5rem;
+  }
+}
+
+.tab-link {
+  color: rgba(0, 25, 51, 0.4);
+  font-weight: 800;
+}
+.tab-link:hover {
+  color: rgba(119, 136, 153, 0.4);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(0, 25, 51, 0.4);
+}
+
+.row > .col-lg-7.col-xl-5 > .bg-faded.rounded {
+  background-color: rgba(0, 25, 51, 0.9);
+}
+
+.row > .col-lg-7.col-xl-5 > .bg-faded.rounded > .section-heading > .section-heading-upper {
+  color: lightslategray;
+}
+
+.row > .col-lg-7.col-xl-5 > .bg-faded.rounded > .section-heading > .section-heading-lower {
+  color: #fff;
 }
 
 .text-primary {

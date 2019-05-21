@@ -16,12 +16,7 @@
   animation-duration: 4s;
 }
 
-
-.big-padding {
-  padding: 40px;
-
-}
-
+//ANIMATION FOR THE TITLE
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes example {
   from {opacity: 0;}
@@ -32,14 +27,6 @@
 @keyframes example {
   from {opacity: 0;}
   to {opacity: 1;}
-}
-
-.small-padding {
-  padding: 10px;
-}
-
-.xsmall-padding {
-  padding: 5px;
 }
 
 .small-perimeter{
@@ -59,12 +46,27 @@
 }
 
 
-//NAVBAR
+//PADDING
+.big-padding {
+  padding: 40px;
+
+}
+
+.small-padding {
+  padding: 10px;
+}
+
+.xsmall-padding {
+  padding: 5px;
+}
+
+
+//NAVBAR color
 #mainNav .navbar-dark .navbar-nav .nav-link {
   color: lightslategray;
 }
 
-// DO NOT DECOMMENT
+// DROPDOWN
 .dropdown-toggle {
   font-family: inherit;  //Important for vertical align on mobile phones
   margin: 0;  //Important for vertical align on mobile phones
@@ -112,20 +114,6 @@
 
 
 // CAROUSEL
-/*
-.carousel-inner img {
-  width: 100%;
-  height: 40vh;
-  max-width: 900px;
-  max-height: 400px;
-  min-height: 400px;
-  box-shadow: 0 0 10px #999;
-  border: 10px solid #fff;
-  display: block;
-  margin: 0 20px;
-  float: left;
-}*/
-
 .carousel-inner >.carousel-item {
   min-height: 400px;
   background-size: cover;
@@ -155,7 +143,6 @@
 
 //CARDS
 
-
 //768 px is the mobile version
 @media (max-width: 768px) {
   .bestseller-item {
@@ -177,4 +164,90 @@
 
 .descr-padding{
   padding: 0.7rem;
+}
+
+//BOOK SAMPLE
+
+.book-image{
+  padding-right: 3rem;
+  padding-left: 3rem;
+  padding-bottom: 1rem;
+  margin: 0 auto;
+  width: 20rem;
+
+}
+
+.book-title {
+  padding-bottom: 5rem;
+}
+
+
+#BookImage.img-responsive{
+  border-color: fade_out($white, 0.6);
+}
+
+.book-item{
+  background-color: fade_out($secondary, 0.1);
+  padding: 2rem;
+  @media (max-width: 991px) {
+
+    padding: 1rem;
+
+  }
+}
+
+#BookTitle.section-heading-upper {
+  color: lightslategray;
+}
+
+#BookAuthor.section-heading-lower {
+  color: $white;
+  font-size: 2rem;
+}
+
+.cta-inner-border{
+  position: relative;
+  padding: 3rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: fade-out($white, 0.15);
+  border: 0.25rem solid fade-out($white, 0.15);
+  //for mobile
+  @media(990px){
+    padding: 0.5rem;
+  }
+}
+
+.tab-link {
+  color: fade-out($secondary, 0.6);
+
+  font-weight: 800;
+
+  &:hover {
+    color: fade-out($primary, 0.6);
+  }
+}
+
+//ACTIVE ITEM IN THE TAB
+.nav-pills {
+  .nav-link.active,
+  .show > .nav-link {
+    color: fade_out($white, 0.15);
+    background-color: fade_out($secondary, 0.6);
+  }
+}
+
+//RELATED BOOKS
+//TITLE BESTSELLERS
+
+.row > .col-lg-7.col-xl-5 >.bg-faded.rounded {
+  background-color: fade_out($secondary, 0.1);
+}
+
+.row > .col-lg-7.col-xl-5 >.bg-faded.rounded > .section-heading > .section-heading-upper {
+  color: lightslategray;
+}
+
+.row > .col-lg-7.col-xl-5 >.bg-faded.rounded > .section-heading > .section-heading-lower {
+  color: $white;
 }
