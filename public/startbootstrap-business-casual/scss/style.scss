@@ -1,6 +1,6 @@
 //TITLE
 
-.site-heading-upper{
+#WebTitleU.site-heading-upper{
   color: $secondary;
   -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
   -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
@@ -8,7 +8,7 @@
   animation-duration: 4s;
 }
 
-.site-heading-lower{
+#WebTitleL.site-heading-lower{
   color: $white;
   -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
   -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */

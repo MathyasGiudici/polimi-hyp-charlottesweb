@@ -211,7 +211,7 @@ p {
   background-color: rgba(0, 25, 51, 0.9);
 }
 
-.site-heading-upper {
+#WebTitleU.site-heading-upper {
   color: #001933;
   -webkit-animation-name: example;
   /* Safari 4.0 - 8.0 */
@@ -221,7 +221,7 @@ p {
   animation-duration: 4s;
 }
 
-.site-heading-lower {
+#WebTitleL.site-heading-lower {
   color: #fff;
   -webkit-animation-name: example;
   /* Safari 4.0 - 8.0 */
