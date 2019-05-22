@@ -20,8 +20,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/business-casual.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
 
 </head>
 
@@ -54,6 +54,7 @@
                                 <i class="fas fa-chevron-down"></i>
                             </a>
                         </div>
+
 
                         <ul class="dropdown-menu text-expanded" aria-labelledby="Book">
 
@@ -118,6 +119,7 @@
 
     <div class="big-padding"></div>
 
+
     <!-- REGISTER FORM -->
     <div class="container">
         <div class="row">
@@ -130,30 +132,69 @@
                         <h5 class="card-title text-center">Register</h5>
                         <form class="form-signin">
                             <div class="form-label-group">
+                                <label for="inputUserame">First Name</label>
                                 <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
-                                <label for="inputUserame">Username</label>
+
+                            </div>
+                            <div class="form-label-group">
+                                <label for="inputUserame">Last Name</label>
+                                <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
+
                             </div>
 
                             <div class="form-label-group">
-                                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
                                 <label for="inputEmail">Email address</label>
+                                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
                             </div>
 
-                            <hr>
+                            <!--row for birthday selection and gender selection-->
+                              <div class="form-row">
+                                <div class="col-xl-6 col-lg-5 col-md-5">
+                                  <label for="birth">Birthdate</label>
+                                  <input type="date" id="birth" class="form-control" value="--" min="1940-01-01" max="2018-12-31" required>
+                                </div>
+
+                                <div class="col-xl-5 col-lg-4 col-md-4">
+                                    <label for="gender small-padding">Gender</label>
+
+                                    <!--Buttons on same row-->
+                                    <div class="form-row small-padding">
+                                      <!--div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="male" name="gender">
+                                        <label class="custom-control-label" for="male">Male</label>
+                                      </div>
+
+                                      <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="female" name="gender">
+                                        <label class="custom-control-label" for="female">Female</label>
+                                      </div-->
+
+                                    <div class="radio">
+                                      <input id="male" type="radio" name="gender" value="male">
+                                      <label for="male">Male</label>
+                                      <input id="female" type="radio" name="gender" value="female" style="margin-left:1rem">
+                                      <label for="female">Female</label>
+                                    </div>
+                                  </div>
+
+                                </div>
+                          </div>
 
                             <div class="form-label-group">
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                                 <label for="inputPassword">Password</label>
+                                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
                             </div>
 
                             <div class="form-label-group">
-                                <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
                                 <label for="inputConfirmPassword">Confirm password</label>
-                            </div>
+                                <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
 
+                            </div>
+                            <hr class="my-4"-->
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
-                            <a class="d-block text-center mt-2 small" href="login.html">Sign In</a>
-                            <hr class="my-4">
+                            <!--a class="d-block text-center mt-2 small" href="login.html">Sign In</a>
+                            <hr class="my-4"-->
                         </form>
                     </div>
                 </div>
