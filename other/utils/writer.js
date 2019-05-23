@@ -4,7 +4,7 @@ var ResponsePayload = function(code, payload) {
 }
 
 exports.unauthorizeAction = function(res){
-  res.end({response: "Unauthorized"});
+  writeJson(res, {response: "Unauthorized"});
 }
 
 exports.respondWithCode = function(code, payload) {
