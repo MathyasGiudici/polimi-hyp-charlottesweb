@@ -51,7 +51,7 @@ exports.giveMeData = function() {
       genre : "children",
       theme : "freedom",
       status : "available",
-      ourFavorite : false,
+      ourFavorite : true,
       bestSelling : true,
       value : 19.55,
       currency : "euro",

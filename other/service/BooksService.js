@@ -156,6 +156,58 @@ exports.getBooks = function(offset,limit) {
   });
 }
 
+exports.getBooksOurFavorite = function() {
+  return sqlDb("books").where(sqlDb.raw('"ourFavorite"')).select().then( data => {
+    return data.map( obj => {
+      //Mapping books
+      return bookMapping(obj);
+    });
+  }).then( books => {
+    //Retreving similars
+    return sqlDb("similars").select().then( similars => {
+      let container = {};
+      container.books = books;
+      container.similars = similars;
+      return container;
+    });
+  }).then( container => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    //Recreating correct object books
+    return bookUpdating(container);
+  });
+}
+
+exports.getBooksBestSelling = function() {
+  return sqlDb("books").where(sqlDb.raw('"bestSelling"')).select().then( data => {
+    return data.map( obj => {
+      //Mapping books
+      return bookMapping(obj);
+    });
+  }).then( books => {
+    //Retreving similars
+    return sqlDb("similars").select().then( similars => {
+      let container = {};
+      container.books = books;
+      container.similars = similars;
+      return container;
+    });
+  }).then( container => {
+    //Retreving authors
+    return sqlDb("authors").select().then( authors => {
+      container.authors = authors;
+      return container;
+    });
+  }).then( container => {
+    //Recreating correct object books
+    return bookUpdating(container);
+  });
+}
+
 /**
  * Get a specific book
  *

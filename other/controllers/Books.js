@@ -15,6 +15,26 @@ module.exports.getBooks = function getBooks (req, res, next) {
     });
 };
 
+module.exports.getBooksOurFavorite = function getBooksOurFavorite (req, res, next) {
+  Books.getBooksOurFavorite()
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.getBooksBestSelling = function getBooksBestSelling (req, res, next) {
+  Books.getBooksBestSelling()
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 module.exports.getBooksByIsbn = function getBooksByIsbn (req, res, next) {
   var isbn = req.swagger.params['isbn'].value;
   Books.getBooksByIsbn(isbn)

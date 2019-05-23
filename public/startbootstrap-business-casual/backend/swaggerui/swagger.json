@@ -135,6 +135,72 @@
         "x-swagger-router-controller": "Books"
       }
     },
+    "/books/ourFavorite": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get all company's favorite books",
+        "operationId": "getBooksOurFavorite",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-swagger-router-controller": "Books"
+      }
+    },
+    "/books/bestSelling": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get all best selling books",
+        "operationId": "getBooksBestSelling",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-swagger-router-controller": "Books"
+      }
+    },
     "/books/{isbn}": {
       "get": {
         "tags": [
