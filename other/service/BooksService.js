@@ -18,7 +18,7 @@ exports.booksSetup = function(database){
                 table.text("description");
                 table.text("interview");
                 table.integer("numOfPages");
-                table.binary("photo");
+                table.text("photo");
                 table.enum("type",["paper","ebook"]);
                 table.date("pubbDate");
                 table.enum("genre",["fantasy","science","western","romance","thriller","biography","horror","children","detective","poetry"]);

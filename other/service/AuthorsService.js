@@ -13,7 +13,7 @@ exports.authorsSetup = function(database){
                 table.string("name");
                 table.string("surname");
                 table.text("bio");
-                table.binary("photo");
+                table.text("photo");
             }).then( () => {
              console.log("DEBUG --> FILLING AUTHORS' TABLE");
              return Promise.all(giveMeData()).then( obj => {

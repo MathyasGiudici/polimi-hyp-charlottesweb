@@ -18,7 +18,7 @@ exports.eventsSetup = function(datatbase){
         table.string("book");
         table.string("place");
         table.datetime("timestamp");
-        table.binary("photo");
+        table.text("photo");
       }).then(() => {
         console.log("DEBUG --> FILLING EVENTS' TABLE");
         return Promise.all(giveMeData()).then(obj => {

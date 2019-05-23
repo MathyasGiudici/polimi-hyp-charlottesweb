@@ -15,7 +15,6 @@ exports.usersSetup = function(database){
                 table.string("password");
                 table.enum("gender",["female","male"]);
                 table.date("birthDay");
-                table.binary("photo");
                 table.enum("userType",["user","admin"]);
             }).then( () => {
              console.log("DEBUG --> FILLING USERS' TABLE");
