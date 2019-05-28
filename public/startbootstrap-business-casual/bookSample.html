@@ -134,48 +134,23 @@
 <div class="big-padding"></div>
 
 
-
-
-
-<!-- Who we are -->
-<!--<section class="page-section clearfix">
-  <div class="container">
-    <div class="intro">
-      <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="img/intro.jpg" alt="">
-      <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-        <h2 class="section-heading mb-4">
-          <span class="section-heading-upper">Who we are</span>
-          <span class="section-heading-lower">Worth Drinking</span>
-        </h2>
-        <p class="mb-3">Every cup of our quality artisan coffee starts with locally sourced, hand picked ingredients. Once you try it, our coffee will be a blissful addition to your everyday morning routine - we guarantee it!
-        </p>
-        <div class="intro-button mx-auto">
-          <a class="btn btn-primary btn-xl" href="#">See our Events!</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>-->
-
-
-
     <!--Container Book -->
-    <section class="page-section clearfix">
+    <section class="page-section clearfix" id="booksection">
         <div class="row justify-content-start">
-            <div class="col-lg-4 col-md-4 col-xs-12">
+            <!--div class="col-lg-4 col-md-4 col-xs-12">
                 <img class="img-responsive rounded book-image" id="BookImage" src="img/goodNight.jpg" alt="">
-            </div>
+            </div-->
 
             <div class="col-md-12 col-lg-7 col-xs-12">
                 <div class="bg-faded rounded book-item">
                     <h2 class="section-heading">
-                        <span class="section-heading-upper" id="BookTitle" > Notte fiore </span>
-                        <span class="section-heading-lower" id="BookAuthor"> Tizie </span>
+                        <span class="section-heading-upper" id="BookAuthor"></span>
+                        <span class="section-heading-lower" id="BookTitle"></span>
                     </h2>
                     <br>
-                    <a class="btn btn-primary btn-xl" href="#">
+                    <!--a class="btn btn-primary btn-xl" href="#">
                          Reserve Book
-                    </a>
+                    </a-->
 
                 </div>
             </div>
@@ -189,7 +164,7 @@
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active tab-link text-uppercase" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Details</a>
                 <a class="nav-link tab-link text-uppercase" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Description</a>
-                <a class="nav-link tab-link text-uppercase" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Interview</a>
+                <!--a class="nav-link tab-link text-uppercase" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Interview</a-->
                 <a class="nav-link tab-link text-uppercase" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Reviews</a>
             </div>
             <div class="col-1"></div>
@@ -197,24 +172,24 @@
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <!-- list group for every field -->
                     <ul class="list-group-flush">
-                        <li class="list-group-item">ISBN</li>
-                        <li class="list-group-item">Pubblication Date</li>
-                        <li class="list-group-item">Genre</li>
-                        <li class="list-group-item">Theme</li>
-                        <li class="list-group-item">Type of book</li>
-                        <li class="list-group-item">Number of pages</li>
+                        <li class="list-group-item">ISBN: <span id="isbntest"></span></li>
+                        <li class="list-group-item">Pubblication Date: <span id="pubbdate"></li>
+                        <li class="list-group-item">Genre: <span id="genr"></li>
+                        <li class="list-group-item">Theme: <span id="theme"></li>
+                        <li class="list-group-item">Type of book: <span id="typ"></li>
+                        <li class="list-group-item">Number of pages: <span id="numpg"></li>
                     </ul>
                 </div>
-                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Some text</div>
-                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Some Text</div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"><span id="bookdescript"></span></div>
+                <!--div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Some Text</div-->
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 
                     <!-- List of reviews -->
-                    <ul class="list-group-flush">
-                        <li class="list-group-item">Review 1</li>
+                    <ul class="list-group-flush"  id="reviews">
+                        <!--li class="list-group-item">Review 1</li>
                         <li class="list-group-item">Review 2</li>
                         <li class="list-group-item">Review 3</li>
-                        <li class="list-group-item">Review 4</li>
+                        <li class="list-group-item">Review 4</li-->
                     </ul>
                 </div>
             </div>
@@ -238,11 +213,11 @@
     <a class = "padding small-padding"></a>
 
     <!-- Grid of columns -->
-    <div class="row ml-3">
+    <div class="row ml-3" id="similars">
 
         <!-- TODO: description length is important -->
 
-        <div class="col-md-4 col-xs-12 bestseller-item">
+        <!--div class="col-md-4 col-xs-12 bestseller-item">
             <div class="align-self-center mr-3">
                 <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
                 <div class="cta descr-padding">
@@ -278,7 +253,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
 
     </div>
 </section>
@@ -297,6 +272,7 @@
 <!-- JQUERY MUST BE BEFORE JS FOR THE DROPDOWN MENU'" -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/sampleBook.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
