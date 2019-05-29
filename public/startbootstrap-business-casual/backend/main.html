@@ -1,7 +1,7 @@
 <!-- my-page.html -->
 <script src="https://rawcdn.githack.com/oscarmorrison/md-page/master/md-page.js"></script><noscript>
 
-# Documentation of the Backend part
+# Documentation of the Backend Part
 
 ## General group information
 
@@ -10,7 +10,6 @@
 | 1         | administrator | Mathyas       | Giudici     | 919871    | mathyas.giudici@mail.polimi.it  |
 | 2         | member        | Chiara        | Criscuolo   | 928714    | chiara.criscuolo@mail.polimi.it |
 | 3         | member        | Silvia        | Franzini    | 920268    | silvia1.franzini@mail.polimi.it |
-
 
 ## Links to other deliverables
 
@@ -33,6 +32,9 @@ instructors.
 
 ![Web Architecture Image](./webarchi.png)
 The Web Architecture model follows the model presented in the lectures of the backend part.
+  - The **Database** is a PostgreSQL database provided from Heroku with the heroku-postgresql's service (hobby-dev plan);
+  - The **Application Server** and **REST APIs** are run with a Node.js server starting from the [Swagger](./spec.yaml);
+  - **HTML**, **CSS** starts from a [Start Bootstrap](https://startbootstrap.com/) template.
 
 The HTML is not rendered server side because we don't use any Javascript frameworks (like express) to send to the user the pages of our books' store.
 All our pages are written in pure HTLM and CSS and available in the */public folder*, *npm serve-static* allows us to see the pages and folders in */public* as endpoints where HTML is sent to the user.
@@ -58,6 +60,7 @@ The Resources introduced in our model are related to the relevant data models. T
 For each resource the standard GET method (in */api/{resource}*), the GET method for a specific object of the resource (in */api/{resource}/id*) and a GET method */api/{resource}/findBy* that receives two parameters: attribute and key, it looks for resources that have the attribute's value equal to the key in our database.
 
 ### Data model
+
 In our OpenAPI data model we have:
   - Book
   - Review
@@ -70,48 +73,85 @@ In our OpenAPI data model we have:
 
 In our Data Layer Model:
   | OpenAPI Model   | *mapped in* Data Layer Mapping *as* |
-  | --------------- | ------------------- |
-  | Book            | Table   |
-  | Review          | Table   |
-  | Amount          | Attributes in Book's Table |
-  | User            | Table   |
-  | Cart            | Table   |
-  | Author            | Table   |
-  | Event            | Table   |
-  | ApiResponse            | No mapping (\*)  |
+  | --------------- | ------------------------------------|
+  | Book            | Table                               |
+  | Review          | Table                               |
+  | Amount          | Attributes in Book's Table          |
+  | User            | Table                               |
+  | Cart            | Table                               |
+  | Author          | Table                               |
+  | Event           | Table                               |
+  | ApiResponse     | No mapping (\*)                     |
 
 \*: No mapping because the ApiResponse is a simple object *{ response : string }* and it is created dynamically when needed.
 
-<!-- ## Implementation
+## Implementation
+
 ### Tools used
-Describe here which tools, languages and frameworks did you use for the backend
-of the application.
+
+All the backend is developed using Javascript code using the default **npm** as package manager.
+The staring point with function declarations and interfaces was generated through the [Swagger](./spec.yaml) using the [Swagger Editor](https://editor.swagger.io/)
+
+Relevant package added are:
+  - **pg** node-postgres (aka pg) is a collection of Node.js modules for interfacing with your PostgreSQL database;
+  - **knex.js** is a SQL query builder for Postgres designed to be flexible, portable, and fun to use;
+  - **serve-static** creates a new middleware function to serve files from within a given root directory. The file to serve will be determined by combining req.url with the provided root directory;
+  - **cookie-session** stores the session data on the client within a cookie, instead of storing only a session identifier on the client within a cookie and stores the session data on the server (typically in a database);
+  - **cookie-parser** parses the Cookie header and populates req.cookies with an object keyed by the cookie names.
+
 ### Discussion
-Describe here:
-- How did you make sure your web application adheres to the provided OpenAPI
-specification?
-- Why do you think your web application adheres to common practices to partition
-the web application (static assets vs. application data)
-- Describe synthetically why and how did you manage session state, what are the
-state change triggering actions (e.g., POST to login etc..).
-- Which technology did you use (relational or a no-SQL database) for managing
-the data model?
+
+**How did you make sure your web application adheres to the provided OpenAPI specification?**
+We constantly look at the [OpenAPI Specification](https://swagger.io/docs/specification/about/) documentation during the development phase and during a tutoring session some good-practices were provided to us, so we changed our specification to better fit the advices.
+
+**Why do you think your web application adheres to common practices to partition the web application (static assets vs. application data)**
+Our application adheres to common practices to partition because we deployed our application according to the model given to us: the static assests are in the */public* folder and with *serve-static* showed in the web application ([this address](https://polimi-hyp-charlottesweb.herokuapp.com)); the application data are stored in the db and they could be retrivered using the APIs */api/{resource}*.
+Frontend and backend are run in the same Herokuapp address but they talk to each other only via HTTP requests.
+
+**Describe synthetically why and how did you manage session state, what are the state change triggering actions (e.g., POST to login etc..).**
+In order to manage the session state we use the **cookie-session** and **cookie-parser** package.
+As described in class each user session is an object:
+
+```
+{
+  isLoggedIn : boolean,
+  email      : string
+}
+```
+where isLoggedIn is a boolean value that represents if the user is logged-in or not, email is the user's id.
+
+In the data model the entities that use session are User and Review, the current state of the session changes with the following triggers:
+
+- In the POST */api/users/register* the session is not used;
+- In the POST */api/users/login* the session object is created and intialized with the user's data;
+- In the POST */api/users/logout* and in the DELETE */api/users/me* the session object is destroyed;
+- In the GET/PUT */api/users/me* and in the GET/PUT */api/users/me/cart* the session is used to understand if the user is logged-in and retrieve his/her id;
+- In all the actions performed by */api/reviews/** the session is used to understand if the user is logged-in and retrieve his/her id;
+
+#### Which technology did you use (relational or a no-SQL database) for managing the data model?
+To manage our data model we use a typical relational database.
+
 ## Other information
+
 ### Task assignment
-Describe here how development tasks have been subdivided among members of the
-group, e.g.:
-- Foo worked on front end (80%) and OpenAPI Spec (20% of the time)
-- Bar worked on ....
+All the group's members work on the OpenAPI Spec and provide a contribute to the design decision of the application.
+
+- Mathyas Giudici worked on frontend for the 20% and on the backend for the 80%;
+- Chiara Criscuolo worked on frontend for the 80% and on the backend for the 20%;
+- Silvia Franzini worked on frontend for the 60% and on the backend for the 40%.
+
 ### Analysis of existing API
-Describe here if you have found relevant APIs that have inspired the OpenAPI
-specification and why (at least two).
+For our project we use the following OpenAPI:
+
+- The example showed in class of [dataatwork.org](http://dataatwork.org/);
+- The simple and basic example by swagger.io of a [Pet Store](https://petstore.swagger.io/);
+- As advised in class we found these two OpenAPIs on [APIs Guru](https://apis.guru/browse-apis/): [Hetras Booking API](https://api.apis.guru/v2/specs/hetras-certification.net/booking/v0/swagger.yaml) and [The New York Times Book API](https://api.apis.guru/v2/specs/nytimes.com/books_api/3.0.0/swagger.yaml);
+- There is also an other more extended and detailed API that is the [Google Books API](https://api.apis.guru/v2/specs/googleapis.com/books/v1/swagger.yaml).
+
+Moreover we can also add the OpenAPI and server implementation showed in class.
 ### Learning outcome
-What was the most important thing all the members have learned while developing
-this part of the project, what questions remained unanswered, how you will use
-what you've learned in your everyday life?
-Examples:
-- Foo learned to write SQL queries and Javascript but wanted to know more about
-caching, he's probably going to create his own startup with what she has
-learned
-- Bar learned how to deploy on a cloud platform, he would have liked to know
-more about promises for asynchronous code.. -->
+In this part of the project all the members have learned how to create an OpenAPI Specification and how to implement it using a Node.js server.
+Some unanswered questions are:
+- In our project we have inserted into the db a small number of data. How scalability an performance go with bigger data? Are there other methods to implement a more performant version?
+- We use Heroku to provide our application. Are any other services that do the same thing? Pro and cons?
+- How could we build in Heroku some more difficult application such as Wordpress?
