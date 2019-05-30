@@ -146,14 +146,14 @@
 <!--Container Author -->
 <section class="page-section clearfix">
     <div class="row justify-content-start">
-        <div class="col-lg-4 col-md-4 col-xs-12">
-            <img class="img-responsive rounded book-image" id="EventImage" src="img/Nicholas-Sparks.jpg" alt="">
+        <div class="col-lg-4 col-md-4 col-xs-12" id="EventImage">
+            <!--img class="img-responsive rounded book-image"  src="img/Nicholas-Sparks.jpg" alt=""-->
         </div>
 
         <div class="col-md-12 col-lg-7 col-xs-12">
             <div class="bg-faded rounded book-item">
                 <h2 class="section-heading">
-                    <span class="section-heading-lower" id="EventName"> Event Name </span>
+                    <span class="section-heading-lower" id="EventName"></span>
                 </h2>
 
             </div>
@@ -167,21 +167,21 @@
 <a class = "padding small-padding"></a>
 <div class="container cta small-perimeter">
     <div class="row cta-inner-border ">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <!--div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link active tab-link text-uppercase" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Description</a>
             <a class="nav-link tab-link text-uppercase" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Information</a>
-        </div>
-        <div class="col-1"></div>
+        </div-->
+        <!--div class="col-1"></div-->
 
         <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-profile-tab">Some text</div>
-            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <!--div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-profile-tab">Some text</div-->
+            <div class="tab-pane fade show active " id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <!-- list group for every field -->
                 <ul class="list-group-flush">
-                    <li class="list-group-item"> Author </li>
-                    <li class="list-group-item"> Book </li>
-                    <li class="list-group-item"> When  </li>
-                    <li class="list-group-item"> Where </li>
+                    <li class="list-group-item"> Author: <span id="auth"></span> </li>
+                    <li class="list-group-item"> Book: <span id="book"></span> </li>
+                    <li class="list-group-item"> When: <span id="when"></span>  </li>
+                    <li class="list-group-item"> Where: <span id="place"></span> </li>
                 </ul>
             </div>
 

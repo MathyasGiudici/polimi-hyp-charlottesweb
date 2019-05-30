@@ -9,34 +9,46 @@ $(document).ready(function(){
     dataType: "json",
     success:function(data){
       //sort alphabetically
-      data = $(data).sort(sortByTheme);
+      data = data.sort(sortByTheme);
 
         let currentTheme=' ';
-        let toAppend;
-        let ind=0;
-        $.each(data, function(index, b){
+        let toAppend = '';
+        let ind = 0;
 
-          let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
+        //Declarations
+        let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
+        let beforeDescription = '</h5><h5 class="mt-0" id="author">';
+        let afterDescription = '</h5></div></div></div></div>';
+
+        let themeTitle='<section class=" cta small-perimeter"><h1 class="site-heading text-center text-white d-lg-block small-perimeter">  <span class="site-heading-upper text mb-3">';
+        let afterTheme= '</span></h1></section>';
+        let openRow = '<div class="row ml-3">';
+        let closeRow = '</div><div class="small-padding"></div>';
+
+        console.log(data);
+        data.forEach(function(b){
+
           let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
-          let beforeDescription = '</h5><p class="description" id="Description">';
-          let afterDescription = '</p></div></div></div></div>';
 
-        if(b.theme != currentTheme)
-        {
-          let themeTitle='<section class=" cta small-perimeter"><h1 class="site-heading text-center text-white d-lg-block small-perimeter">  <span class="site-heading-upper text mb-3">';
-          let afterTheme= '</span></h1></section>';
-          let row = '<div class="row ml-3">';
-
-          toAppend =themeTitle+ b.theme + afterTheme +row + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + b.description + afterDescription ;
-
-          //toAppend = themeTitle+ b.theme + afterTheme + row + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + b.description + afterDescription ;
-          currentTheme = b.theme;
-
-        } else  toAppend = beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + b.description + afterDescription;
-
-        $("#bookstheme").append(toAppend);
-      });
-
+          if(b.theme != currentTheme)
+          {
+            if(!(currentTheme == ' ')){
+              toAppend = toAppend + closeRow;
+              $("#bookstheme").append(toAppend);
+            }
+            currentTheme = b.theme;
+            ind = 0;
+            toAppend = themeTitle+ b.theme + afterTheme + openRow + beforePhoto + b.photo + beforeTitle + b.title + beforeDescription + setAuthors(b.authors) + afterDescription ;
+          }
+          else{
+            ind = ind +1;
+            toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title + beforeDescription + setAuthors(b.authors) + afterDescription;
+            if( ind%2 == 0)
+            {
+                toAppend = toAppend + openRow;
+            }
+          }
+       });
       },
       error:function(jqXHR, textStatus, errorThrown){
            console.log("Error:" + jqXHR + textStatus + errorThrown);
@@ -51,4 +63,24 @@ $(document).ready(function(){
   let handleBookClick = function(isbn){
     localStorage.isbn = isbn;
     window.location.href = './bookSample.html';
+  }
+
+
+  let setAuthors = function(authors)
+  {
+        let com = " ";
+        if(authors.length == 1){
+          com = authors[0].name + " " + authors[0].surname;
+        }
+        else{
+          let i;
+          for(i = 0; i < authors.length ; i++){
+            if(i == (authors.length - 1)){
+              com = com + authors[i].name + " " + authors[i].surname;
+            }else com = com + authors[i].name + " " + authors[i].surname + ", ";
+
+          }
+        }
+        return com;
+      //$("#authors").text(com);
   }

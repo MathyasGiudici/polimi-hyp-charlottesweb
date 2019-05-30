@@ -6,16 +6,25 @@ $(document).ready(function(){
   console.log("Author Loading");
 
   $.ajax({
-    url: baseUrl + "authors/" + localStorage.authorId,
+    url: baseUrl + "events/" + localStorage.eventId,
     dataType: "json",
     success:function(b){
       console.log(b);
-      let beforePicture='<div class="col-lg-4 col-md-4 col-xs-12"><img class="img-responsive rounded book-image" id="BookImage" src="';
-      let afterPicture='" alt=""></div>';
+      let afterPicture='" alt="">';
+      let beforePicture='<img class="img-responsive rounded book-image" id="EventImage" src="';
+
 
       let toAppend= beforePicture +  b.photo + afterPicture;
-      $("#AuthorName").text(b.name);
-      $("#AuthorSurname").text(b.surname);
+      $("#EventName").text(b.title);
+      $("#EventImage").append(toAppend);
+      $("#auth").text(setAuthors(b.authors));
+      $("#book").text(b.book);
+      $("#when").text(b.timestamp);
+      $("#place").text(b.place);
+
+
+
+
 
     },
 
@@ -25,6 +34,24 @@ $(document).ready(function(){
 
   });
 
-
-
 });
+
+
+let setAuthors = function(authors)
+{
+      let com = " ";
+      if(authors.length == 1){
+        com = authors[0].name + " " + authors[0].surname;
+      }
+      else{
+        let i;
+        for(i = 0; i < authors.length ; i++){
+          if(i == (authors.length - 1)){
+            com = com + authors[i].name + " " + authors[i].surname;
+          }else com = com + authors[i].name + " " + authors[i].surname + ", ";
+
+        }
+      }
+      return com;
+    //$("#authors").text(com);
+}

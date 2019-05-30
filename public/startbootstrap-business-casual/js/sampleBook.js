@@ -15,24 +15,12 @@ $(document).ready(function(){
 
       let toAppend= beforePicture +  b.photo + afterPicture;
 
-      //NON VAAAAAAA
-      let com;
-      if(b.authors.lenght==1){
-        com = b.authors[0].name + " " + b.authors[0].surname;
-      }
-      else{
-        for (let i=0; i < b.authors.lenght ; i++){
-         com = com + b.authors[i].name + " " + b.authors[i].surname + ", ";
-          if(i==3){
-            com = com + b.authors[i].name + " " + b.authors[i].surname;
-          }
-        }
-      }
-
+      //console.log("com:" + com);
+      setAuthors(b.authors);
       //localStorage.removeItem(isbn);
       $("#booksection").append(toAppend);
       $("#BookTitle").text(b.title);
-      $("#BookAuthor").text(com);
+      $("#BookAuthor").text(setAuthors(b.authors));
       $("#isbntest").text(b.isbn);
       $("#pubbdate").text(b.pubbDate);
       $("#genr").text(b.genre);
@@ -59,7 +47,7 @@ $(document).ready(function(){
         let beforeDescription = '</h5><p class="description" id="Description">';
         let afterDescription = '</p></div></div></div></div>';
 
-        let toAppend = beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + b.description + afterDescription;
+        let toAppend = beforePhoto + b.photo + beforeTitle + b.title + beforeDescription + setAuthors(b.authors);
         $("#similars").append(toAppend);
       });
     },
@@ -70,13 +58,15 @@ $(document).ready(function(){
 
   });
   $.ajax({
-    url: baseUrl + "books/" + localStorage.isbn +"/similar",
+    url: baseUrl + "reviews/findBy?attribute=isbn&key=" + localStorage.isbn,
     dataType: "json",
     success:function(reviews){
+      console.log(localStorage.isbn);
+      console.log(reviews);
       for(let i=0; i< reviews.length; i++){
         let  tab = '<li class="list-group-item" id="rev'+i+'">Review ';
         let  fin='</li>';
-        let  toAppend= tab + (i+1)+ " : " + reviews[i].title + " by "+ reviews[i].id + fin + reviews[i].description;
+        let  toAppend= tab + (i+1)+ " : " + reviews[i].title + " by "+ reviews[i].userId + fin + reviews[i].description;
         $("#reviews").append(toAppend);
         }
     },
@@ -88,21 +78,21 @@ $(document).ready(function(){
 
 });
 
-// let setAuthors = function(authors)
-// {
-//     let com= "";
-//     if(authors.lenght==1){
-//       com = authors[0].name + " " + authors[0].surname;
-//     }
-//     else{
-//       for (let i=0; i < authors.lenght ; i++){
-//        com = com + authors[i].name + " " + authors[i].surname + ", ";
-//         if(i==3){
-//           com = com + authors[i].name + " " + authors[i].surname;
-//         }
-//       }
-//     }
-//
-//     return(com);
-//     //$("#BookAuthor").text(com);
-// }
+let setAuthors = function(authors)
+{
+      let com = " ";
+      if(authors.length == 1){
+        com = authors[0].name + " " + authors[0].surname;
+      }
+      else{
+        let i;
+        for(i = 0; i < authors.length ; i++){
+         com = com + authors[i].name + " " + authors[i].surname + ", ";
+          if(i == (authors.length - 1)){
+            com = com + authors[i].name + " " + authors[i].surname;
+          }
+        }
+      }
+      return com;
+    //$("#BookAuthor").text(com);
+}

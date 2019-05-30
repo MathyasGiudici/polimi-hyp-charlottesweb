@@ -136,16 +136,16 @@
 
     <!--Container Author -->
     <section class="page-section clearfix">
-        <div class="row justify-content-start">
-            <div class="col-lg-4 col-md-4 col-xs-12">
+        <div class="row justify-content-start" id="authorImage">
+            <!--div class="col-lg-4 col-md-4 col-xs-12">
                 <img class="img-responsive rounded book-image" id="AuthorImage" src="img/elena-favilli-e-francesca-cavallo.jpg" alt="">
-            </div>
+            </div-->
 
             <div class="col-md-12 col-lg-7 col-xs-12">
                 <div class="bg-faded rounded book-item">
                     <h2 class="section-heading">
-                        <span class="section-heading-upper" id="AuthorName" > Name </span>
-                        <span class="section-heading-lower" id="AuthorSurname"> Author Surname </span>
+                        <span class="section-heading-upper" id="AuthorName" ></span>
+                        <span class="section-heading-lower" id="AuthorSurname"></span>
                     </h2>
 
                 </div>
@@ -160,13 +160,13 @@
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active tab-link text-uppercase" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Bio</a>
                 <a class="nav-link tab-link text-uppercase" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Events</a>
-                <a class="nav-link tab-link text-uppercase" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Interview?</a>
+                <!--a class="nav-link tab-link text-uppercase" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Interview?</a-->
             </div>
             <div class="col-1"></div>
 
             <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-profile-tab">Some text</div>
-                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-profile-tab"><span id="authorBio"></span></div>
+                <div class="tab-pane fade " id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <!-- list group for every field -->
                     <ul class="list-group-flush">
                         <li class="list-group-item">Event 1</li>
@@ -174,7 +174,7 @@
                     </ul>
                 </div>
 
-                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Some Text</div>
+                <!--div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Some Text</div-->
 
             </div>
         </div>
@@ -197,11 +197,11 @@
         <a class = "padding small-padding"></a>
 
         <!-- Grid of columns -->
-        <div class="row ml-3">
+        <div class="row ml-3" id="authorsBooks">
 
             <!-- TODO: description length is important -->
 
-            <div class="col-md-4 col-xs-12 bestseller-item">
+            <!--div class="col-md-4 col-xs-12 bestseller-item">
                 <div class="align-self-center mr-3">
                     <img class="align-self-start" src="img/bgBlue.jpg" style="width: 70%" alt="">
                     <div class="cta descr-padding">
@@ -237,7 +237,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div-->
 
         </div>
     </section>
@@ -256,6 +256,7 @@
     <!-- JQUERY MUST BE BEFORE JS FOR THE DROPDOWN MENU'" -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/sampleAuthor.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->

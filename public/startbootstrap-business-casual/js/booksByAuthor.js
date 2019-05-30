@@ -9,32 +9,45 @@ $(document).ready(function(){
     dataType: "json",
     success:function(data){
       //sort alphabetically
-      data = $(data).sort(sortByAuthor);
+        data = data.sort(sortByAuthor);
 
         let currentAuthor=' ';
-        let toAppend;
-        let ind=0;
+        let toAppend = '';
+        let ind = 0;
+
+
+        let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
+        //let beforeDescription = '<p class="description" id="Description">';
+        let afterDescription = '</h5></div></div></div></div>';
+        let row = '<div class="row ml-3">';
+        let closeRow = '</div><div class="small-padding"></div>';
+        let afterAuthor= '</span></h1></section>';
+
+
         $.each(data, function(index, b){
-
-          let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
-          let beforeTitle = '" onClick="handleBook('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
-          let beforeDescription = '</h5><p class="description" id="Description">';
-          let afterDescription = '</p></div></div></div></div>';
-
-        if(b.author[0] != currentAuthor)
+        let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
+        let authorTitle='<section class=" cta small-perimeter"><h1 class="site-heading text-center text-white d-lg-block small-perimeter">  <span class="site-heading-upper text mb-3">';
+        if(b.authors[0] != currentAuthor)
         {
-          let authorTitle='<section class=" cta small-perimeter"><h1 class="site-heading text-center text-white d-lg-block small-perimeter">  <span class="site-heading-upper text mb-3">';
-          let afterAuthor= '</span></h1></section>';
-          let row = '<div class="row ml-3">';
-          if(ind%3==0){
-            toAppend =authorTitle+ b.author[0] + afterAuthor + row + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + b.description + afterDescription ;
-            flag = 1;
-          } else toAppend = authorTitle+ b.author[0] + afterAuthor + row + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + b.description + afterDescription ;
-          currentAuthor = b.author[0];
+          if(!(currentAuthor=='')){
+            toAppend = toAppend + closeRow;
+            $("#booksauthor").append(toAppend);
+          }
+          currentAuthor=b.authors[0]; //TO DO:da decidere come indicizzare per più autori
+          ind = 0;
 
-        } else  toAppend = beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + b.description + afterDescription;
+          //TO DO: da rivedereper il secondo autore
+          toAppend =authorTitle+ b.authors[0].name + ' ' + b.authors[0].surname + afterAuthor + row + beforePhoto + b.photo + beforeTitle + b.title + afterDescription ;
 
-        $("#booksauthor").append(toAppend);
+        } else {
+          ind = ind +1;
+          toAppend = beforePhoto + b.photo + beforeTitle + b.title+ afterDescription;
+          if( ind%2 == 0)
+          {
+              toAppend = toAppend + openRow;
+          }
+        }
+
       });
 
       },
@@ -44,8 +57,9 @@ $(document).ready(function(){
     });
   });
 
+//TO DO:da rivedere come ordinare per il secondo autore
   let sortByAuthor= function(a, b){
-    return a.author.toLowerCase() > b.author.toLowerCase() ? 1 : -1;
+    return a.authors[0].surname.toLowerCase() > b.authors[0].surname.toLowerCase() ? 1 : -1;
   }
 
   let handleBookClick = function(isbn){

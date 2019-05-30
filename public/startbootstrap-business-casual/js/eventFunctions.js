@@ -12,9 +12,9 @@ $(document).ready(function(){
         let firstPart;
 
         if(i == 0)
-          firstPart = '<div class="carousel-item active" style="background-image: url('+ "'";
+          firstPart = '<div class="carousel-item active" onClick="handleEventClick('+ "'" + data[i].id + "'" +')" style="background-image: url('+ "'";
         else
-          firstPart = '<div class="carousel-item" style="background-image: url('+ "'";
+          firstPart = '<div class="carousel-item" onClick="handleEventClick('+ "'" + data[i].id +"'" +')" style="background-image: url('+ "'";
 
         let secondPart = "'" + ')"></div>';
         let toAppend = firstPart + data[i].photo + secondPart;
@@ -64,6 +64,10 @@ let numberofEvents = function(data){
    }
 }
 
+let handleEventClick = function(id){
+  localStorage.eventId = id;
+  window.location.href = './eventSample.html';
+}
 
 let contentTable = function(data){
 
