@@ -258,7 +258,7 @@ paths:
         404:
           description: "Not Found"
       x-swagger-router-controller: "Reviews"
-  /review/findBy:
+  /reviews/findBy:
     get:
       tags:
       - "Reviews"

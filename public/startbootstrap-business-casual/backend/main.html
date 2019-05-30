@@ -1,18 +1,18 @@
 <!-- my-page.html -->
 <script src="https://rawcdn.githack.com/oscarmorrison/md-page/master/md-page.js"></script><noscript>
 
-# Documentation of the Backend part
-> Deliverable D1
+# Documentation of the Backend Part
 
 ## General group information
+
 | Member n. | Role          | First name    | Last Name   | Matricola | Email address                   |
 | --------- | ------------- | ----------    | ---------   | --------- | ---------------                 |
 | 1         | administrator | Mathyas       | Giudici     | 919871    | mathyas.giudici@mail.polimi.it  |
 | 2         | member        | Chiara        | Criscuolo   | 928714    | chiara.criscuolo@mail.polimi.it |
 | 3         | member        | Silvia        | Franzini    | 920268    | silvia1.franzini@mail.polimi.it |
 
-
 ## Links to other deliverables
+
 - Deliverable D0: the web application is accessible at
 [this address](https://polimi-hyp-charlottesweb.herokuapp.com).
 - Deliverable D2: the YAML or JSON file containing the specification of the app
@@ -25,3 +25,133 @@ API can be found at [this address](./spec.yaml).
 available [this address](https://github.com/MathyasGiudici/polimi-hyp-charlottesweb). We hereby declare that this
 is a private repository and, upon request, we will give access to the
 instructors.
+
+## Specification
+
+### Web Architecture
+
+![Web Architecture Image](./webarchi.png)
+The Web Architecture model follows the model presented in the lectures of the backend part.
+  - The **Database** is a PostgreSQL database provided from Heroku with the heroku-postgresql's service (hobby-dev plan);
+  - The **Application Server** and **REST APIs** are run with a Node.js server starting from the [Swagger](./spec.yaml);
+  - **HTML**, **CSS** starts from a [Start Bootstrap](https://startbootstrap.com/) template.
+
+The HTML is not rendered server side because we don't use any Javascript frameworks (like express) to send to the user the pages of our books' store.
+All our pages are written in pure HTLM and CSS and available in the */public folder*, *npm serve-static* allows us to see the pages and folders in */public* as endpoints where HTML is sent to the user.
+
+### API
+
+#### REST compliance
+
+In order to build an API description format for REST APIs we used an [OpenAPI Specification](https://swagger.io/docs/specification/about/) (formerly Swagger Specification) and particularly useful was the [Pet Store](https://petstore.swagger.io/) example.
+
+In our REST APIs not all the HTTP Status Codes are described, only the relevant ones are putted in.
+Moreover, in the *books* endpoints */books/bestSelling* and */books/ourFavorite* are alone and not in *​/books​/findBy* in order to have an easilly access point to particular books that are used in the Homepage of our site and not directly correlated to the concept of a filter, that is for *​/books​/findBy*.
+
+#### OpenAPI Resource models
+
+The Resources introduced in our model are related to the relevant data models. They are:
+  - Books
+  - Authors
+  - Users
+  - Reviews
+  - Events
+
+For each resource the standard GET method (in */api/{resource}*), the GET method for a specific object of the resource (in */api/{resource}/id*) and a GET method */api/{resource}/findBy* that receives two parameters: attribute and key, it looks for resources that have the attribute's value equal to the key in our database.
+
+### Data model
+
+In our OpenAPI data model we have:
+  - Book
+  - Review
+  - Amount
+  - User
+  - Cart
+  - Author
+  - Event
+  - ApiResponse
+
+In our Data Layer Model:
+  | OpenAPI Model   | *mapped in* Data Layer Mapping *as* |
+  | --------------- | ------------------------------------|
+  | Book            | Table                               |
+  | Review          | Table                               |
+  | Amount          | Attributes in Book's Table          |
+  | User            | Table                               |
+  | Cart            | Table                               |
+  | Author          | Table                               |
+  | Event           | Table                               |
+  | ApiResponse     | No mapping (\*)                     |
+
+\*: No mapping because the ApiResponse is a simple object *{ response : string }* and it is created dynamically when needed.
+
+## Implementation
+
+### Tools used
+
+All the backend is developed using Javascript code using the default **npm** as package manager.
+The staring point with function declarations and interfaces was generated through the [Swagger](./spec.yaml) using the [Swagger Editor](https://editor.swagger.io/)
+
+Relevant package added are:
+  - **pg** node-postgres (aka pg) is a collection of Node.js modules for interfacing with your PostgreSQL database;
+  - **knex.js** is a SQL query builder for Postgres designed to be flexible, portable, and fun to use;
+  - **serve-static** creates a new middleware function to serve files from within a given root directory. The file to serve will be determined by combining req.url with the provided root directory;
+  - **cookie-session** stores the session data on the client within a cookie, instead of storing only a session identifier on the client within a cookie and stores the session data on the server (typically in a database);
+  - **cookie-parser** parses the Cookie header and populates req.cookies with an object keyed by the cookie names.
+
+### Discussion
+
+**How did you make sure your web application adheres to the provided OpenAPI specification?**
+We constantly look at the [OpenAPI Specification](https://swagger.io/docs/specification/about/) documentation during the development phase and during a tutoring session some good-practices were provided to us, so we changed our specification to better fit the advices.
+
+**Why do you think your web application adheres to common practices to partition the web application (static assets vs. application data)**
+Our application adheres to common practices to partition because we deployed our application according to the model given to us: the static assests are in the */public* folder and with *serve-static* showed in the web application ([this address](https://polimi-hyp-charlottesweb.herokuapp.com)); the application data are stored in the db and they could be retrivered using the APIs */api/{resource}*.
+Frontend and backend are run in the same Herokuapp address but they talk to each other only via HTTP requests.
+
+**Describe synthetically why and how did you manage session state, what are the state change triggering actions (e.g., POST to login etc..).**
+In order to manage the session state we use the **cookie-session** and **cookie-parser** package.
+As described in class each user session is an object:
+
+```
+{
+  isLoggedIn : boolean,
+  email      : string
+}
+```
+where isLoggedIn is a boolean value that represents if the user is logged-in or not, email is the user's id.
+
+In the data model the entities that use session are User and Review, the current state of the session changes with the following triggers:
+
+- In the POST */api/users/register* the session is not used;
+- In the POST */api/users/login* the session object is created and intialized with the user's data;
+- In the POST */api/users/logout* and in the DELETE */api/users/me* the session object is destroyed;
+- In the GET/PUT */api/users/me* and in the GET/PUT */api/users/me/cart* the session is used to understand if the user is logged-in and retrieve his/her id;
+- In all the actions performed by */api/reviews/** the session is used to understand if the user is logged-in and retrieve his/her id;
+
+#### Which technology did you use (relational or a no-SQL database) for managing the data model?
+To manage our data model we use a typical relational database.
+
+## Other information
+
+### Task assignment
+All the group's members work on the OpenAPI Spec and provide a contribute to the design decision of the application.
+
+- Mathyas Giudici worked on frontend for the 20% and on the backend for the 80%;
+- Chiara Criscuolo worked on frontend for the 80% and on the backend for the 20%;
+- Silvia Franzini worked on frontend for the 60% and on the backend for the 40%.
+
+### Analysis of existing API
+For our project we use the following OpenAPI:
+
+- The example showed in class of [dataatwork.org](http://dataatwork.org/);
+- The simple and basic example by swagger.io of a [Pet Store](https://petstore.swagger.io/);
+- As advised in class we found these two OpenAPIs on [APIs Guru](https://apis.guru/browse-apis/): [Hetras Booking API](https://api.apis.guru/v2/specs/hetras-certification.net/booking/v0/swagger.yaml) and [The New York Times Book API](https://api.apis.guru/v2/specs/nytimes.com/books_api/3.0.0/swagger.yaml);
+- There is also an other more extended and detailed API that is the [Google Books API](https://api.apis.guru/v2/specs/googleapis.com/books/v1/swagger.yaml).
+
+Moreover we can also add the OpenAPI and server implementation showed in class.
+### Learning outcome
+In this part of the project all the members have learned how to create an OpenAPI Specification and how to implement it using a Node.js server.
+Some unanswered questions are:
+- In our project we have inserted into the db a small number of data. How scalability an performance go with bigger data? Are there other methods to implement a more performant version?
+- We use Heroku to provide our application. Are any other services that do the same thing? Pro and cons?
+- How could we build in Heroku some more difficult application such as Wordpress?

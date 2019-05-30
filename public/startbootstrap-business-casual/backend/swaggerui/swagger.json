@@ -381,7 +381,7 @@
         "x-swagger-router-controller": "Reviews"
       }
     },
-    "/review/findBy": {
+    "/reviews/findBy": {
       "get": {
         "tags": [
           "Reviews"
