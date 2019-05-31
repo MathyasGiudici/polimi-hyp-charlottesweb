@@ -17,8 +17,9 @@ $(document).ready(function(){
 
         //Declarations
         let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
-        let beforeDescription = '</h5><h5 class="mt-0" id="author">';
-        let afterDescription = '</h></div></div></div></div>';
+        let beforeDescription = '</font></b></h5><h5 class="mt-0" id="author">';
+        let priz='</h5><div class="small-padding"></div><h5 class="mt-0" id="price">';
+        let afterDescription = '</h5></div></div></div></div>';
 
         let genreTitle='<section class=" cta small-perimeter"><h1 class="site-heading text-center text-white d-lg-block small-perimeter">  <span class="site-heading-upper text mb-3">';
         let afterGenre= '</span></h1></section>';
@@ -28,7 +29,7 @@ $(document).ready(function(){
         console.log(data);
         data.forEach(function(b){
 
-          let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
+          let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook"><b><font size="+2">';
 
           if(b.genre != currentGenre)
           {
@@ -39,11 +40,11 @@ $(document).ready(function(){
             }
             currentGenre = b.genre;
             ind = 0;
-            toAppend = genreTitle+ b.genre + afterGenre + openRow + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + setAuthors(b.authors) + afterDescription ;
+            toAppend = genreTitle+ b.genre + afterGenre + openRow + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + setAuthors(b.authors) + priz + b.price.value + ' '+ b.price.currency + afterDescription ;
           }
           else{
             ind = ind +1;
-            toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + setAuthors(b.authors) + afterDescription;
+            toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title+ beforeDescription + setAuthors(b.authors) + priz + b.price.value + ' '+ b.price.currency + afterDescription ;
             if( ind%2 == 0)
             {
                 toAppend = toAppend + openRow;

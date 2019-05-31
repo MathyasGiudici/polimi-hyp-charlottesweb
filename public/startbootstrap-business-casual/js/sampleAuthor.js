@@ -10,8 +10,8 @@ $(document).ready(function(){
     dataType: "json",
     success:function(b){
       console.log(b);
-      let beforePicture='<div class="col-lg-4 col-md-4 col-xs-12"><img class="img-responsive rounded book-image" id="BookImage" src="';
-      let afterPicture='" alt=""></div>';
+      let beforePicture='<img class="img-responsive rounded book-image" style="width:110%;height:110%;" src="';
+      let afterPicture='" alt="">';
 
       let toAppend= beforePicture +  b.photo + afterPicture;
       $("#AuthorName").text(b.name);
@@ -47,5 +47,22 @@ $(document).ready(function(){
          console.log("Error:" + jqXHR + textStatus + errorThrown);
     }
   });
+
+  $.ajax({
+    //TODO: check FindBy
+    url: baseUrl + "events/findBy?attribute=id&key=" + localStorage.authorId,
+    dataType: "json",
+    success:function(data){
+      for(let i=0; i<data.length; i++){
+        
+
+      }
+    },
+    error:function(jqXHR, textStatus, errorThrown){
+         console.log("Error:" + jqXHR + textStatus + errorThrown);
+    }
+  });
+
+
 
 });
