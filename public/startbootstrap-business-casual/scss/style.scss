@@ -239,16 +239,8 @@
 //RELATED BOOKS
 //TITLE BESTSELLERS
 
-.row > .col-lg-7.col-xl-5 >.bg-faded.rounded {
+#homeOurFav {
   background-color: fade_out($secondary, 0.1);
-}
-
-.row > .col-lg-7.col-xl-5 >.bg-faded.rounded > .section-heading > .section-heading-upper {
-  color: lightslategray;
-}
-
-.row > .col-lg-7.col-xl-5 >.bg-faded.rounded > .section-heading > .section-heading-lower {
-  color: $white;
 }
 
 /* -------AUTHOR SAMPLE--------- */
@@ -274,4 +266,28 @@
 
 #EventImage.img-responsive{
   width: 25rem;
+}
+
+//Padding in vertical navbar and list
+.list-group-flush{
+  padding-inline-start: 0px;
+}
+
+//Our top 3 and list of books (image + title)
+#threeBookInRow{
+  text-align: center;
+}
+
+#threeBookInRowImg{
+  resize: auto;
+  height: 350px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  #threeBookInRowImg{
+    resize: auto;
+    height: 250px;
+    margin-bottom: 10px;
+  }
 }

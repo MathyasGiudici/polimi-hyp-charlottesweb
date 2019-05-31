@@ -421,16 +421,8 @@ p {
   background-color: rgba(0, 25, 51, 0.4);
 }
 
-.row > .col-lg-7.col-xl-5 > .bg-faded.rounded {
+#homeOurFav {
   background-color: rgba(0, 25, 51, 0.9);
-}
-
-.row > .col-lg-7.col-xl-5 > .bg-faded.rounded > .section-heading > .section-heading-upper {
-  color: lightslategray;
-}
-
-.row > .col-lg-7.col-xl-5 > .bg-faded.rounded > .section-heading > .section-heading-lower {
-  color: #fff;
 }
 
 /* -------AUTHOR SAMPLE--------- */
@@ -457,6 +449,27 @@ p {
   width: 25rem;
 }
 
+.list-group-flush {
+  padding-inline-start: 0px;
+}
+
+#threeBookInRow {
+  text-align: center;
+}
+
+#threeBookInRowImg {
+  resize: auto;
+  height: 350px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  #threeBookInRowImg {
+    resize: auto;
+    height: 250px;
+    margin-bottom: 10px;
+  }
+}
 .mathy-padding {
   padding: 10px;
 }

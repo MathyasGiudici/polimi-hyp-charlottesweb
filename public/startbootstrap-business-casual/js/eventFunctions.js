@@ -2,31 +2,6 @@
 let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
 $(document).ready(function(){
-  console.log("Carousel Loading");
-
-  $.ajax({
-    url: baseUrl + "events",
-    dataType: "json",
-    success:function(data){
-      for(let i =0; i< data.length; i++){
-        let firstPart;
-
-        if(i == 0)
-          firstPart = '<div class="carousel-item active" onClick="handleEventClick('+ "'" + data[i].id + "'" +')" style="background-image: url('+ "'";
-        else
-          firstPart = '<div class="carousel-item" onClick="handleEventClick('+ "'" + data[i].id +"'" +')" style="background-image: url('+ "'";
-
-        let secondPart = "'" + ')"></div>';
-        let toAppend = firstPart + data[i].photo + secondPart;
-        $(".carousel-inner").append(toAppend);
-      }
-    },
-    error:function(jqXHR, textStatus, errorThrown){
-         console.log("Error:" + jqXHR + textStatus + errorThrown);
-    }
-  });
-
-
   $.ajax({
     url: baseUrl + "events",
     dataType: "json",
@@ -56,9 +31,9 @@ let numberofEvents = function(data){
     let endEvent = '</a>';
 
     if (i==0)
-     toAppend = numEvents+('Event '+(i+1))+endEvent;
+     toAppend = numEvents+(data[i].title)+endEvent;
     else
-     toAppend = numEvents+('Event '+(i+1))+endEvent;
+     toAppend = numEvents+(data[i].title)+endEvent;
     $("#v-pills-tab").append(toAppend);
 
    }
@@ -73,23 +48,53 @@ let contentTable = function(data){
 
     for(let i=0; i< data.length; i++){
 
-      //let separator='</div><div class="col-1"></div>';
-      //let content='<div class="tab-content" id="v-pills-tabContent">';
       let tabelEvent = '<div class="tab-pane fade" id="evnumb'+i+'" role="tabpanel" aria-labelledby="eventnumb'+i+'">';
       let activeEvent= '<div class="tab-pane fade show active" id="evnumb0" role="tabpanel" aria-labelledby="eventnumb0">';
-      let auth= '<ul class="list-group-flush"><li class="list-group-item" style="margin-left:1rem">Author: ';
-      let book='<li class="list-group-item" style="margin-left:1rem">Book: ';
-      let date ='<li class="list-group-item" style="margin-left:1rem">When: ';
-      let place='<li class="list-group-item" style="margin-left:1rem">Where: ';
+      let title= '<ul class="list-group-flush"><li class="list-group-item" style="margin-left:1rem"><b>Title:</b> ';
+      let auth= '<li class="list-group-item" style="margin-left:1rem"><b>Author:</b> ';
+      let date ='<li class="list-group-item" style="margin-left:1rem"><b>When:</b> ';
+      let place='<li class="list-group-item" style="margin-left:1rem"><b>Where:</b> ';
       let close = '</li>';
       let endTable='</ul></div>';
       let closureActive='</div>';
+      let button = '<li class="list-group-item" style="margin-left:1rem"><a href="#" onclick="handleClick(' + "'"+ data[i].id + "'" +
+      ')" class="btn btn-primary">Read More</a></li>';
 
 
       if (i==0)
-       toAppend = activeEvent+auth+data[i].author+close+book+data[i].book+close+date+data[i].timestamp+close+place+data[i].place+close+endTable+closureActive;
+       toAppend = activeEvent + title + data[i].title + close + auth + authorsToString(data[i].authors) + close + date + resetDateTime(data[i].timestamp) +
+       close + place + data[i].place + close + button + endTable + closureActive;
       else
-       toAppend = tabelEvent+auth+data[i].author+close+book+data[i].book+close+date+data[i].timestamp+close+place+data[i].place+close+endTable;
+       toAppend = tabelEvent + title + data[i].title + close + auth + authorsToString(data[i].authors) + close  + date + resetDateTime(data[i].timestamp) +
+       close + place + data[i].place + close+ button + endTable;
       $("#v-pills-tabContent").append(toAppend);
     }
+}
+
+let authorsToString = function(authors){
+     let string = "";
+     if(authors.length == 1){
+       string = authors[0].name + " " + authors[0].surname;
+     }
+     else{
+       for(let i = 0; i < authors.length ; i++){
+         if(i == (authors.length - 1)){
+           string = string + authors[i].name + " " + authors[i].surname;
+         }
+         else{
+           string = string + authors[i].name + " " + authors[i].surname + ", ";
+         }
+       }
+     }
+     return string;
+}
+
+let resetDateTime = function(time){
+  let array = time.split('T');
+  return array[0] + " at " + array[1].slice(0,5);
+}
+
+let handleClick = function(id){
+  localStorage.eventId = id;
+  window.location.href = './eventSample.html';
 }
