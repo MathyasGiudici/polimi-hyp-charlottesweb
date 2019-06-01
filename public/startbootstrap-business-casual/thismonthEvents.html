@@ -1,4 +1,7 @@
+
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
 
     <meta charset="utf-8">
@@ -19,10 +22,15 @@
     <!-- Custom styles for this template -->
     <link href="css/business-casual.min.css" rel="stylesheet">
 
+    <!-- Icon style -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
+
+
 </head>
+
 <body>
+
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-2 fixed-top" id="mainNav">
@@ -45,21 +53,12 @@
                     <!-- Book button -->
                     <li class="dropdown">
 
-                        <div class="dropdown-toggle nav-item active" id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown-toggle nav-item" id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <a class="nav-link px-lg-4 text-uppercase text-expanded icon">
                                 Book
                                 <i class="fas fa-chevron-down"></i>
                             </a>
                         </div>
-
-                        <!--ALTERNATIVES
-                        <a href="#" class="dropdown-toggle" id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                          Book <span class="caret"></span></a>
-
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="Book" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Book
-                        </button>-->
-
 
 
                         <ul class="dropdown-menu text-expanded" aria-labelledby="Book">
@@ -72,7 +71,7 @@
                     </li>
 
                     <!-- Events -->
-                    <li class="nav-item px-lg-4">
+                    <li class="nav-item active px-lg-4">
                         <a class="nav-link text-uppercase text-expanded icon" href="events.html">Events</a>
                     </li>
 
@@ -123,19 +122,20 @@
         </div>
     </nav>
 
-    <div class="small-padding"></div>
+
+    <div class="big-padding"></div>
 
     <!-- Introduction to the page -->
     <section class="page-section about-heading">
         <div class="container">
-            <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="img/BGbooks_genres.jpg" alt="image of the title" style="width:60%;">
+            <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="img/BGevents.jpg" alt="image of the title" style="width:60%;">
             <div class="about-heading-content">
                 <div class="row" >
                     <div class="col-xl-9 col-lg-10 ">
                         <div class="bg-faded rounded p-5">
                             <h2 class="section-heading mb-4">
-                                <span class="section-heading-upper" >Our genres, </span>
-                                <span class="section-heading-lower">Choose your favourite one!</span>
+                                <span class="section-heading-upper" >Our events, </span>
+                                <span class="section-heading-lower"></span>
                             </h2>
 
                         </div>
@@ -145,16 +145,12 @@
         </div>
     </section>
 
-
-    <!-- Container Books -->
-
+    <!-- Tab -->
     <div class="small-perimeter">
-        <div class="row cta-inner-border ">
+        <div class="row cta-inner-border" id="thismonthContainer">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <!-- <a class="nav-link tab-link text-uppercase" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Event Title</a> -->
             </div>
-            <!-- Space control with a column -->
-            <div class="col-1"></div>
             <div class="tab-content" id="v-pills-tabContent">
               <!-- <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                   <ul class="list-group-flush">
@@ -170,6 +166,7 @@
         </div>
     </div>
 
+    <a class = "padding small-padding"></a>
 
     <!-- FOOTER -->
     <footer class="footer text-faded text-center py-2 col-12">
@@ -182,12 +179,17 @@
     <!-- JQUERY MUST BE BEFORE JS FOR THE DROPDOWN MENU'" -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/booksByGenre.js"></script>
+    <script src="js/thismEventFunctions.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
+
+
+
 </body>
-</head>
+
+
+</html>

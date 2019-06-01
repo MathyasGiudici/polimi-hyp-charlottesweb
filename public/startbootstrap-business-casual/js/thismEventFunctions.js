@@ -1,13 +1,29 @@
 //let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
+const monthNames = ["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"];
+
+
 $(document).ready(function(){
+
+  let d = new Date();
+  $(".section-heading-lower").append("of " + monthNames[d.getMonth()] + "!");
+
   $.ajax({
     url: baseUrl + "events",
     dataType: "json",
     success:function(data){
-        numberofEvents(data);
-        contentTable(data);
+        let filtered = filterMonthEvent(data);
+
+        if(filtered.length != 0) {
+          numberofEvents(filtered);
+          contentTable(filtered);
+        }else{
+          $("#v-pills-tab").remove();
+          $("#v-pills-tabContent").remove();
+          $("#thismonthContainer").append("<h4>Sorry there are no events this month!</h4>");
+        }
       },
       error:function(jqXHR, textStatus, errorThrown){
            console.log("Error:" + jqXHR + textStatus + errorThrown);
@@ -97,4 +113,30 @@ let handleClick = function(id){
 let handleEventClick = function(id){
   localStorage.eventId = id;
   window.location.href = './eventSample.html';
+}
+
+let filterMonthEvent = function(data){
+  let filtered = [];
+
+  data.forEach( e => {
+    //retriving timestamp
+    let timestamp = e.timestamp;
+    //Searching date
+    timestamp = timestamp.split('T');
+    //Searching month
+    timestamp = timestamp[0].split('-');
+    let month = parseInt(timestamp[1],10);
+
+    //Searching current month
+    var d = new Date();
+    let currentMonth = d.getMonth();
+    //Adding 1, months in JS goes from 0 to 11
+    currentMonth = currentMonth + 1;
+
+    if( month == currentMonth ){
+      filtered.push(e);
+    }
+  });
+
+  return filtered;
 }

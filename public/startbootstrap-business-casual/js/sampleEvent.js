@@ -3,29 +3,33 @@ let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
 
 $(document).ready(function(){
-  console.log("Author Loading");
 
   $.ajax({
     url: baseUrl + "events/" + localStorage.eventId,
     dataType: "json",
     success:function(b){
-      console.log(b);
+      //Deleting passing value
+      delete localStorage.eventId;
+
+      //Setting strings
       let afterPicture='" alt="">';
-      let beforePicture='<img class="img-responsive rounded book-image" id="EventImage" src="';
+      let beforePicture='<img class="img-responsive rounded book-image" id="EventImage" alt="image of event: '+ b.id +'" src="';
 
+      //Retriving book related to the event
+      $.ajax({
+        url: baseUrl + "books/" + b.book,
+        dataType: "json",
+        success:function(data){
+          $("#book").append('<a href="#" onclick="handleBookClick(' + "'" + data.isbn + "'" + ')">' + data.title + "</a>");
+        }});
 
+      //Appending event's info
       let toAppend= beforePicture +  b.photo + afterPicture;
       $("#EventName").text(b.title);
       $("#EventImage").append(toAppend);
-      $("#auth").text(setAuthors(b.authors));
-      $("#book").text(b.book);
-      $("#when").text(b.timestamp);
+      $("#auth").append(setAuthors(b.authors));
+      $("#when").text(resetDateTime(b.timestamp));
       $("#place").text(b.place);
-
-
-
-
-
     },
 
     error:function(jqXHR, textStatus, errorThrown){
@@ -37,21 +41,39 @@ $(document).ready(function(){
 });
 
 
-let setAuthors = function(authors)
-{
-      let com = " ";
+let setAuthors = function(authors){
+      let toRet = " ";
       if(authors.length == 1){
-        com = authors[0].name + " " + authors[0].surname;
+        //Only one author case
+        toRet = '<a href="#" onclick="handleAuthorClick(' + "'" + authors[0].id + "'" + ')">' + authors[0].name + " " + authors[0].surname + "</a>";
       }
       else{
-        let i;
-        for(i = 0; i < authors.length ; i++){
+        //More than 1 author
+        for(let i = 0; i < authors.length ; i++){
           if(i == (authors.length - 1)){
-            com = com + authors[i].name + " " + authors[i].surname;
-          }else com = com + authors[i].name + " " + authors[i].surname + ", ";
-
+            //Final author of the list (no comma)
+            toRet = toRet + '<a href="#" onclick="handleAuthorClick(' + "'" + authors[i].id + "'" + ')">' + authors[i].name + " " + authors[i].surname + "</a>";
+          }else{
+            //Auhtor in the list
+            toRet = toRet + '<a href="#" onclick="handleAuthorClick(' + "'" + authors[i].id + "'" + ')">' + authors[i].name + " " + authors[i].surname + "</a>" + ", ";
+          }
         }
       }
-      return com;
-    //$("#authors").text(com);
+      return toRet;
+}
+
+let resetDateTime = function(time){
+  //Makes the timestamp more readeable
+  let array = time.split('T');
+  return array[0] + " at " + array[1].slice(0,5);
+}
+
+let handleBookClick = function(isbn){
+  localStorage.isbn = isbn;
+  window.location.href = './bookSample.html';
+}
+
+let handleAuthorClick = function(id){
+  localStorage.authorId = id;
+  window.location.href = './authorSample.html';
 }
