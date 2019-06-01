@@ -2,85 +2,128 @@
 let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
 $(document).ready(function(){
-  console.log("Books Loading");
-
   $.ajax({
     url: baseUrl + "books",
     dataType: "json",
     success:function(data){
-      //sort alphabetically
-      data = data.sort(sortByTheme);
+      //Retriving themes
+      let themes = [];
 
-        let currentTheme=' ';
-        let toAppend = '';
-        let ind = 0;
+      data.forEach( b => {
+        themes.push(b.theme);
+      });
 
-        //Declarations
-        let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
-        let beforeDescription = '</font></b></h5><h5 class="mt-0" id="author">';
-        let priz='</h5><div class="small-padding"></div><h5 class="mt-0" id="price">';
-        let afterDescription = '</h5></div></div></div></div>';
+      themes = [...new Set(themes)];
 
-        let themeTitle='<section class=" cta small-perimeter"><h1 class="site-heading text-center text-white d-lg-block small-perimeter">  <span class="site-heading-upper text mb-3">';
-        let afterTheme= '</span></h1></section>';
-        let openRow = '<div class="row ml-3">';
-        let closeRow = '</div><div class="small-padding"></div>';
+      //Sorting books by theme
+      data = data.sort(function(a,b){
+        let sortA = a.theme + a.title;
+        let sortB = b.theme + b.title;
 
-        console.log(data);
-        data.forEach(function(b){
+        if (sortA < sortB) {
+          return -1;
+        }
+        if (sortA > sortB) {
+          return 1;
+        }
 
-          let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook"><b><font size="+2">';
+        return 0;
+      });
 
-          if(b.theme != currentTheme)
-          {
-            if(!(currentTheme == ' ')){
-              toAppend = toAppend + closeRow;
-              $("#bookstheme").append(toAppend);
-            }
-            currentTheme = b.theme;
-            ind = 0;
-            toAppend = themeTitle+ b.theme + afterTheme + openRow + beforePhoto + b.photo + beforeTitle + b.title + beforeDescription + setAuthors(b.authors) + priz + b.price.value + ' '+ b.price.currency + afterDescription ;
-          }
-          else{
-            ind = ind +1;
-            toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title + beforeDescription + setAuthors(b.authors) + priz + b.price.value + ' '+ b.price.currency + afterDescription;
-            if( ind%2 == 0)
-            {
-                toAppend = toAppend + openRow;
-            }
-          }
-       });
-      },
-      error:function(jqXHR, textStatus, errorThrown){
-           console.log("Error:" + jqXHR + textStatus + errorThrown);
-      }
-    });
+      numberofThemes(themes);
+      contentTable(data,themes);
+    },
+    error:function(jqXHR, textStatus, errorThrown){
+       console.log("Error:" + jqXHR + textStatus + errorThrown);
+    }
+  });
+});
+
+let numberofThemes = function(data){
+  for(let i=0; i< data.length; i++){
+    let book;
+    let toAppend;
+
+    if(i == 0)
+      book = '<a class="nav-link active tab-link text-uppercase" id="booknumb0" data-toggle="pill" href="#bonumb0" role="tab" aria-controls="bonumb0" aria-selected="true">';
+    else
+      book = '<a class="nav-link tab-link text-uppercase" id="booknumb"+i data-toggle="pill" href="#bonumb'+i+'" role="tab" aria-controls="bonumb'+i+'" aria-selected="true">';
+
+    let endBook = '</a>';
+
+    if (i==0)
+     toAppend = book + data[i] + endBook;
+    else
+     toAppend = book + data[i] + endBook;
+    $("#v-pills-tab").append(toAppend);
+
+   }
+}
+
+let contentTable = function(data,themes){
+
+    for(let i=0; i<themes.length; i++){
+      let tabelEvent = '<div class="tab-pane fade" id="bonumb'+i+'" role="tabpanel" aria-labelledby="booknumb'+i+'">';
+      let activeEvent= '<div class="tab-pane fade show active" id="bonumb0" role="tabpanel" aria-labelledby="booknumb0">';
+      let closure='</div>';
+      let themeTitle = '<h4>' + themes[i] + '</h4>';
+
+      if (i==0)
+       toAppend = activeEvent+ themeTitle.toUpperCase() + myBooksListToAppend(themes[i],data) + closure;
+      else
+       toAppend = tabelEvent + themeTitle.toUpperCase() + myBooksListToAppend(themes[i],data) + closure;
+
+      $("#v-pills-tabContent").append(toAppend);
+    }
+}
+
+let myBooksListToAppend = function(theme, books){
+  let init = "<ul>";
+  let eInit = '<li><a href="#" onclick="handleBookClick(' + "'";
+  let eMid = "')" + '">';
+  let eEnd = "</a></li>";
+  let end = "</ul>";
+
+  let toAppend = init;
+
+  books.forEach( b => {
+    if(b.theme == theme)
+      toAppend = toAppend + eInit + b.isbn + eMid + b.title + '<br/>' + authorsToString(b.authors) + eEnd;
   });
 
-  let sortByTheme= function(a, b){
-    return a.theme.toLowerCase() > b.theme.toLowerCase() ? 1 : -1;
-  }
+  toAppend = toAppend + end;
 
-  let handleBookClick = function(isbn){
-    localStorage.isbn = isbn;
-    window.location.href = './bookSample.html';
-  }
+  return toAppend;
+}
 
+let authorTitleToAppend = function(author){
+  return '<i><a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a></i>";
+}
 
-  let setAuthors = function(authors)
-  {
-        let com = " ";
-        if(authors.length == 1){
-          com = authors[0].name + " " + authors[0].surname;
-        }
-        else{
-          let i;
-          for(i = 0; i < authors.length ; i++){
-            if(i == (authors.length - 1)){
-              com = com + authors[i].name + " " + authors[i].surname;
-            }else com = com + authors[i].name + " " + authors[i].surname + ", ";
+let handleBookClick = function(isbn){
+  localStorage.isbn = isbn;
+  window.location.href = './bookSample.html';
+}
 
-          }
-        }
-        return com;
-  }
+let handleAuthorClick = function(id){
+  localStorage.authorId = id;
+  window.location.href = './authorSample.html';
+}
+
+let authorsToString = function(authors){
+     let string = "";
+     if(authors.length == 1){
+       string = authorTitleToAppend(authors[0]);
+     }
+     else{
+       for(let i = 0; i < authors.length ; i++){
+         if(i == (authors.length - 1)){
+           string = string + authorTitleToAppend(authors[i]);
+         }
+         else{
+           string = string + authorTitleToAppend(authors[i]) + ", ";
+         }
+       }
+     }
+     return string;
+}

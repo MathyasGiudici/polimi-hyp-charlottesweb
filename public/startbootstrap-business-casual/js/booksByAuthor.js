@@ -2,67 +2,117 @@
 let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
 $(document).ready(function(){
-  console.log("Books Loading");
-
   $.ajax({
-    url: baseUrl + "books",
+    url: baseUrl + "authors",
     dataType: "json",
     success:function(data){
-      //sort alphabetically
-        data = data.sort(sortByAuthor);
+      //Sorting authors
+      data = data.sort(function(a,b){
+        let sortA = (a.surname + a.name).toUpperCase();
+        let sortB = (b.surname + b.name).toUpperCase();
 
-        let currentAuthor=' ';
-        let toAppend = '';
-        let ind = 0;
-
-
-        let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
-        //let beforeDescription = '<p class="description" id="Description">';
-        let afterDescription = '</h5></div></div></div></div>';
-        let row = '<div class="row ml-3">';
-        let closeRow = '</div><div class="small-padding"></div>';
-        let afterAuthor= '</span></h1></section>';
-
-
-        $.each(data, function(index, b){
-        let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
-        let authorTitle='<section class=" cta small-perimeter"><h1 class="site-heading text-center text-white d-lg-block small-perimeter">  <span class="site-heading-upper text mb-3">';
-        if(b.authors[0] != currentAuthor)
-        {
-          if(!(currentAuthor=='')){
-            toAppend = toAppend + closeRow;
-            $("#booksauthor").append(toAppend);
-          }
-          currentAuthor=b.authors[0]; //TO DO:da decidere come indicizzare per più autori
-          ind = 0;
-
-          //TO DO: da rivedereper il secondo autore
-          toAppend =authorTitle+ b.authors[0].name + ' ' + b.authors[0].surname + afterAuthor + row + beforePhoto + b.photo + beforeTitle + b.title + afterDescription ;
-
-        } else {
-          ind = ind +1;
-          toAppend = beforePhoto + b.photo + beforeTitle + b.title+ afterDescription;
-          if( ind%2 == 0)
-          {
-              toAppend = toAppend + openRow;
-          }
+        if (sortA < sortB) {
+          return -1;
+        }
+        if (sortA > sortB) {
+          return 1;
         }
 
+        return 0;
       });
 
+      //Setting up authors column
+      numberofAuthors(data);
+
+      //Creating object of parameters
+      let obj = {};
+      obj.authors = data;
+
+      //Retriving books
+      $.ajax({
+        url: baseUrl + "books",
+        dataType: "json",
+        success:function(data){
+          obj.books = data;
+          //Setting up content table
+          contentTable(obj);
+        }});
       },
       error:function(jqXHR, textStatus, errorThrown){
            console.log("Error:" + jqXHR + textStatus + errorThrown);
       }
+  });
+});
+
+
+let numberofAuthors = function(data){
+  for(let i=0; i< data.length; i++){
+    let author;
+    let toAppend;
+
+    if(i == 0)
+      author = '<a class="nav-link active tab-link text-uppercase" id="authornumb0" data-toggle="pill" href="#aunumb0" role="tab" aria-controls="aunumb0" aria-selected="true">';
+    else
+      author = '<a class="nav-link tab-link text-uppercase" id="authornumb"+i data-toggle="pill" href="#aunumb'+i+'" role="tab" aria-controls="aunumb'+i+'" aria-selected="true">';
+
+    let endEvent = '</a>';
+
+    if (i==0)
+     toAppend = author + data[i].surname + endEvent;
+    else
+     toAppend = author + data[i].surname + endEvent;
+    $("#v-pills-tab").append(toAppend);
+
+   }
+}
+
+let contentTable = function(obj){
+
+    for(let i=0; i< obj.authors.length; i++){
+      let tabelEvent = '<div class="tab-pane fade" id="aunumb'+i+'" role="tabpanel" aria-labelledby="authornumb'+i+'">';
+      let activeEvent= '<div class="tab-pane fade show active" id="aunumb0" role="tabpanel" aria-labelledby="authornumb0">';
+      let closure='</div>';
+
+      if (i==0)
+       toAppend = activeEvent+ authorTitleToAppend(obj.authors[i]) + myBooksListToAppend(obj.authors[i],obj.books) + closure;
+      else
+       toAppend = tabelEvent + authorTitleToAppend(obj.authors[i]) + myBooksListToAppend(obj.authors[i],obj.books) + closure;
+
+      $("#v-pills-tabContent").append(toAppend);
+    }
+}
+
+let authorTitleToAppend = function(author){
+  return '<h4><a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>'s Books </h4>'";
+}
+
+let myBooksListToAppend = function(author, books){
+  let init = "<ul>";
+  let eInit = '<li><a href="#" onclick="handleBookClick(' + "'";
+  let eMid = "')" + '">';
+  let eEnd = "</a></li>";
+  let end = "</ul>";
+
+  let toAppend = init;
+
+  books.forEach( b => {
+    b.authors.forEach( a => {
+      if(author.id == a.id)
+        toAppend = toAppend + eInit + b.isbn + eMid + b.title + eEnd;
     });
   });
 
-//TO DO:da rivedere come ordinare per il secondo autore
-  let sortByAuthor= function(a, b){
-    return a.authors[0].surname.toLowerCase() > b.authors[0].surname.toLowerCase() ? 1 : -1;
-  }
+  toAppend = toAppend + end;
 
-  let handleBookClick = function(isbn){
-    localStorage.isbn = isbn;
-    window.location.href = './bookSample.html';
-  }
+  return toAppend;
+}
+
+let handleAuthorClick = function(id){
+  localStorage.authorId = id;
+  window.location.href = './authorSample.html';
+}
+
+let handleBookClick = function(isbn){
+  localStorage.isbn = isbn;
+  window.location.href = './bookSample.html';
+}

@@ -39,11 +39,6 @@ let numberofEvents = function(data){
    }
 }
 
-let handleEventClick = function(id){
-  localStorage.eventId = id;
-  window.location.href = './eventSample.html';
-}
-
 let contentTable = function(data){
 
     for(let i=0; i< data.length; i++){
@@ -95,6 +90,11 @@ let resetDateTime = function(time){
 }
 
 let handleClick = function(id){
+  localStorage.eventId = id;
+  window.location.href = './eventSample.html';
+}
+
+let handleEventClick = function(id){
   localStorage.eventId = id;
   window.location.href = './eventSample.html';
 }
