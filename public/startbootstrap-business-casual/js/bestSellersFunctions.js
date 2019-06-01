@@ -3,10 +3,13 @@ let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
 $(document).ready(function(){
   $.ajax({
-    url: baseUrl + 'books/ourFavorite',
+    url: baseUrl + 'books/bestSelling',
     dataType: "json",
     success:function(data){
-      //Retriving our favorites
+      //Retriving our best sellers
+      let step = 1;
+      let count=0;
+      let toAppend = "";
       data.forEach( b => {
         //Setting up strings of code
         let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3" id="threeBookInRow">'
@@ -16,15 +19,41 @@ $(document).ready(function(){
         let beforePrice = '</h6><i>Price: ';
         let afterPrice = '</i></div></div></div></div>';
 
-        let toAppend = beforePhoto + b.photo + beforeTitle + b.title+ beforeAuthors + authorsToString(b.authors) +
+        toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title+ beforeAuthors + authorsToString(b.authors) +
                        beforePrice + b.price.value + " " + b.price.currency + afterPrice;
-        $("#ourFavorite").append(toAppend);
+        if(step == 1){
+          toAppend = '<div class="row ml-3" style="padding-bottom: 20px;">' + toAppend;
+          step = 2;
+          if((data.length-1) == count){
+            toAppend = toAppend + "</div>";
+            $("#ourBestsellers").append(toAppend);
+            toAppend = "";
+            step = 1;
+          }
+        }
+        else{
+          if((data.length-1) == count){
+            step = 3;
+          }
+
+          if(step == 2){
+              step = 3;
+          }
+          else{
+              toAppend = toAppend + "</div>";
+              $("#ourBestsellers").append(toAppend);
+              toAppend = "";
+              step = 1;
+          }
+        }
+        count++;
       });
     },
     error:function(jqXHR, textStatus, errorThrown){
          console.log("Error:" + jqXHR + textStatus + errorThrown);
     }
   });
+
 });
 
 let handleBookClick = function(isbn){
