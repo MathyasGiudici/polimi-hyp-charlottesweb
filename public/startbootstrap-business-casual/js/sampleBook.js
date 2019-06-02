@@ -56,7 +56,6 @@ $(document).ready(function(){
     url: baseUrl + "events/findBy?attribute=book&key=" + localStorage.isbn,
     dataType: "json",
     success:function(events){
-      console.log(events);
       if(events.length != 0){
         let toAppend = '<ul>';
 
@@ -82,7 +81,7 @@ $(document).ready(function(){
     url: baseUrl + "books/" + localStorage.isbn +"/similar",
     dataType: "json",
     success:function(data){
-      //Retriving our best sellers
+      //Retriving similars
       let step = 1;
       let count=0;
       let toAppend = "";
