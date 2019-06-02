@@ -249,29 +249,65 @@ exports.getBooksByIsbn = function(isbn) {
  * returns List
  **/
 exports.getBooksFindBy = function(attribute,key) {
-  return sqlDb("books").where(attribute,key).select().then( data => {
-    return data.map( obj => {
-      //Mapping books
-      return bookMapping(obj);
-    });
-  }).then( books => {
-    //Retreving similars
-    return sqlDb("similars").select().then( similars => {
-      let container = {};
-      container.books = books;
-      container.similars = similars;
-      return container;
-    });
-  }).then( container => {
-    //Retreving authors
-    return sqlDb("authors").select().then( authors => {
-      container.authors = authors;
-      return container;
-    });
-  }).then( container => {
-    //Recreating correct object books
-    return bookUpdating(container);
-  });
+ if(attribute != 'author') {
+   return sqlDb("books").where(attribute,key).select().then( data => {
+     return data.map( obj => {
+       //Mapping books
+       return bookMapping(obj);
+     });
+   }).then( books => {
+     //Retreving similars
+     return sqlDb("similars").select().then( similars => {
+       let container = {};
+       container.books = books;
+       container.similars = similars;
+       return container;
+     });
+   }).then( container => {
+     //Retreving authors
+     return sqlDb("authors").select().then( authors => {
+       container.authors = authors;
+       return container;
+     });
+   }).then( container => {
+     //Recreating correct object books
+     return bookUpdating(container);
+   });
+ } else{
+   return sqlDb("books").where("author1",key).select().then( data1 => {
+     return sqlDb("books").where("author2",key).select().then( data2 => {
+       return sqlDb("books").where("author3",key).select().then( data3 => {
+         return sqlDb("books").where("author4",key).select().then( data4 => {
+           let final = data1.concat(data2).concat(data3).concat(data4);
+           return final;
+         });
+       });
+     });
+   }).then( data => {
+     return data.map( obj => {
+       //Mapping books
+       return bookMapping(obj);
+     });
+   })
+     .then( books => {
+     //Retreving similars
+     return sqlDb("similars").select().then( similars => {
+       let container = {};
+       container.books = books;
+       container.similars = similars;
+       return container;
+     });
+   }).then( container => {
+     //Retreving authors
+     return sqlDb("authors").select().then( authors => {
+       container.authors = authors;
+       return container;
+     });
+   }).then( container => {
+     //Recreating correct object books
+     return bookUpdating(container);
+   });
+ }
 }
 
 

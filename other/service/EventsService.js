@@ -134,20 +134,47 @@ exports.getEventsById = function(id) {
  * key String Key of the attribute for the search
  * returns List
  **/
-exports.getEventsFindBy = function(attribute,key) {
-  return sqlDb("events").where(attribute, key).select().then( data => {
-    return data.map( obj => {
-      return eventMapping(obj);
-    });
-  }).then( events => {
-    //Retreving authors
-    return sqlDb("authors").select().then( authors => {
-      let container = {};
-      container.events = events;
-      container.authors = authors;
-      return container;
-    });
-  }).then( container => {
-    return eventUpdating(container);
-  });
-}
+ exports.getEventsFindBy = function(attribute,key) {
+   if(attribute != 'author') {
+     return sqlDb("events").where(attribute, key).select().then( data => {
+       return data.map( obj => {
+         return eventMapping(obj);
+       });
+     }).then( events => {
+       //Retreving authors
+       return sqlDb("authors").select().then( authors => {
+         let container = {};
+         container.events = events;
+         container.authors = authors;
+         return container;
+       });
+     }).then( container => {
+       return eventUpdating(container);
+     });
+   } else{
+     return sqlDb("events").where("author1",key).select().then( data1 => {
+       return sqlDb("events").where("author2",key).select().then( data2 => {
+         return sqlDb("events").where("author3",key).select().then( data3 => {
+           return sqlDb("events").where("author4",key).select().then( data4 => {
+             let final = data1.concat(data2).concat(data3).concat(data4);
+             return final;
+           });
+         });
+       });
+     }).then( data => {
+       return data.map( obj => {
+         return eventMapping(obj);
+       });
+     }).then( events => {
+       //Retreving authors
+       return sqlDb("authors").select().then( authors => {
+         let container = {};
+         container.events = events;
+         container.authors = authors;
+         return container;
+       });
+     }).then( container => {
+       return eventUpdating(container);
+     });
+   }
+ }

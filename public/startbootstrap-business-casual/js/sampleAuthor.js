@@ -11,7 +11,7 @@ $(document).ready(function(){
     success:function(b){
       console.log(b);
       let beforePicture='<img class="img-responsive rounded book-image" style="width:110%;height:110%;" src="';
-      let afterPicture='" alt="">';
+      let afterPicture='" alt="image of the author'+ b.id +'">';
 
       let toAppend= beforePicture +  b.photo + afterPicture;
       $("#AuthorName").text(b.name);
@@ -26,12 +26,9 @@ $(document).ready(function(){
   });
 
   $.ajax({
-    //TODO: check FindBy
-    url: baseUrl + "books/findBy?attribute=id&key=" + localStorage.authorId,
+    url: baseUrl + "books/findBy?attribute=author&key=" + localStorage.authorId,
     dataType: "json",
     success:function(data){
-      console.log("author's books");
-      console.log(localStorage.authorId);
       console.log(data);
       for(let i=0; i<data.length; i++){
         console.log(data[i]);
@@ -50,11 +47,11 @@ $(document).ready(function(){
 
   $.ajax({
     //TODO: check FindBy
-    url: baseUrl + "events/findBy?attribute=id&key=" + localStorage.authorId,
+    url: baseUrl + "events/findBy?attribute=authors&key=" + localStorage.authorId,
     dataType: "json",
     success:function(data){
       for(let i=0; i<data.length; i++){
-        
+
 
       }
     },

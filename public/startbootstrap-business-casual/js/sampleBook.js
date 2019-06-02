@@ -12,7 +12,7 @@ $(document).ready(function(){
       $("#BookImage").attr("src",b.photo);
       $("#BookImage").attr("alt","photo of the book:" + b.isbn);
       $("#BookTitle").text(b.title);
-      $("#BookAuthor").text(authorsToString(b.authors));
+      $("#BookAuthor").append(authorsToString(b.authors));
       $("#BookReserve").on({
         'click': function(){
           reserveFunction(b.isbn);
@@ -135,19 +135,23 @@ $(document).ready(function(){
 let authorsToString = function(authors){
      let string = "";
      if(authors.length == 1){
-       string = authors[0].name + " " + authors[0].surname;
+       string = authorTitleToAppend(authors[0]);
      }
      else{
        for(let i = 0; i < authors.length ; i++){
          if(i == (authors.length - 1)){
-           string = string + authors[i].name + " " + authors[i].surname;
+           string = string + authorTitleToAppend(authors[i]);
          }
          else{
-           string = string + authors[i].name + " " + authors[i].surname + ", ";
+           string = string + authorTitleToAppend(authors[i]) + ", ";
          }
        }
      }
      return string;
+}
+
+let authorTitleToAppend = function(author){
+  return '<i><a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a></i>";
 }
 
 let reserveFunction = function(isbn){
@@ -163,4 +167,14 @@ let reserveFunction = function(isbn){
 let handleEventClick = function(id){
   localStorage.eventId = id;
   window.location.href = './eventSample.html';
+}
+
+let handleBookClick = function(isbn){
+  localStorage.isbn = isbn;
+  window.location.href = './bookSample.html';
+}
+
+let handleAuthorClick = function(id){
+  localStorage.authorId = id;
+  window.location.href = './authorSample.html';
 }
