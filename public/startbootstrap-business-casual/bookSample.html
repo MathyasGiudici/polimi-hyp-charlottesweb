@@ -121,7 +121,7 @@
                 <!-- Cart -->
                 <li class="nav-item px-lg-4">
                     <a href="cart.html" class="nav-link text-uppercase text-expanded">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-shopping-cart" id="cartIcon"></i>
                     </a>
                 </li>
 
@@ -135,22 +135,22 @@
 
 
     <!--Container Book -->
-    <section class="page-section clearfix" id="booksection">
+    <section class="page-section clearfix">
         <div class="row justify-content-start">
-            <!--div class="col-lg-4 col-md-4 col-xs-12">
-                <img class="img-responsive rounded book-image" id="BookImage" src="img/goodNight.jpg" alt="">
-            </div-->
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <img class="img-responsive rounded book-image" id="BookImage" src="" alt="">
+            </div>
 
             <div class="col-md-12 col-lg-7 col-xs-12">
                 <div class="bg-faded rounded book-item">
                     <h2 class="section-heading">
-                        <span class="section-heading-upper" id="BookAuthor"></span>
+                        <span class="section-heading-upper" id="BookAuthor" ></span>
                         <span class="section-heading-lower" id="BookTitle"></span>
                     </h2>
                     <br>
-                    <!--a class="btn btn-primary btn-xl" href="#">
-                         Reserve Book
-                    </a-->
+                    <a class="btn btn-primary btn-xl" id="BookReserve" href="#">
+                         Reserve this book
+                    </a>
 
                 </div>
             </div>
@@ -159,30 +159,31 @@
 
     <!-- Tab -->
     <a class = "padding small-padding"></a>
+
     <div class="container cta small-perimeter">
         <div class="row cta-inner-border ">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active tab-link text-uppercase" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Details</a>
-                <a class="nav-link tab-link text-uppercase" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Description</a>
+                <a class="nav-link tab-link text-uppercase" id="v-pills-description-tab" data-toggle="pill" href="#v-pills-description" role="tab" aria-controls="v-pills-description" aria-selected="false">Description</a>
                 <!--a class="nav-link tab-link text-uppercase" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Interview</a-->
-                <a class="nav-link tab-link text-uppercase" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Reviews</a>
+                <a class="nav-link tab-link text-uppercase" id="v-pills-reviews-tab" data-toggle="pill" href="#v-pills-reviews" role="tab" aria-controls="v-pills-reviews" aria-selected="false">Reviews</a>
             </div>
             <div class="col-1"></div>
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <!-- list group for every field -->
                     <ul class="list-group-flush">
-                        <li class="list-group-item">ISBN: <span id="isbntest"></span></li>
-                        <li class="list-group-item">Pubblication Date: <span id="pubbdate"></li>
-                        <li class="list-group-item">Genre: <span id="genr"></li>
-                        <li class="list-group-item">Theme: <span id="theme"></li>
-                        <li class="list-group-item">Type of book: <span id="typ"></li>
-                        <li class="list-group-item">Number of pages: <span id="numpg"></li>
+                        <li class="list-group-item"><b>ISBN:</b> <span id="AttIsbn"></span></li>
+                        <li class="list-group-item"><b>Pubblication Date:</b> <span id="AttPubbdate"></li>
+                        <li class="list-group-item"><b>Genre:</b> <span id="AttGenre"></li>
+                        <li class="list-group-item"><b>Theme:</b> <span id="AttTheme"></li>
+                        <li class="list-group-item"><b>Type of book:</b> <span id="AttType"></li>
+                        <li class="list-group-item"><b>Number of pages:</b> <span id="AttNumOfP"></li>
                     </ul>
                 </div>
-                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"><span id="bookdescript"></span></div>
                 <!--div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Some Text</div-->
-                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                <div class="tab-pane fade" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab" style="max-width: 760px;"><span id="AttDescr"></span></div>
+                <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" style="max-width: 760px;">
 
                     <!-- List of reviews -->
                     <ul class="list-group-flush"  id="reviews">
@@ -199,23 +200,20 @@
 
 <!-- Container BestSellers -->
 <section class="page-section clearfix">
-    <div class="row" >
-        <div class="col-xl-5 col-lg-7">
-            <div class="bg-faded rounded">
-                <h2 class="section-heading">
-                    <span class="section-heading-lower">Related books</span>
-                </h2>
 
-            </div>
-        </div>
-    </div>
+  <section class=" cta small-perimeter" id="homeOurFav">
+    <h1 class="site-heading text-center text-white d-lg-block small-perimeter">
+      <span class="section-heading-lower">Related books</span>
+    </h1>
+  </section>
 
     <a class = "padding small-padding"></a>
 
     <!-- Grid of columns -->
-    <div class="row ml-3" id="similars">
+    <div id="similars">
 
-        <!-- TODO: description length is important -->
+      <!-- <div class="row ml-3" id="similars">
+        TODO: description length is important -->
 
         <!--div class="col-md-4 col-xs-12 bestseller-item">
             <div class="align-self-center mr-3">
@@ -253,7 +251,9 @@
                     </div>
                 </div>
             </div>
-        </div-->
+        </div>
+
+      </div-->
 
     </div>
 </section>

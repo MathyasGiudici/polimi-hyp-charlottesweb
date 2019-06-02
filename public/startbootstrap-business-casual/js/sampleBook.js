@@ -1,76 +1,119 @@
 //let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
+let currentIsbn;
 
 $(document).ready(function(){
+  //Deleting isbn from the localStorage
+  currentIsbn = localStorage.isbn;
+  // delete localStorage.isbn;
+
+  //Retriving book's info
   $.ajax({
-    url: baseUrl + "books/" + localStorage.isbn,
+    url: baseUrl + "books/" + currentIsbn,
     dataType: "json",
     success:function(b){
-      let beforePicture='<div class="col-lg-4 col-md-4 col-xs-12"><img class="img-responsive rounded book-image" id="BookImage" src="';
-      let afterPicture='" alt=""></div>';
 
-      let toAppend= beforePicture +  b.photo + afterPicture;
-
-      setAuthors(b.authors);
-      $("#booksection").append(toAppend);
+      //Setting up attributes (header)
+      $("#BookImage").attr("src",b.photo);
+      $("#BookImage").attr("alt","photo of the book:" + b.isbn);
       $("#BookTitle").text(b.title);
-      $("#BookAuthor").text(setAuthors(b.authors));
-      $("#isbntest").text(b.isbn);
-      $("#pubbdate").text(b.pubbDate);
-      $("#genr").text(b.genre);
-      $("#theme").text(b.theme);
-      $("#typ").text(b.type);
-      $("#numpg").text(b.numOfPages);
-      $("#bookdescript").text(b.description);
-    },
-
-    error:function(jqXHR, textStatus, errorThrown){
-         console.log("Error:" + jqXHR + textStatus + errorThrown);
-    }
-
-  });
-
-  $.ajax({
-    url: baseUrl + "books/" + localStorage.isbn +"/similar",
-    dataType: "json",
-    success:function(data){
-      data.forEach( b => {
-        let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3"><img class="align-self-start" src="';
-        let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')"style="width: 70%" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
-        let beforeDescription = '</h5><p class="description" id="Description">';
-        let afterDescription = '</p></div></div></div></div>';
-
-        let toAppend = beforePhoto + b.photo + beforeTitle + b.title + beforeDescription + setAuthors(b.authors);
-        $("#similars").append(toAppend);
+      $("#BookAuthor").text(authorsToString(b.authors));
+      $("#BookReserve").on({
+        'click': function(){
+          reserveFunction(b.isbn);
+        }
       });
+
+      //Setting up attributes (description)
+      $("#AttIsbn").text(b.isbn);
+      $("#AttPubbdate").text(b.pubbDate.replace().slice(0,10));
+      $("#AttGenre").text(b.genre.toUpperCase());
+      $("#AttTheme").text(b.theme.toUpperCase());
+      $("#AttType").text(b.type.toUpperCase());
+      $("#AttNumOfP").text(b.numOfPages);
+      $("#AttDescr").text(b.description);
     },
 
     error:function(jqXHR, textStatus, errorThrown){
          console.log("Error:" + jqXHR + textStatus + errorThrown);
     }
-
   });
+
+  //Retriving book's reviews
   $.ajax({
-    url: baseUrl + "reviews/findBy?attribute=isbn&key=" + localStorage.isbn,
+    url: baseUrl + "reviews/findBy?attribute=isbn&key=" + currentIsbn,
     dataType: "json",
     success:function(reviews){
       for(let i=0; i< reviews.length; i++){
-        let  tab = '<li class="list-group-item" id="rev'+i+'">Review ';
+        let  tab = '<li class="list-group-item" id="rev'+i+'"> "<i>';
         let  fin='</li>';
-        let  toAppend= tab + (i+1)+ " : " + reviews[i].title + " by "+ reviews[i].userId + fin + reviews[i].description;
+        let  toAppend= tab + reviews[i].title + '"</i> by '+ reviews[i].userId + fin + reviews[i].description;
         $("#reviews").append(toAppend);
         }
     },
     error:function(jqXHR, textStatus, errorThrown){
          console.log("Error:" + jqXHR + textStatus + errorThrown);
     }
+  });
 
+  //Retriving similars
+  // $("#similars").append(toAppend);
+  $.ajax({
+    url: baseUrl + "books/" + currentIsbn +"/similar",
+    dataType: "json",
+    success:function(data){
+      //Retriving our best sellers
+      let step = 1;
+      let count=0;
+      let toAppend = "";
+      data.forEach( b => {
+        //Setting up strings of code
+        let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3" id="threeBookInRow">'
+        + '<img id="threeBookInRowImg" class="align-self-start" alt="image of book: ' + b.isbn  + '" src="';
+        let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
+        let beforeAuthors = '</h5><h6>';
+        let beforePrice = '</h6><i>Price: ';
+        let afterPrice = '</i></div></div></div></div>';
+
+        toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title+ beforeAuthors + authorsToString(b.authors) +
+                       beforePrice + b.price.value + " " + b.price.currency + afterPrice;
+        if(step == 1){
+          toAppend = '<div class="row ml-3" style="padding-bottom: 20px;">' + toAppend;
+          step = 2;
+          if((data.length-1) == count){
+            toAppend = toAppend + "</div>";
+            $("#similars").append(toAppend);
+            toAppend = "";
+            step = 1;
+          }
+        }
+        else{
+          if((data.length-1) == count){
+            step = 3;
+          }
+
+          if(step == 2){
+              step = 3;
+          }
+          else{
+              toAppend = toAppend + "</div>";
+              $("#similars").append(toAppend);
+              toAppend = "";
+              step = 1;
+          }
+        }
+        count++;
+      });
+    },
+    error:function(jqXHR, textStatus, errorThrown){
+         console.log("Error:" + jqXHR + textStatus + errorThrown);
+    }
   });
 
 });
 
-let setAuthors = function(authors){
+let authorsToString = function(authors){
      let string = "";
      if(authors.length == 1){
        string = authors[0].name + " " + authors[0].surname;
@@ -86,4 +129,14 @@ let setAuthors = function(authors){
        }
      }
      return string;
+}
+
+let reserveFunction = function(isbn){
+  // Animation
+  $("#cartIcon").attr("class","fa fa-spinner " + "fa-pulse");
+  setTimeout(function(){
+    $("#cartIcon").attr("class","fas fa-shopping-cart");
+  }, 1000);
+
+  // TODO: adding to the cart
 }

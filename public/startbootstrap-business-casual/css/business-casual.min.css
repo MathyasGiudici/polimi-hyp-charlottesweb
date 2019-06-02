@@ -384,11 +384,11 @@ p {
   }
 }
 
-#BookTitle.section-heading-upper {
+#BookAuthor.section-heading-upper {
   color: lightslategray;
 }
 
-#BookAuthor.section-heading-lower {
+#BookTitle.section-heading-lower {
   color: #fff;
   font-size: 2rem;
 }
