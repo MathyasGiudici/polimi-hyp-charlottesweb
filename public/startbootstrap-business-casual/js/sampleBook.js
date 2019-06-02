@@ -1,16 +1,10 @@
 //let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
-let currentIsbn;
-
 $(document).ready(function(){
-  //Deleting isbn from the localStorage
-  currentIsbn = localStorage.isbn;
-  // delete localStorage.isbn;
-
   //Retriving book's info
   $.ajax({
-    url: baseUrl + "books/" + currentIsbn,
+    url: baseUrl + "books/" + localStorage.isbn,
     dataType: "json",
     success:function(b){
 
@@ -42,7 +36,7 @@ $(document).ready(function(){
 
   //Retriving book's reviews
   $.ajax({
-    url: baseUrl + "reviews/findBy?attribute=isbn&key=" + currentIsbn,
+    url: baseUrl + "reviews/findBy?attribute=isbn&key=" + localStorage.isbn,
     dataType: "json",
     success:function(reviews){
       for(let i=0; i< reviews.length; i++){
@@ -57,10 +51,35 @@ $(document).ready(function(){
     }
   });
 
+  //Retriving book's reviews
+  $.ajax({
+    url: baseUrl + "events/findBy?attribute=book&key=" + localStorage.isbn,
+    dataType: "json",
+    success:function(events){
+      console.log(events);
+      if(events.length != 0){
+        let toAppend = '<ul>';
+
+        events.forEach( e => {
+            toAppend = toAppend + '<li><a href="#" onclick="handleEventClick(\'' +
+            e.id + '\')">' + e.title + '</a></li>';
+        });
+
+        toAppend = toAppend + '</ul>';
+        $("#v-pills-events").append(toAppend);
+      } else{
+        $("#v-pills-events").append("Sorry there are no events for this book");
+      }
+    },
+    error:function(jqXHR, textStatus, errorThrown){
+         console.log("Error:" + jqXHR + textStatus + errorThrown);
+    }
+  });
+
   //Retriving similars
   // $("#similars").append(toAppend);
   $.ajax({
-    url: baseUrl + "books/" + currentIsbn +"/similar",
+    url: baseUrl + "books/" + localStorage.isbn +"/similar",
     dataType: "json",
     success:function(data){
       //Retriving our best sellers
@@ -139,4 +158,9 @@ let reserveFunction = function(isbn){
   }, 1000);
 
   // TODO: adding to the cart
+}
+
+let handleEventClick = function(id){
+  localStorage.eventId = id;
+  window.location.href = './eventSample.html';
 }
