@@ -83,7 +83,7 @@ $(document).ready(function(){
         let toAppend = '<ul>';
 
         events.forEach( e => {
-            toAppend = toAppend + '<li><a href="#" onclick="handleEventClick(\'' +
+            toAppend = toAppend + '<li><a href="#" class="standard-link" onclick="handleEventClick(\'' +
             e.id + '\')">' + e.title + '</a></li>';
         });
 

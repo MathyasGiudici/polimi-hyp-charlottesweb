@@ -33,7 +33,7 @@ $(document).ready(function(){
 
 let myBooksListToAppend = function(books){
   let init = "<ul>";
-  let eInit = '<li><a href="#" onclick="handleBookClick(' + "'";
+  let eInit = '<li><a href="#" class="standard-link" onclick="handleBookClick(' + "'";
   let eMid = "')" + '">';
   let eEnd = "</a></li>";
   let end = "</ul>";

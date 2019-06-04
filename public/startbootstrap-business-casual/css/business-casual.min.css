@@ -384,7 +384,7 @@ p {
   }
 }
 
-#BookAuthor.section-heading-upper {
+#BookAuthor.section-heading-upper > a {
   color: lightslategray;
 }
 
@@ -470,6 +470,14 @@ p {
     margin-bottom: 10px;
   }
 }
+.standard-link {
+  color: rgba(0, 25, 51, 0.7);
+}
+
+.standard-link:hover {
+  color: lightslategray;
+}
+
 .mathy-padding {
   padding: 10px;
 }

@@ -8,9 +8,6 @@ $(document).ready(function(){
     url: baseUrl + "events/" + localStorage.eventId,
     dataType: "json",
     success:function(b){
-      //Deleting passing value
-      delete localStorage.eventId;
-
       //Setting strings
       let afterPicture='" alt="">';
       let beforePicture='<img class="img-responsive rounded book-image" id="EventImage" alt="image of event: '+ b.id +'" src="';
@@ -20,7 +17,7 @@ $(document).ready(function(){
         url: baseUrl + "books/" + b.book,
         dataType: "json",
         success:function(data){
-          $("#book").append('<a href="#" onclick="handleBookClick(' + "'" + data.isbn + "'" + ')">' + data.title + "</a>");
+          $("#book").append('<a href="#" class="standard-link" onclick="handleBookClick(' + "'" + data.isbn + "'" + ')">' + data.title + "</a>");
         }});
 
       //Appending event's info
@@ -45,17 +42,17 @@ let setAuthors = function(authors){
       let toRet = " ";
       if(authors.length == 1){
         //Only one author case
-        toRet = '<a href="#" onclick="handleAuthorClick(' + "'" + authors[0].id + "'" + ')">' + authors[0].name + " " + authors[0].surname + "</a>";
+        toRet = '<a href="#" class="standard-link" onclick="handleAuthorClick(' + "'" + authors[0].id + "'" + ')">' + authors[0].name + " " + authors[0].surname + "</a>";
       }
       else{
         //More than 1 author
         for(let i = 0; i < authors.length ; i++){
           if(i == (authors.length - 1)){
             //Final author of the list (no comma)
-            toRet = toRet + '<a href="#" onclick="handleAuthorClick(' + "'" + authors[i].id + "'" + ')">' + authors[i].name + " " + authors[i].surname + "</a>";
+            toRet = toRet + '<a href="#" class="standard-link" onclick="handleAuthorClick(' + "'" + authors[i].id + "'" + ')">' + authors[i].name + " " + authors[i].surname + "</a>";
           }else{
             //Auhtor in the list
-            toRet = toRet + '<a href="#" onclick="handleAuthorClick(' + "'" + authors[i].id + "'" + ')">' + authors[i].name + " " + authors[i].surname + "</a>" + ", ";
+            toRet = toRet + '<a href="#" class="standard-link" onclick="handleAuthorClick(' + "'" + authors[i].id + "'" + ')">' + authors[i].name + " " + authors[i].surname + "</a>" + ", ";
           }
         }
       }

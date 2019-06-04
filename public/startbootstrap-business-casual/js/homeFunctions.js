@@ -2,6 +2,10 @@
 let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
 $(document).ready(function(){
+
+  $("#ourFavorite").after('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_ourFav"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
+  $("#ourBestsellers").after('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_bestSell"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
+
   $.ajax({
     url: baseUrl + "events",
     dataType: "json",
@@ -11,11 +15,11 @@ $(document).ready(function(){
         let firstPart;
 
         if(i == 0)
-          firstPart = '<div class="carousel-item active" style="background-image: url('+ "'";
+          firstPart = '<div class="carousel-item active" style="background-image: url(\'';
         else
-          firstPart = '<div class="carousel-item" style="background-image: url('+ "'";
+          firstPart = '<div class="carousel-item" style="background-image: url(\'';
 
-        let secondPart = "'" + ')"></div>';
+        let secondPart = "'" + ')" onclick="handleEventClick(\''+ data[i].id +'\')"></div>';
         let toAppend = firstPart + data[i].photo + secondPart;
         $(".carousel-inner").append(toAppend);
       }
@@ -30,6 +34,8 @@ $(document).ready(function(){
     url: baseUrl + 'books/ourFavorite',
     dataType: "json",
     success:function(data){
+      //Removing loading
+      $("#toBeDel_ourFav").remove();
       //Retriving our favorites
       data.forEach( b => {
         //Setting up strings of code
@@ -54,6 +60,9 @@ $(document).ready(function(){
     url: baseUrl + 'books/bestSelling',
     dataType: "json",
     success:function(data){
+      //Removing loading
+      $("#toBeDel_bestSell").remove();
+
       //Retriving our best sellers
       let step = 1;
       let count=0;
@@ -107,6 +116,11 @@ $(document).ready(function(){
 let handleBookClick = function(isbn){
   localStorage.isbn = isbn;
   window.location.href = './bookSample.html';
+}
+
+let handleEventClick = function(id){
+  localStorage.eventId = id;
+  window.location.href = './eventSample.html';
 }
 
 let authorsToString = function(authors){

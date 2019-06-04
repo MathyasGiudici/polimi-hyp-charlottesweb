@@ -83,12 +83,12 @@ let contentTable = function(obj){
 }
 
 let authorTitleToAppend = function(author){
-  return '<h4><a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>'s Books </h4>'";
+  return '<h4><a href="#" class="standard-link" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>'s Books </h4>'";
 }
 
 let myBooksListToAppend = function(author, books){
   let init = "<ul>";
-  let eInit = '<li><a href="#" onclick="handleBookClick(' + "'";
+  let eInit = '<li><a href="#" class="standard-link" onclick="handleBookClick(' + "'";
   let eMid = "')" + '">';
   let eEnd = "</a></li>";
   let end = "</ul>";

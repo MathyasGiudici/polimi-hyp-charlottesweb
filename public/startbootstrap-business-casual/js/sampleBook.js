@@ -12,7 +12,7 @@ $(document).ready(function(){
       $("#BookImage").attr("src",b.photo);
       $("#BookImage").attr("alt","photo of the book:" + b.isbn);
       $("#BookTitle").text(b.title);
-      $("#BookAuthor").append(authorsToString(b.authors));
+      $("#BookAuthor").append(authorsToString(b.authors, true));
       $("#BookReserve").on({
         'click': function(){
           reserveFunction(b.isbn);
@@ -60,7 +60,7 @@ $(document).ready(function(){
         let toAppend = '<ul>';
 
         events.forEach( e => {
-            toAppend = toAppend + '<li><a href="#" onclick="handleEventClick(\'' +
+            toAppend = toAppend + '<li><a href="#" class="standard-link" onclick="handleEventClick(\'' +
             e.id + '\')">' + e.title + '</a></li>';
         });
 
@@ -94,7 +94,7 @@ $(document).ready(function(){
         let beforePrice = '</h6><i>Price: ';
         let afterPrice = '</i></div></div></div></div>';
 
-        toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title+ beforeAuthors + authorsToString(b.authors) +
+        toAppend = toAppend + beforePhoto + b.photo + beforeTitle + b.title+ beforeAuthors + authorsToString(b.authors, false) +
                        beforePrice + b.price.value + " " + b.price.currency + afterPrice;
         if(step == 1){
           toAppend = '<div class="row ml-3" style="padding-bottom: 20px;">' + toAppend;
@@ -131,18 +131,30 @@ $(document).ready(function(){
 
 });
 
-let authorsToString = function(authors){
+let authorsToString = function(authors, isHeader){
      let string = "";
      if(authors.length == 1){
-       string = authorTitleToAppend(authors[0]);
+       if(isHeader){
+         string = authorTitleToAppend(authors[0]);
+       }else{
+         string = authors[0].name + " " + authors[0].surname;
+       }
      }
      else{
        for(let i = 0; i < authors.length ; i++){
          if(i == (authors.length - 1)){
-           string = string + authorTitleToAppend(authors[i]);
+           if(isHeader){
+             string = string + authorTitleToAppend(authors[i]);
+           }else{
+             string = string + authors[i].name + " " + authors[i].surname;
+           }
          }
          else{
-           string = string + authorTitleToAppend(authors[i]) + ", ";
+           if(isHeader){
+             string = string + authorTitleToAppend(authors[i]) + ", ";
+           }else{
+             string = string + authors[i].name + " " + authors[i].surname + ", ";
+           }
          }
        }
      }
@@ -150,7 +162,7 @@ let authorsToString = function(authors){
 }
 
 let authorTitleToAppend = function(author){
-  return '<i><a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a></i>";
+  return '<a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>";
 }
 
 let reserveFunction = function(isbn){

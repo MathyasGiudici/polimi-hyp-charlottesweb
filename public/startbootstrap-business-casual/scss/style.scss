@@ -195,7 +195,7 @@
   }
 }
 
-#BookAuthor.section-heading-upper {
+#BookAuthor.section-heading-upper > a {
   color: lightslategray;
 }
 
@@ -290,4 +290,11 @@
     height: 250px;
     margin-bottom: 10px;
   }
+}
+
+.standard-link{
+  color: fade-out($secondary, 0.3);
+}
+.standard-link:hover{
+  color: $primary;
 }

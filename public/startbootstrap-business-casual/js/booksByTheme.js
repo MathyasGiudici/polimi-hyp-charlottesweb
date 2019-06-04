@@ -79,7 +79,7 @@ let contentTable = function(data,themes){
 
 let myBooksListToAppend = function(theme, books){
   let init = "<ul>";
-  let eInit = '<li><a href="#" onclick="handleBookClick(' + "'";
+  let eInit = '<li><a href="#" class="standard-link" onclick="handleBookClick(' + "'";
   let eMid = "')" + '">';
   let eEnd = "</a></li>";
   let end = "</ul>";
@@ -97,7 +97,7 @@ let myBooksListToAppend = function(theme, books){
 }
 
 let authorTitleToAppend = function(author){
-  return '<i><a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a></i>";
+  return '<i><a href="#" class="standard-link" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a></i>";
 }
 
 let handleBookClick = function(isbn){

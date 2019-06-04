@@ -68,7 +68,7 @@ let contentTable = function(data){
       let close = '</li>';
       let endTable='</ul></div>';
       let closureActive='</div>';
-      let button = '<li class="list-group-item" style="margin-left:1rem"><a href="#" onclick="handleClick(' + "'"+ data[i].id + "'" +
+      let button = '<li class="list-group-item" style="margin-left:1rem"><a href="#"  onclick="handleClick(' + "'"+ data[i].id + "'" +
       ')" class="btn btn-primary">Read More</a></li>';
 
 
