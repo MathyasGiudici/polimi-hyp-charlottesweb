@@ -51,7 +51,7 @@ $(document).ready(function(){
     }
   });
 
-  //Retriving book's reviews
+  //Retriving book's events
   $.ajax({
     url: baseUrl + "events/findBy?attribute=book&key=" + localStorage.isbn,
     dataType: "json",

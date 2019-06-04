@@ -157,26 +157,26 @@
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <!-- list group for every field -->
                     <ul class="list-group-flush">
-                        <li class="list-group-item">Name</li>
-                        <li class="list-group-item">Surname</li>
-                        <li class="list-group-item">Email</li>
+                        <li class="list-group-item">Name: <span id ="UserName"></span></li>
+                        <li class="list-group-item">Surname: <span id ="UserLastName"></span></li>
+                        <li class="list-group-item">Email: <span id ="UserEmail"></span></li>
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <!-- list group for every field -->
                     <ul class="list-group-flush">
-                        <li class="list-group-item">Gender </li>
-                        <li class="list-group-item">BirthDay</li>
+                        <li class="list-group-item">Gender: <span id ="UserGender"></span></li>
+                        <li class="list-group-item">BirthDay: <span id ="UserBirthDay"></span></li>
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 
                     <!-- List of reviews -->
-                    <ul class="list-group-flush">
-                        <li class="list-group-item">Review 1</li>
+                    <ul class="list-group-flush" id="reviews">
+                        <!--<li class="list-group-item">Review 1</li>
                         <li class="list-group-item">Review 2</li>
                         <li class="list-group-item">Review 3</li>
-                        <li class="list-group-item">Review 4</li>
+                        <li class="list-group-item">Review 4</li>-->
                     </ul>
                 </div>
             </div>
@@ -194,6 +194,7 @@
     <!-- JQUERY MUST BE BEFORE JS FOR THE DROPDOWN MENU'" -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/userProfile.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
