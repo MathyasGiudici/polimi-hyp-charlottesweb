@@ -40,6 +40,34 @@ $(document).ready(function(){
     $('#logoutBtn').click(function() {
       localStorage.isLogged=false;
       localStorage.userId="";
+        $.ajax({
+
+          type: "POST",
+          url: baseUrl + 'users/logout',
+          dataType: "json",
+          success: function(data)
+          {
+
+              if (data.response === 'Successful logout') {
+                  console.log("success")
+
+                  setTimeout(function () {
+                    window.location.href='./index.html';
+                  }, 1000);
+
+
+              }
+              else {
+                  //alert(data.response);
+                  $("#error").fadeIn(10, function(){
+                    $("#error").append('<div class="alert alert-danger"><strong>Error! </strong>'+ data.response + ' </div>');
+                  });
+             }
+
+           }
+
+
+        });
 
     });
 

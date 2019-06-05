@@ -32,20 +32,20 @@ $(document).ready(function() {
             success: function(data)
             {
               console.log("operation succeded");
-              console.log(data.response);
+              console.log(data.email);
 
-              if (data.response === 'Successful') {
+              if (data.email === toSend.email) {
                 $("#error").fadeIn(10, function(){
-                  $("#error").append('<div class="alert alert-success"><strong>Success! </strong>'+ data.response + ' </div>');
+                  $("#error").append('<div class="alert alert-success"><strong>Success! you will be redirected to the login... </strong></div>');
                 });
                 setTimeout(function () {
                   window.location.href='./login.html';
-                }, 20);
+                }, 2000);
                 }
                 else {
 
                   $("#error").fadeIn(10, function(){
-                    $("#error").append('<div class="alert alert-danger"><strong>Error! </strong>'+ data.response + ' </div>');
+                    $("#error").append('<div class="alert alert-danger"><strong>Error! Probably you have already registered </strong></div>');
                   });
 
                 }
