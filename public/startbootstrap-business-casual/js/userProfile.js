@@ -6,12 +6,40 @@ $(document).ready(function(){
         url: baseUrl + "users/me",
         dataType: "json",
         success:function(data){
-            //contentTable(data);
+            contentTable(data);
             console.log(data.response);
+            $('#AuthorSurname').text(localStorage.userId);
         },
         error:function(jqXHR, textStatus, errorThrown){
             console.log("Error:" + jqXHR + textStatus + errorThrown);
         }
+
+    });
+
+
+
+    //Retriving user's reviews
+    $.ajax({
+        url: baseUrl + "reviews/findBy?attribute=userId&key=" + localStorage.userId,
+        dataType: "json",
+        success:function(reviews){
+            for(let i=0; i< reviews.length; i++){
+                let  tab = '<li class="list-group-item" id="rev'+i+'"> "<i>';
+                let  fin='</li>';
+                let  toAppend= tab + reviews[i].title + '"</i> ' + fin + reviews[i].description;
+                $("#reviews").append(toAppend);
+            }
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            console.log("Error:" + jqXHR + textStatus + errorThrown);
+        }
+
+    });
+
+    //Logout function
+    $('#logoutBtn').click(function() {
+      localStorage.isLogged=false;
+      localStorage.userId="";
 
     });
 
@@ -27,21 +55,3 @@ let contentTable = function(data){
     $("#UserBirthDay").text(data.birthDay);
 
 }
-
-//Retriving user's reviews
-$.ajax({
-    url: baseUrl + "reviews/findBy?attribute=userId&key=" + localStorage.user.userId,
-    dataType: "json",
-    success:function(reviews){
-        for(let i=0; i< reviews.length; i++){
-            let  tab = '<li class="list-group-item" id="rev'+i+'"> "<i>';
-            let  fin='</li>';
-            let  toAppend= tab + reviews[i].title + '"</i> ' + fin + reviews[i].description;
-            $("#reviews").append(toAppend);
-        }
-    },
-    error:function(jqXHR, textStatus, errorThrown){
-        console.log("Error:" + jqXHR + textStatus + errorThrown);
-    }
-});
-

@@ -130,17 +130,17 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title text-center">Register</h5>
-                        <form class="form-signin">
+                        <form id="registerForm" class="form-signin">
                             <div class="form-label-group">
                                 <label for="inputUserame">First Name</label>
-                                <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
+                                <input type="text" id="inputFirstName" class="form-control" placeholder="Username" required autofocus>
                             </div>
 
                             <div class="small-padding"></div>
 
                             <div class="form-label-group">
                                 <label for="inputUserame">Last Name</label>
-                                <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
+                                <input type="text" id="inputLastName" class="form-control" placeholder="Username" required autofocus>
                             </div>
 
                             <div class="small-padding"></div>
@@ -156,7 +156,7 @@
                               <div class="form-row">
                                 <div class="col-xl-6 col-lg-5 col-md-5">
                                   <label for="birth">Birthdate</label>
-                                  <input type="date" id="birth" class="form-control" value="--" min="1940-01-01" max="2018-12-31" required>
+                                  <input type="date" id="birth" class="form-control"  min="1940-01-01" max="2018-12-31" required>
                                 </div>
 
                                 <div class="small-padding"></div>
@@ -188,7 +188,7 @@
 
                           <div class="small-padding"></div>
 
-
+                          <form id="identicalForm">
                             <div class="form-label-group">
                                 <label for="inputPassword">Password</label>
                                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -201,10 +201,16 @@
                                 <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
 
                             </div>
+                            <div class="xsmall-padding"></div>
+                            <div id="message"></div>
                             <hr class="my-4"-->
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+                            <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="registerBtn" value="Register"/>
                             <!--a class="d-block text-center mt-2 small" href="login.html">Sign In</a>
                             <hr class="my-4"-->
+                            <div class="small-padding"></div>
+
+                              <div id="error"></div>
+                          </form>
                         </form>
                     </div>
                 </div>
@@ -226,6 +232,7 @@
     <!-- JQUERY MUST BE BEFORE JS FOR THE DROPDOWN MENU'" -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/register.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
