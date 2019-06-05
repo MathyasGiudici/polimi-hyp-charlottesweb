@@ -901,7 +901,7 @@ definitions:
         - "female"
         - "male"
       birthDay:
-        type: "integer"
+        type: "string"
         format: "date"
       userType:
         type: "string"

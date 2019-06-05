@@ -153,7 +153,7 @@ exports.postUsersLogin = function(email,password,req) {
       return {response: "Successful login"};
     }
     else{
-      return {response: "You must be register"};
+      return {response: "You must be registered"};
     }
   });
 }

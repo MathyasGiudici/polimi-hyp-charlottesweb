@@ -8,15 +8,13 @@ $(document).ready(function(){
         success:function(data){
             contentTable(data);
             console.log(data.response);
-            $('#AuthorSurname').text(localStorage.userId);
+            $('#Username').text(localStorage.userId);
         },
         error:function(jqXHR, textStatus, errorThrown){
             console.log("Error:" + jqXHR + textStatus + errorThrown);
         }
 
     });
-
-
 
     //Retriving user's reviews
     $.ajax({
@@ -73,13 +71,10 @@ $(document).ready(function(){
 
 });
 
-
 let contentTable = function(data){
-
-    $("#UserName").text(data.firstName);
+    $("#UserFirstName").text(data.firstName);
     $("#UserLastName").text(data.lastName);
     $("#UserEmail").text(data.email);
     $("#UserGender").text(data.gender);
-    $("#UserBirthDay").text(data.birthDay);
-
+    $("#UserBirthDay").text(data.birthDay.replace().slice(0,10));
 }

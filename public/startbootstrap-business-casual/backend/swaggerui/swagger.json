@@ -1301,7 +1301,7 @@
           ]
         },
         "birthDay": {
-          "type": "integer",
+          "type": "string",
           "format": "date"
         },
         "userType": {

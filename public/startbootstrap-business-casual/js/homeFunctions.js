@@ -3,6 +3,7 @@ let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
 
 $(document).ready(function(){
 
+  $("#myCarousel").before('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_car"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
   $("#ourFavorite").after('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_ourFav"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
   $("#ourBestsellers").after('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_bestSell"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
 
@@ -10,18 +11,25 @@ $(document).ready(function(){
     url: baseUrl + "events",
     dataType: "json",
     success:function(data){
+      //Removing loading
+      $("#toBeDel_car").remove();
       //Setting up the carousel
       for(let i =0; i< data.length; i++){
         let firstPart;
 
-        if(i == 0)
+        if(i == 0){
           firstPart = '<div class="carousel-item active" style="background-image: url(\'';
-        else
+          $(".carousel-indicators").append('<li data-target="#myCarousel" data-slide-to="0" class="active"></li>');
+        }
+        else{
           firstPart = '<div class="carousel-item" style="background-image: url(\'';
+          $(".carousel-indicators").append('<li data-target="#myCarousel" data-slide-to="' + i + '"></li>');
+        }
 
         let secondPart = "'" + ')" onclick="handleEventClick(\''+ data[i].id +'\')"></div>';
         let toAppend = firstPart + data[i].photo + secondPart;
         $(".carousel-inner").append(toAppend);
+
       }
     },
     error:function(jqXHR, textStatus, errorThrown){
