@@ -32,7 +32,7 @@ $(document).ready(function(){
         //Setting up strings of code
         let beforePhoto = '<div class="col-md-4 col-xs-12 bestseller-item"><div class="align-self-center mr-3" id="threeBookInRow">'
         + '<img id="threeBookInRowImg" class="align-self-start" alt="image of book: ' + b.isbn  + '" src="';
-        let beforeTitle = '" onClick="handleBookClick('+ b.isbn +')" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
+        let beforeTitle = '" onClick="handleBookClick(\''+ b.isbn +'\')" alt=""><div class="cta descr-padding"><div class="cta-inner rounded pt-2 pl-2 pr-2"><h5 class="mt-0" id="TitleBook">';
         let beforeAuthors = '</h5>';
         let beforePrice = '<i>Price: ';
         let afterPrice = '</i></div></div></div></div>';
