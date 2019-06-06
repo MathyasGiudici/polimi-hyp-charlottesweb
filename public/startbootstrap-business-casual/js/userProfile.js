@@ -1,5 +1,4 @@
-//let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
-let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
+let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 $(document).ready(function(){
     $.ajax({
@@ -7,8 +6,7 @@ $(document).ready(function(){
         dataType: "json",
         success:function(data){
             contentTable(data);
-            console.log(data.response);
-            $('#Username').text(localStorage.userId);
+            $('#Username').append(localStorage.userId);
         },
         error:function(jqXHR, textStatus, errorThrown){
             console.log("Error:" + jqXHR + textStatus + errorThrown);
@@ -33,48 +31,38 @@ $(document).ready(function(){
         }
 
     });
-
-    //Logout function
-    $('#logoutBtn').click(function() {
-      localStorage.isLogged=false;
-      localStorage.userId="";
-        $.ajax({
-
-          type: "POST",
-          url: baseUrl + 'users/logout',
-          dataType: "json",
-          success: function(data)
-          {
-
-              if (data.response === 'Successful logout') {
-                  console.log("success")
-
-                  setTimeout(function () {
-                    window.location.href='./index.html';
-                  }, 1000);
-
-
-              }
-              else {
-                  //alert(data.response);
-                  $("#error").fadeIn(10, function(){
-                    $("#error").append('<div class="alert alert-danger"><strong>Error! </strong>'+ data.response + ' </div>');
-                  });
-             }
-
-           }
-
-
-        });
-
-    });
-
 });
+
+let handleLogout = function(){
+  //Handling logout
+  $.ajax({
+    type: "POST",
+    url: baseUrl + 'users/logout',
+    dataType: "json",
+    success: function(data){
+        if (data.response === 'Successful logout') {
+            localStorage.isLogged = false;
+            localStorage.userId = "";
+
+            setTimeout(function () {
+              window.location.href='./index.html';
+            }, 1000);
+          } else {
+            $("#error").before('<br/>');
+            $("#error").fadeIn(10, function(){
+              $("#error").empty();
+              $("#error").append('<div class="alert alert-danger"><strong>Error! </strong>'+ data.response + ' </div>');
+            });
+       }
+
+     }
+  });
+}
 
 let contentTable = function(data){
     $("#UserFirstName").text(data.firstName);
     $("#UserLastName").text(data.lastName);
     $("#UserEmail").text(data.email);
-    $("#UserGender").text(data.gender);
+    $("#UserGender").text(data.gender.toUpperCase());
     $("#UserBirthDay").text(data.birthDay.replace().slice(0,10));
 }

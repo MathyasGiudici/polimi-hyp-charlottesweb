@@ -1,5 +1,4 @@
-//let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
-let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
+let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"];

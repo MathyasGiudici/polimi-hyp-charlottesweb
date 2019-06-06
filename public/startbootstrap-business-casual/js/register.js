@@ -1,10 +1,6 @@
-//let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
-let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
+let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 $(document).ready(function() {
-
-    console.log("script uploaded");
-
     $('#registerForm').submit(function(e) {
 
         e.preventDefault();
@@ -18,7 +14,6 @@ $(document).ready(function() {
                password: $("#inputPassword").val()
           };
 
-        console.log(toSend);
         $.ajax({
             type: "POST",
             url: baseUrl + 'users/register',
@@ -29,13 +24,10 @@ $(document).ready(function() {
             beforeSend: function(){
               $("#error").fadeOut();
             },
-            success: function(data)
-            {
-              console.log("operation succeded");
-              console.log(data.email);
-
+            success: function(data){
               if (data.email === toSend.email) {
                 $("#error").fadeIn(10, function(){
+                  $("#error").empty();
                   $("#error").append('<div class="alert alert-success"><strong>Success! you will be redirected to the login... </strong></div>');
                 });
                 setTimeout(function () {
@@ -43,17 +35,16 @@ $(document).ready(function() {
                 }, 2000);
                 }
                 else {
-
                   $("#error").fadeIn(10, function(){
+                    $("#error").empty();
                     $("#error").append('<div class="alert alert-danger"><strong>Error! Probably you have already registered </strong></div>');
                   });
-
                 }
-
-
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                  console.log("Error:" + jqXHR + textStatus + errorThrown);
             }
         });
-
     });
 
     //password validation
@@ -62,7 +53,5 @@ $(document).ready(function() {
         $("#message").html('<div class="alert alert-success"><strong>Passwords matching! </strong> </div>');
       } else
       $("#message").html('<div class="alert alert-danger"><strong>Passwords NOT matching! </strong> </div>');
-
     });
-
 });

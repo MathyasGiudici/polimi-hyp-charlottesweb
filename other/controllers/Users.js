@@ -61,7 +61,7 @@ module.exports.postUsersLogin = function postUsersLogin (req, res, next) {
 module.exports.postUsersLogout = function postUsersLogout (req, res, next) {
   req.session.isLoggedIn = false;
   req.session.email = " ";
-  utils.writeJson(res, {response: "Successful Logout"});
+  utils.writeJson(res, {response: "Successful logout"});
 };
 
 module.exports.postUsersRegister = function postUsersRegister (req, res, next) {
@@ -82,7 +82,13 @@ module.exports.putCart = function putCart (req, res, next) {
   if(req.session.isLoggedIn && req.session.email == body.id){
     Users.putCart(body)
       .then(function (response) {
-        utils.writeJson(res, response);
+        Users.getCart(req.session.email)
+          .then(function (response) {
+            utils.writeJson(res, response);
+          })
+          .catch(function (response) {
+            utils.writeJson(res, response);
+          });
       })
       .catch(function (response) {
         utils.writeJson(res, response);

@@ -1,6 +1,4 @@
-//let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
-let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
-
+let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 $(document).ready(function(){
 

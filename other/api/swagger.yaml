@@ -436,7 +436,7 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "User to sign-up"
+        description: "User to register"
         required: true
         schema:
           $ref: "#/definitions/User"

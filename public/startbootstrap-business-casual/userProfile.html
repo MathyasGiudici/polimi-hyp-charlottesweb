@@ -130,21 +130,15 @@
         </div>
     </nav>
 
-
-
-<div id="error"></div>
-
     <section class="page-section clearfix">
         <div class="col-md-12 col-lg-7 col-xs-12">
             <div class="bg-faded rounded book-item">
                 <h2 class="section-heading">
-                    <span class="section-heading-lower" id="Username"> </span>
+                    <span class="section-heading-lower" id="Username">Hi, </span>
                 </h2>
                 <br>
-                <a class="btn btn-primary btn-sm" id="logoutBtn" href="#">
-                     Logout
-                </a>
-
+                <a class="btn btn-primary btn-sm" href="#" onclick="handleLogout()" >Logout</a>
+                <div id="error"></div>
             </div>
         </div>
     </section>
@@ -180,16 +174,16 @@
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 
                     <!-- List of reviews -->
-                    <ul class="list-group-flush" id="reviews">
+                    <ul class="list-group-flush" id="reviews" style="max-width: 760px;">
                         <!--<li class="list-group-item">Review 1</li>
-                        <li class="list-group-item">Review 2</li>
-                        <li class="list-group-item">Review 3</li>
-                        <li class="list-group-item">Review 4</li>-->
+                        <li class="list-group-item">Review 2</li> -->
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+
+    <a class = "padding small-padding"></a>
 
     <!-- FOOTER -->
     <footer class="footer text-faded text-center py-2 col-12">

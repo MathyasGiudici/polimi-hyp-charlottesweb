@@ -478,6 +478,11 @@ p {
   color: lightslategray;
 }
 
+#Username.section-heading-lower {
+  color: #fff;
+  font-size: 2rem;
+}
+
 .mathy-padding {
   padding: 10px;
 }

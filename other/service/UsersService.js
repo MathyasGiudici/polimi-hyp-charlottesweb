@@ -62,7 +62,7 @@ let getCartHandler = function(email,data){
     let obj = {};
     obj.id = email;
     obj.books = [];
-    obj.price = { value: 0, currency: "euro" };
+    obj.total = { value: 0, currency: "euro" };
     return obj;
   }
 
@@ -85,7 +85,7 @@ let getCartHandler = function(email,data){
   let obj = {};
   obj.id = email;
   obj.books = tBooks;
-  obj.price = { value: tValue, currency: tCurrency };
+  obj.total = { value: tValue, currency: tCurrency };
 
   return obj;
 }
@@ -153,7 +153,7 @@ exports.postUsersLogin = function(email,password,req) {
       return {response: "Successful login"};
     }
     else{
-      return {response: "You must be registered"};
+      return {response: "You must be register"};
     }
   });
 }
@@ -190,7 +190,7 @@ exports.putCart = function(body) {
       let obj = {};
       obj.id = body.id;
       obj.books = [];
-      obj.price = { value: 0, currency: "euro" };
+      obj.total = { value: 0, currency: "euro" };
       return obj;
     });
   } else{

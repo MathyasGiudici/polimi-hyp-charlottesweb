@@ -1,10 +1,10 @@
 $(document).ready(function() {
   if(localStorage.isLogged === "true"){
     //User is logged-in
+    var id = localStorage.userId.split('@')[0];
     var string= '<a class="nav-link text-uppercase text-expanded" href="userProfile.html"><i class="fas fa-user"></i> ';
-    var name = localStorage.userId + '</a>';
+    var name = id + '</a>';
     var toAppend= string + name;
-    console.log(localStorage.userId);
     $('#userNav').append(toAppend);
   } else{
     //User not logged-in

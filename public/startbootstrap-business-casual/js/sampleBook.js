@@ -1,5 +1,4 @@
-//let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
-let baseUrl = "https://webserver-test-polimi.herokuapp.com/api/";
+let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 $(document).ready(function(){
   //Retriving book's info
@@ -15,7 +14,7 @@ $(document).ready(function(){
       $("#BookAuthor").append(authorsToString(b.authors, true));
       $("#BookReserve").on({
         'click': function(){
-          reserveFunction(b.isbn);
+          reserveFunction(b.isbn, JSON.stringify(b.price));
         }
       });
 
@@ -165,14 +164,22 @@ let authorTitleToAppend = function(author){
   return '<a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>";
 }
 
-let reserveFunction = function(isbn){
+let reserveFunction = function(isbn,price){
   // Animation
   $("#cartIcon").attr("class","fa fa-spinner " + "fa-pulse");
-  setTimeout(function(){
-    $("#cartIcon").attr("class","fas fa-shopping-cart");
-  }, 1000);
 
-  // TODO: adding to the cart
+  setTimeout(function(){
+    //Creating object to pass
+    let obj = {
+      book: isbn,
+      price: JSON.parse(price),
+      quantity: 1
+    };
+
+    localStorage.redirectFromBook = JSON.stringify(obj);
+    $("#cartIcon").attr("class","fas fa-shopping-cart");
+    window.location.href = './cart.html'
+  }, 1000);
 }
 
 let handleEventClick = function(id){
