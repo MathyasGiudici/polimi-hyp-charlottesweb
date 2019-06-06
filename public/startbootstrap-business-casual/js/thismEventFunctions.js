@@ -5,7 +5,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 
 
 $(document).ready(function(){
+  //Creating loading animation
+  $(".row.cta-inner-border").parent().hide();
+  $(".row.cta-inner-border").parent().before('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
 
+  //Updating current month in the title
   let d = new Date();
   $(".section-heading-lower").append("of " + monthNames[d.getMonth()] + "!");
 
@@ -27,9 +31,7 @@ $(document).ready(function(){
       error:function(jqXHR, textStatus, errorThrown){
            console.log("Error:" + jqXHR + textStatus + errorThrown);
       }
-
   });
-
 });
 
 
@@ -50,12 +52,10 @@ let numberofEvents = function(data){
     else
      toAppend = numEvents+(data[i].title)+endEvent;
     $("#v-pills-tab").append(toAppend);
-
    }
 }
 
 let contentTable = function(data){
-
     for(let i=0; i< data.length; i++){
 
       let tabelEvent = '<div class="tab-pane fade" id="evnumb'+i+'" role="tabpanel" aria-labelledby="eventnumb'+i+'">';
@@ -79,6 +79,9 @@ let contentTable = function(data){
        close + place + data[i].place + close+ button + endTable;
       $("#v-pills-tabContent").append(toAppend);
     }
+    //Removing loading animation
+    $("#toBeDel").remove();
+    $(".row.cta-inner-border").parent().show();
 }
 
 let authorsToString = function(authors){

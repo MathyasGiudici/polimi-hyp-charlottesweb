@@ -1,7 +1,7 @@
 let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 $(document).ready(function(){
-
+  //Creating loading animation
   $("#myCarousel").before('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_car"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
   $("#ourFavorite").after('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_ourFav"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
   $("#ourBestsellers").after('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel_bestSell"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
@@ -10,7 +10,7 @@ $(document).ready(function(){
     url: baseUrl + "events",
     dataType: "json",
     success:function(data){
-      //Removing loading
+      //Removing loading animation
       $("#toBeDel_car").remove();
       //Setting up the carousel
       for(let i =0; i< data.length; i++){
@@ -41,7 +41,7 @@ $(document).ready(function(){
     url: baseUrl + 'books/ourFavorite',
     dataType: "json",
     success:function(data){
-      //Removing loading
+      //Removing loading animation
       $("#toBeDel_ourFav").remove();
       //Retriving our favorites
       data.forEach( b => {
@@ -67,7 +67,7 @@ $(document).ready(function(){
     url: baseUrl + 'books/bestSelling',
     dataType: "json",
     success:function(data){
-      //Removing loading
+      //Removing loading animation
       $("#toBeDel_bestSell").remove();
 
       //Retriving our best sellers

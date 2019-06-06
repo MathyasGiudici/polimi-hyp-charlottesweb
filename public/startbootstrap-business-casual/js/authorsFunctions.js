@@ -1,6 +1,9 @@
 let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 $(document).ready(function(){
+  //Creating loading animation
+  $("#authorsContainer").before('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
+
   $.ajax({
     url: baseUrl + "authors",
     dataType: "json",
@@ -23,6 +26,8 @@ $(document).ready(function(){
 
            if((data.length-1) == i){
              toAppend = toAppend + "</div>";
+             //Removing loading animation + appending
+             $("#toBeDel").remove();
              $("#authorsContainer").append(toAppend);
              toAppend = "";
              step = 1;
@@ -38,6 +43,8 @@ $(document).ready(function(){
            }
            else{
                toAppend = toAppend + "</div>";
+               //Removing loading animation + appending
+               $("#toBeDel").remove();
                $("#authorsContainer").append(toAppend);
                toAppend = "";
                step = 1;
@@ -48,9 +55,7 @@ $(document).ready(function(){
     error:function(jqXHR, textStatus, errorThrown){
          console.log("Error:" + jqXHR + textStatus + errorThrown);
     }
-
   });
-
 });
 
 let handleAuthorClick = function(id){

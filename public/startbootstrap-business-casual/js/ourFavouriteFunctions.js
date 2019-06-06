@@ -1,6 +1,10 @@
 let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
 $(document).ready(function(){
+  //Creating loading animation
+  $(".row.cta-inner-border").parent().hide();
+  $(".row.cta-inner-border").parent().before('<div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-spinner fa-spin"></i><h1></div>');
+
   $.ajax({
     url: baseUrl + "books/ourFavorite",
     dataType: "json",
@@ -20,12 +24,14 @@ $(document).ready(function(){
       });
 
       let toAppend = myBooksListToAppend(data);
+      //Removing loading animation
+      $("#toBeDel").remove();
+      $(".row.cta-inner-border").parent().show();
       $("#ourFavouriteContainer").append(toAppend);
       },
       error:function(jqXHR, textStatus, errorThrown){
            console.log("Error:" + jqXHR + textStatus + errorThrown);
       }
-
   });
 
 });

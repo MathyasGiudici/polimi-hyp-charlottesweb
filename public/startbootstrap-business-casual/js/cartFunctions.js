@@ -43,9 +43,12 @@ $(document).ready(function(){
 
 
 let showCart = function(){
+  //Removing animation
+  $("#MyCartList").empty();
+
   //Empty cart
   if(currentCart.books.length == 0){
-    $("#MyCartList").append('<tr><td colspan="5" style="width:100%; text-align: center;"><b>Your cart is empty!</b></td></tr>');
+    $("#MyCartList").append('<tr><td colspan="5" style="width:100%; text-align: center;"><div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-shopping-cart" style="color:black;"></i><h1></div><strong>Your cart is empty!</strong></td></tr>');
     updateTotal();
     return;
   }

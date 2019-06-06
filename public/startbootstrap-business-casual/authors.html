@@ -25,105 +25,101 @@
 </head>
 
 <body>
-
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark py-lg-2 fixed-top" id="mainNav">
+  <nav class="navbar navbar-expand-lg navbar-dark py-lg-2 fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Charlotte's Web <i class="fas fa-spider"></i></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+      <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="index.html">Charlotte's Web <i class="fas fa-spider"></i></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mx-auto">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mx-auto">
 
-                <!-- Home -->
-                <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded icon" href="index.html">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
+          <!-- Home -->
+          <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase text-expanded icon" href="index.html">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
 
-                <!-- Book button -->
-                <li class="dropdown">
+          <!-- Book button -->
+          <li class="dropdown">
 
-                    <div class="dropdown-toggle nav-item" id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <a class="nav-link px-lg-4 text-uppercase text-expanded icon">
-                            Book
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
+            <div class="dropdown-toggle nav-item" id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link px-lg-4 text-uppercase text-expanded icon">
+                Books
+                <i class="fas fa-chevron-down"></i>
+              </a>
+            </div>
 
-                    <!--ALTERNATIVES
-                    <a href="#" class="dropdown-toggle" id="Book" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                      Book <span class="caret"></span></a>
-
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="Book" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Book
-                    </button>-->
-
-
-
-                    <ul class="dropdown-menu text-expanded" aria-labelledby="Book">
-
-                        <li><a class="dropdown-item" href="booksAuthor.html">All books from author</a></li>
-                        <li>  <a class="dropdown-item" href="#">All books from genre</a></li>
-                        <li> <a class="dropdown-item" href="#">All books from theme</a></li>
-                        <li> <a class="dropdown-item" href="#">Our favorite readings</a></li>
-                    </ul>
-                </li>
-
-                <!-- Events -->
-                <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded icon" href="events.html">Events</a>
-                </li>
-
-                <!-- Author -->
-                <li class="nav-item active px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded icon" href="authors.html">Authors</a>
-                </li>
-
-                <!-- Info button -->
-                <li class="dropdown">
-                    <div class="dropdown-toggle nav-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <a class="nav-link px-lg-4 text-uppercase text-expanded">
-                            Info
-                            <span class="caret"></span>
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-
-                    <ul class="dropdown-menu text-expanded" aria-labelledby="Info">
-
-                        <li><a class="dropdown-item" href="info.html">Ordering and Shopping Info</a></li>
-                        <li><a class="dropdown-item" href="faq.html">FAQ</a></li>
-                    </ul>
-                </li>
-
-
-                <!-- Contact Us -->
-                <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="contactUs.html">Contacts</a>
-                </li>
-
-                <!-- User -->
-                <li class="nav-item px-lg-4">
-                    <a class="nav-link text-uppercase text-expanded" href="login.html" >
-                        <i class="fas fa-user"></i>
-                    </a>
-                </li>
-
-                <!-- Cart -->
-                <li class="nav-item px-lg-4">
-                    <a href="cart.html" class="nav-link text-uppercase text-expanded">
-                        <i class="fas fa-shopping-cart"></i>
-                    </a>
-                </li>
-
+            <ul class="dropdown-menu text-expanded" aria-labelledby="Books">
+              <li><a class="dropdown-item" href="books.html">All books</a></li>
+              <li><a class="dropdown-item" href="booksAuthor.html">All books from author</a></li>
+              <li> <a class="dropdown-item" href="booksGenre.html">All books from genre</a></li>
+              <li> <a class="dropdown-item" href="booksTheme.html">All books from theme</a></li>
+              <li> <a class="dropdown-item" href="ourFavourite.html">Our favourite</a></li>
+              <li> <a class="dropdown-item" href="bestSellers.html">Best Sellers</a></li>
             </ul>
-        </div>
+          </li>
+
+          <!-- Events -->
+          <li class="dropdown">
+
+            <div class="dropdown-toggle nav-item" id="Event" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link px-lg-4 text-uppercase text-expanded icon">
+                Events
+                <i class="fas fa-chevron-down"></i>
+              </a>
+            </div>
+
+            <ul class="dropdown-menu text-expanded" aria-labelledby="Book">
+              <li><a class="dropdown-item" href="events.html">All events</a></li>
+              <li><a class="dropdown-item" href="thismonthEvents.html">All this month events</a></li>
+            </ul>
+          </li>
+
+          <!-- Author -->
+          <li class="nav-item active px-lg-4">
+            <a class="nav-link text-uppercase text-expanded icon" href="authors.html">Authors</a>
+          </li>
+
+          <!-- Info button -->
+          <li class="dropdown">
+            <div class="dropdown-toggle nav-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link px-lg-4 text-uppercase text-expanded">
+                Info
+                <span class="caret"></span>
+                <i class="fas fa-chevron-down"></i>
+              </a>
+            </div>
+
+            <ul class="dropdown-menu text-expanded" aria-labelledby="Info">
+
+              <li><a class="dropdown-item" href="info.html">Ordering and Shopping Info</a></li>
+              <li><a class="dropdown-item" href="faq.html">FAQ</a></li>
+            </ul>
+          </li>
+
+          <!-- Contact Us -->
+          <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="contacts.html">Contacts</a>
+          </li>
+
+          <!-- User -->
+          <li class="nav-item px-lg-4 " id="userNav"></li>
+
+          <!-- Cart -->
+          <li class="nav-item px-lg-4" >
+            <a href="cart.html" class="nav-link text-uppercase text-expanded">
+              <i class="fas fa-shopping-cart" id="cartIcon"></i>
+            </a>
+          </li>
+
+        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
 
 <a class = "padding small-padding"></a>
 
@@ -155,7 +151,7 @@
 <a class = "padding small-padding"></a>
 
 <!-- FOOTER -->
-<footer class="footer text-faded text-center py-2 col-12">
+<footer class="footer text-faded text-center py-3 col-12">
     <div class="container">
         <p class="m-0 small">Copyright &copy; Charlotte's Web 2019</p>
     </div>
@@ -165,8 +161,10 @@
 <!-- JQUERY MUST BE BEFORE JS FOR THE DROPDOWN MENU'" -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="vendor/jquery/jquery.min.js"></script>
-<script src="js/authorsFunctions.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/authorsFunctions.js"></script>
+<script src="js/logged.js"></script>
+
 
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
