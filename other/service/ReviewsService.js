@@ -73,7 +73,7 @@ exports.getReviewsById = function(id) {
  * returns List
  **/
 exports.getReviewsFindBy = function(attribute,key) {
-  return sqlDb("reviews").where(attribute, key).select();
+  return sqlDb("reviews").where(attribute,key).select();
 }
 
 

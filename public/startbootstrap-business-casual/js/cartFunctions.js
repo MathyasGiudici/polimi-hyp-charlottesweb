@@ -43,31 +43,37 @@ $(document).ready(function(){
 
 
 let showCart = function(){
-  var promise = new Promise((resolve, reject) => {resolve(1);});
+  //Empty cart
+  if(currentCart.books.length == 0){
+    $("#MyCartList").append('<tr><td colspan="5" style="width:100%; text-align: center;"><b>Your cart is empty!</b></td></tr>');
+    updateTotal();
+    return;
+  }
+
+  var promise = new Promise((resolve, reject) => {
+    //Filling cart
+    currentCart.books.forEach( b => {
+      $.ajax({
+        url: baseUrl + "books/" + b.book,
+        dataType: "json",
+        success:function(data){
+          //Creating rows of book
+          createBookLine(data,b.quantity);
+
+          //resolve if is the last
+          if(currentCart.books.indexOf(b) == (currentCart.books.length - 1)){
+            resolve(1);
+          }
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+             console.log("Error:" + jqXHR + textStatus + errorThrown);
+        }
+      });
+    });
+  });
 
   //Sequential schedule
   promise.then( v => {
-     //Filling cart
-     currentCart.books.forEach( b => {
-       $.ajax({
-         url: baseUrl + "books/" + b.book,
-         dataType: "json",
-         success:function(data){
-           //Creating rows of book
-           if(data.length == 0){
-             $("#MyCartList").append('<tr><td colspan="5" style="width:100%"><strong>Your cart is empty!</strong></td></tr>');
-           } else{
-             createBookLine(data,b.quantity);
-           }
-         },
-         error:function(jqXHR, textStatus, errorThrown){
-              console.log("Error:" + jqXHR + textStatus + errorThrown);
-         }
-       });
-     });
-
-     return v;
-  }).then( v => {
     //Updating the total
     updateTotal();
     return v;
@@ -176,9 +182,11 @@ let putChange = function(){
 
   var parsedCart = jQuery.extend(true, {}, currentCart);
 
-  parsedCart.books.forEach( b => {
-    delete b.price;
-  });
+  if(parsedCart.books.length !== 0){
+    parsedCart.books.forEach( b => {
+      delete b.price;
+    });
+  }
 
   $.ajax({
       type: "PUT",
@@ -204,7 +212,7 @@ let updateTotal = function(){
   //Updating in page
   $("#TotalOfCart").empty();
 
-  if(tot !== 0){
+  if(tot.value !== 0){
     let toAppend = "Total: " + tot.value.toFixed(2).toString() + " " + tot.currency;
     $("#TotalOfCart").append(toAppend);
   }
@@ -213,7 +221,7 @@ let updateTotal = function(){
 let getTotalOfCart = function(){
   var toRet = {
     value: 0,
-    currency: ''
+    currency: 'euro'
   };
 
   currentCart.books.forEach( b => {
@@ -244,6 +252,7 @@ let putFromBook = function(){
 
   //Book not in the cart
   if(isIn == 0){
+    delete redBook.price;
     currentCart.books.push(redBook);
   }
 
