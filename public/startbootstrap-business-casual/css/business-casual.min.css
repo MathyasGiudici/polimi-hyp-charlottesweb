@@ -787,10 +787,6 @@ label {
     margin-top: 10px;
   }
 
-  .product .product-line-price:before {
-    content: "Item Total: ";
-  }
-
   .totals .totals-item label {
     width: 60%;
   }
@@ -798,15 +794,6 @@ label {
     width: 40%;
   }
 }
-.empty-cart {
-  width: 90rem;
-}
-@media (max-width: 990px) {
-  .empty-cart {
-    width: 100%;
-  }
-}
-
 .text-primary {
   color: lightslategray !important;
 }
