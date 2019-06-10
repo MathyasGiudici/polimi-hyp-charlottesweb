@@ -126,10 +126,10 @@
 
     <!-- CART -->
         <div class="container">
-            <table id="cart" class="table-responsive table-hover table-condensed" style="background: white">
+            <table id="cart" class="table table-hover table-condensed" style="background: white">
                 <thead>
                 <tr>
-                    <th style="width:50%">Product</th>
+                    <th class="col-md-8 offset-md-3" style="width:50%">Product</th>
                     <th style="width:10%">Price</th>
                     <th style="width:8%">Quantity</th>
                     <th style="width:22%" class="text-center">Subtotal</th>
@@ -163,7 +163,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td style="width:25%"><button id="ContinueShopping" class="btn btn-secondary btn-mobile" onclick="window.location.href = './bookSample.html'" ><i class="fa fa-angle-left"></i> Continue Shopping</button></td>
+                    <td style="width:25%"><button id="ContinueShopping" class="btn btn-secondary" onclick="window.location.href = './bookSample.html'" ><i class="fa fa-angle-left"></i> Continue Shopping</button></td>
                     <!-- <td  class="hidden-xs"></td> -->
                     <td  colspan="3" style="width:50%"><strong id="TotalOfCart"></strong></td>
                     <td style="width:25%"><button class="btn btn-light btn-block" onclick="window.location.href = './index.html'" style="width:max-content;">Home <i class="fa fa-angle-right"></i></button></td>
@@ -173,6 +173,82 @@
         </div>
 
         <div class="padding big-padding"></div>
+
+        <!-- CART2 -->
+<div class="container cta small-perimeter padding-mobile">
+            <div class="row cta-inner-border ">
+<div class="shopping-cart">
+
+  <div class="column-labels">
+    <label class="product-image">Image</label>
+    <label class="product-details">Product</label>
+    <label class="product-price">Price</label>
+    <label class="product-quantity">Quantity</label>
+    <label class="product-removal">Remove</label>
+    <label class="product-line-price">Subtotal</label>
+  </div>
+
+  <div class="product">
+    <div class="product-image">
+      <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+    </div>
+    <div class="product-details">
+      <div class="product-title">
+        <a class="btn-link" style="font-weight:bold" href="book.html">
+          Dingo Dog Bones
+        </a>
+        </div>
+      <p class="product-description">The best dog bones of all time. </p>
+    </div>
+    <div class="product-price">12.99</div>
+    <div class="product-quantity">
+      <input type="number" value="2" min="1">
+    </div>
+    <div class="product-removal">
+      <button class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
+    </div>
+    <div class="product-line-price">25.98</div>
+  </div>
+
+  <div class="product">
+    <div class="product-image">
+      <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
+    </div>
+    <div class="product-details">
+      <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
+      <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
+    </div>
+    <div class="product-price">45.99</div>
+    <div class="product-quantity">
+      <input type="number" value="1" min="1">
+    </div>
+    <div class="product-removal">
+      <button class="remove-product">
+        Remove
+      </button>
+    </div>
+    <div class="product-line-price">45.99</div>
+  </div>
+
+
+
+  <div class="totals">
+    <div class="totals-item totals-item-total">
+      <label>Total</label>
+      <div class="totals-value" id="cart-total">90.57</div>
+    </div>
+  </div>
+
+
+
+      <button class="checkout">Checkout</button>
+
+      <button id="ContinueShopping" class="btn btn-secondary continue" onclick="window.location.href = './bookSample.html'" >
+      <i class="fa fa-angle-left"></i> Continue Shopping</button><i class="fa fa-money" aria-hidden="true"></i>
+
+</div>
+
+</div></div>
 
     <!-- FOOTER -->
     <footer class="footer text-faded text-center py-3 col-12">

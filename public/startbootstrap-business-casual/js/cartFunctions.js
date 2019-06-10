@@ -1,6 +1,7 @@
 let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
-let currentCart;
+let fakeCart = '{ "id": "mario.rossi@mail.polimi.it", "books": [ { "book": "9780061124952", "quantity": 2, "price": { "value": 8.04, "currency": "euro" } } ], "total": { "value": 16.08, "currency": "euro" } }';
+let currentCart = JSON.parse(fakeCart);
 
 $(document).ready(function(){
   //Checking if the user is logged-in
