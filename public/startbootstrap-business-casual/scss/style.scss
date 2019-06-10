@@ -37,8 +37,11 @@
   margin-top: 0.5rem;
   margin-left: 4rem;
   margin-right: 4rem;
-
+  @media (max-width: 990px) {
+    margin: 0.5rem;
+  }
 }
+
 @media (max-width: 990px) {
   .hidden-xs {
     display: none !important;
@@ -212,8 +215,25 @@
   background-color: fade-out($white, 0.15);
   border: 0.25rem solid fade-out($white, 0.15);
   //for mobile
-  @media(990px){
+  @media(max-width: 990px){
+    padding-top: 0.8rem;
     padding: 0.5rem;
+  }
+}
+
+.cta .cta-inner{
+  @media (max-width: 990px){
+    margin: 0.5rem;
+    padding: 0.5rem;
+    padding-top: 0.8rem;
+  }
+}
+
+.padding-mobile{
+  @media (max-width: 990px){
+    margin: 0.5rem;
+    padding: 0.5rem !important;
+    padding-top: 0.8rem !important;
   }
 }
 
@@ -239,7 +259,7 @@
 //RELATED BOOKS
 //TITLE BESTSELLERS
 
-#homeOurFav {
+.bg-color {
   background-color: fade_out($secondary, 0.1);
 }
 

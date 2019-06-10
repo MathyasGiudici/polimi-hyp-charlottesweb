@@ -88,7 +88,7 @@ let contentTable = function(obj){
 }
 
 let authorTitleToAppend = function(author){
-  return '<h4><a href="#" class="standard-link" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>'s Books </h4>'";
+  return '<h4><a href="#" class="standard-link" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>'s Books </h4>";
 }
 
 let myBooksListToAppend = function(author, books){
