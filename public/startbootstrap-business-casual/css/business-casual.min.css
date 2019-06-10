@@ -183,6 +183,15 @@ p {
   animation-name: example;
   animation-duration: 4s; }
 
+@media (max-width: 990px) {
+  .heading-upper-mobile {
+    font-weight: 400 !important;
+    font-size: 1.5rem !important; } }
+
+@media (max-width: 990px) {
+  .heading-lower-mobile {
+    font-size: 2rem !important; } }
+
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes example {
   from {
@@ -333,6 +342,11 @@ p {
     padding: 0.5rem !important;
     padding-top: 0.8rem !important; } }
 
+.btn-mobile {
+  margin: 0rem;
+  padding: 0.5rem;
+  font-size: 1rem; }
+
 .tab-link {
   color: rgba(0, 25, 51, 0.4);
   font-weight: 800; }
@@ -343,6 +357,10 @@ p {
 .nav-pills .show > .nav-link {
   color: rgba(255, 255, 255, 0.85);
   background-color: rgba(0, 25, 51, 0.4); }
+
+@media (max-width: 991px) {
+  .tab-content {
+    padding-top: 2rem; } }
 
 .bg-color {
   background-color: rgba(0, 25, 51, 0.9); }
@@ -365,6 +383,12 @@ p {
 
 #EventImage.img-responsive {
   width: 25rem; }
+  @media (max-width: 991px) {
+    #EventImage.img-responsive {
+      padding: 0rem;
+      margin: 0rem;
+      text-align: center;
+      width: inherit; } }
 
 .list-group-flush {
   padding-inline-start: 0px; }

@@ -16,6 +16,18 @@
   animation-duration: 4s;
 }
 
+.heading-upper-mobile {
+  @media (max-width: 990px) {
+      font-weight: 400 !important;
+      font-size: 1.5rem !important;
+  }
+}
+.heading-lower-mobile {
+  @media (max-width: 990px) {
+      font-size: 2rem !important;
+  }
+}
+
 //ANIMATION FOR THE TITLE
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes example {
@@ -237,6 +249,12 @@
   }
 }
 
+.btn-mobile{
+  margin: 0rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
 .tab-link {
   color: fade-out($secondary, 0.6);
 
@@ -253,6 +271,12 @@
   .show > .nav-link {
     color: fade_out($white, 0.15);
     background-color: fade_out($secondary, 0.6);
+  }
+}
+
+.tab-content{
+  @media (max-width: 991px) {
+    padding-top: 2rem;
   }
 }
 
@@ -286,6 +310,15 @@
 
 #EventImage.img-responsive{
   width: 25rem;
+  @media (max-width: 991px) {
+
+    padding: 0rem;
+    margin: 0rem;
+    text-align: center;
+    width: inherit;
+
+
+  }
 }
 
 //Padding in vertical navbar and list

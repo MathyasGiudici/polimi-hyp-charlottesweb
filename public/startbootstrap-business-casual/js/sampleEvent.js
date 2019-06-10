@@ -15,7 +15,7 @@ $(document).ready(function(){
         url: baseUrl + "books/" + b.book,
         dataType: "json",
         success:function(data){
-          $("#book").append('<a href="#" class="standard-link" onclick="handleBookClick(' + "'" + data.isbn + "'" + ')">' + data.title + "</a>");
+          $("#book_presented").append('<a href="#" class="standard-link" onclick="handleBookClick(' + "'" + data.isbn + "'" + ')">' + data.title + "</a>");
         }});
 
       //Appending event's info
