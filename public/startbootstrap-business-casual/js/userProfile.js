@@ -19,12 +19,17 @@ $(document).ready(function(){
         url: baseUrl + "reviews/findBy?attribute=userId&key=" + localStorage.userId,
         dataType: "json",
         success:function(reviews){
-            for(let i=0; i< reviews.length; i++){
+          if(reviews.length == 0){
+            $("#reviews").append("You don't have posted any reviews");
+            return;
+          }
+
+          for(let i=0; i< reviews.length; i++){
                 let  tab = '<li class="list-group-item" id="rev'+i+'"> "<i>';
                 let  fin='</li>';
                 let  toAppend= tab + reviews[i].title + '"</i> ' + fin + reviews[i].description;
                 $("#reviews").append(toAppend);
-            }
+          }
         },
         error:function(jqXHR, textStatus, errorThrown){
             console.log("Error:" + jqXHR + textStatus + errorThrown);

@@ -54,7 +54,7 @@
               </a>
             </div>
 
-            <ul class="dropdown-menu text-expanded" aria-labelledby="Books">
+            <ul class="dropdown-menu text-expanded" aria-labelledby="Book">
               <li><a class="dropdown-item" href="books.html">All books</a></li>
               <li><a class="dropdown-item" href="booksAuthor.html">All books from author</a></li>
               <li> <a class="dropdown-item" href="booksGenre.html">All books from genre</a></li>
@@ -74,7 +74,7 @@
               </a>
             </div>
 
-            <ul class="dropdown-menu text-expanded" aria-labelledby="Book">
+            <ul class="dropdown-menu text-expanded" aria-labelledby="Event">
               <li><a class="dropdown-item" href="events.html">All events</a></li>
               <li><a class="dropdown-item" href="thismonthEvents.html">All this month events</a></li>
             </ul>
@@ -87,7 +87,7 @@
 
           <!-- Info button -->
           <li class="dropdown">
-            <div class="dropdown-toggle nav-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown-toggle nav-item" id="Info" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <a class="nav-link px-lg-4 text-uppercase text-expanded">
                 Info
                 <span class="caret"></span>
@@ -136,14 +136,14 @@
                         <h5 class="card-title text-center">Register</h5>
                         <form id="registerForm" class="form-signin">
                             <div class="form-label-group">
-                                <label for="inputUserame">First Name</label>
+                                <label for="inputFirstName">First Name</label>
                                 <input type="text" id="inputFirstName" class="form-control" placeholder="Username" required autofocus>
                             </div>
 
                             <div class="small-padding"></div>
 
                             <div class="form-label-group">
-                                <label for="inputUserame">Last Name</label>
+                                <label for="inputLastName">Last Name</label>
                                 <input type="text" id="inputLastName" class="form-control" placeholder="Username" required autofocus>
                             </div>
 
@@ -166,7 +166,7 @@
                                 <div class="small-padding"></div>
 
                                 <div class="col-xl-5 col-lg-4 col-md-4">
-                                    <label for="gender">Gender</label>
+                                    <label>Gender</label>
 
                                     <!--Buttons on same row-->
                                     <div class="form-row">

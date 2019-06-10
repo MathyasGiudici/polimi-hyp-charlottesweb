@@ -38,12 +38,17 @@ $(document).ready(function(){
     url: baseUrl + "reviews/findBy?attribute=isbn&key=" + localStorage.isbn,
     dataType: "json",
     success:function(reviews){
+      if(reviews.length == 0){
+        $("#reviews").append("Sorry there are no reviews for this book");
+        return;
+      }
+
       for(let i=0; i< reviews.length; i++){
         let  tab = '<li class="list-group-item" id="rev'+i+'"> "<i>';
         let  fin='</li>';
         let  toAppend= tab + reviews[i].title + '"</i> by '+ reviews[i].userId + fin + reviews[i].description;
         $("#reviews").append(toAppend);
-        }
+      }
     },
     error:function(jqXHR, textStatus, errorThrown){
          console.log("Error:" + jqXHR + textStatus + errorThrown);
