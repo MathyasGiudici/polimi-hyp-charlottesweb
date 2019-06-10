@@ -9,11 +9,6 @@ $(document).ready(function(){
     window.location.href = './login.html';
   }
 
-  //Checking if there is reason to have continueShopping
-  if(!localStorage.isbn){
-    $("#ContinueShopping").attr("disabled", true);
-  }
-
   $.ajax({
       url: baseUrl + "users/me/cart",
       dataType: "json",
