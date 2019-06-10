@@ -48,7 +48,7 @@ let showCart = function(){
 
   //Empty cart
   if(currentCart.books.length == 0){
-    $("#MyCartList").append('<div class="product"><h1 style="text-align: center;"><i class="fas fa-shopping-cart" style="color:black;"></i><strong> Your cart is empty!</strong></h1></div>');
+    $("#MyCartList").append('<div class="product"> <div class="product-image"> <i class="fas fa-shopping-cart fa-5x" style="color:black;"></i> </div> <div class="product-details"> <h3>Your cart is empty</h3> <h3 class="product-description">Shop on our amazing website!</h3> </div> <div class="product-price"> <span style="color:transparent;">Something</span> </div> <div class="product-quantity"> <span style="color:transparent;">Something</span> </div> <div class="product-removal"> <span style="color:transparent;">Something</span> </div> <div class="product-line-price"> <span style="color:transparent;">Something</span> </div> </div>');
     updateTotal();
     return;
   }
@@ -180,7 +180,7 @@ let deletionBook = function(isbn){
 
   //Empty cart
   if(currentCart.books.length == 0){
-    $("#MyCartList").append('<div class="product"><h1 style="text-align: center;"><i class="fas fa-shopping-cart" style="color:black;"></i><strong> Your cart is empty!</strong></h1></div>');
+    $("#MyCartList").append('<div class="product"> <div class="product-image"> <i class="fas fa-shopping-cart fa-5x" style="color:black;"></i> </div> <div class="product-details"> <h3>Your cart is empty</h3> <h3 class="product-description">Shop on our amazing website!</h3> </div> <div class="product-price"> <span style="color:transparent;">Something</span> </div> <div class="product-quantity"> <span style="color:transparent;">Something</span> </div> <div class="product-removal"> <span style="color:transparent;">Something</span> </div> <div class="product-line-price"> <span style="color:transparent;">Something</span> </div> </div>');
     updateTotal();
   }
 
