@@ -1,7 +1,6 @@
 let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
 
-let fakeCart = '{ "id": "mario.rossi@mail.polimi.it", "books": [ { "book": "9780061124952", "quantity": 2, "price": { "value": 8.04, "currency": "euro" } } ], "total": { "value": 16.08, "currency": "euro" } }';
-let currentCart = JSON.parse(fakeCart);
+let currentCart ;
 
 $(document).ready(function(){
   //Checking if the user is logged-in
@@ -49,7 +48,7 @@ let showCart = function(){
 
   //Empty cart
   if(currentCart.books.length == 0){
-    $("#MyCartList").append('<tr><td colspan="5" style="width:100%; text-align: center;"><div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-shopping-cart" style="color:black;"></i><h1></div><strong>Your cart is empty!</strong></td></tr>');
+    $("#MyCartList").append('<div class="product"><h1 style="text-align: center;"><i class="fas fa-shopping-cart" style="color:black;"></i><strong> Your cart is empty!</strong></h1></div>');
     updateTotal();
     return;
   }
@@ -85,40 +84,41 @@ let showCart = function(){
 }
 
 let createBookLine = function(book,quantity){
-  let toAppend = '<tr id="book_' + book.isbn + '">';
+  let toAppend = '<div class="product" id="book_' + book.isbn + '">';
 
   //Creating book's photo
-  let photoCol = '<td data-th="Product"><div class="row" ><div class="col-sm-4 hidden-xs"><img src="';
-  let photoColEnd = '" style="width: 100%" alt="image of book: ' + book.isbn +'" class="img-responsive"/></div>';
+  let photoCol = '<div class="product-image"><img src="';
+  let photoColEnd = '" alt="image of book: ' + book.isbn +'"></div>';
   toAppend = toAppend.concat(photoCol).concat(book.photo).concat(photoColEnd);
 
 
   //Creating book's data
-  let titleCol = '<div class="col-sm-8 "><a class="standard-link" style="font-weight:bold" onclick="handleBookClick(\'' + book.isbn + '\')">';
-  toAppend = toAppend.concat(titleCol).concat(book.title).concat('</a><p>');
-  toAppend = toAppend.concat(authorsToString(book.authors,true)).concat('</p></div></div></td>');
+  let titleCol = '<div class="product-details"><div class="product-title"><a class="btn-link" style="font-weight:bold" onclick="handleBookClick(\'' + book.isbn + '\')">';
+  toAppend = toAppend.concat(titleCol).concat(book.title).concat('</a></div><p class="product-description">');
+  toAppend = toAppend.concat(authorsToString(book.authors,true)).concat('</p></div>');
 
   //Creating book's price
-  toAppend = toAppend.concat('<td data-th="Price">').concat(book.price.value).concat(' ').concat(book.price.currency).concat('</td>');
+  toAppend = toAppend.concat('<div class="product-price">').concat(book.price.value).concat(' ').concat(book.price.currency).concat('</div>');
 
   //Creating book's quantity
-  let quantityCol = '<td data-th="Quantity"><input type="number" class="form-control text-center" min="1" value="';
+  let quantityCol = '<div class="product-quantity"><input type="number" min="1" value="';
   toAppend = toAppend.concat(quantityCol).concat(quantity).concat('" id="book_quan_');
   toAppend = toAppend.concat(book.isbn).concat('" onchange="changingQuantity(\'');
-  toAppend = toAppend.concat(book.isbn).concat('\');" ></td>');
+  toAppend = toAppend.concat(book.isbn).concat('\');"></div>');
+
+  //Creating book's deletion button
+  toAppend = toAppend.concat('<div class="product-removal"><button class="btn btn-danger btn-md" onclick="deletionBook(\'');
+  toAppend = toAppend.concat(book.isbn).concat('\');"><i class="fa fa-trash"></i></button></div>');
 
   //Creating book's subTot
   let subTot = book.price.value * quantity;
   subTot = subTot.toFixed(2);
-  toAppend = toAppend.concat('<td data-th="Subtotal" id="book_subt_').concat(book.isbn);
-  toAppend = toAppend.concat('" class="text-center">').concat(subTot).concat(' ').concat(book.price.currency).concat('</td>');
+  toAppend = toAppend.concat('<div class="product-line-price" id="book_subt_').concat(book.isbn);
+  toAppend = toAppend.concat('">').concat(subTot).concat(' ').concat(book.price.currency).concat('</div>');
 
-  //Creating book's deletion button
-  toAppend = toAppend.concat('<td class="actions" data-th="DelButton"><button class="btn btn-danger btn-md" onclick="deletionBook(\'');
-  toAppend = toAppend.concat(book.isbn).concat('\');"><i class="fa fa-trash"></i></button></td>');
 
   //Closing the row
-  toAppend = toAppend.concat('</tr>');
+  toAppend = toAppend.concat('</div>');
   $("#MyCartList").append(toAppend);
 
   //Adding price at the currentCart
@@ -180,7 +180,7 @@ let deletionBook = function(isbn){
 
   //Empty cart
   if(currentCart.books.length == 0){
-    $("#MyCartList").append('<tr><td colspan="5" style="width:100%; text-align: center;"><div class="cta small-perimeter" style="background-color: rgba(0,0,0,0);"id="toBeDel"><h1 class="site-heading text-center text-white d-lg-block small-perimeter"><i class="fas fa-shopping-cart" style="color:black;"></i><h1></div><strong>Your cart is empty!</strong></td></tr>');
+    $("#MyCartList").append('<div class="product"><h1 style="text-align: center;"><i class="fas fa-shopping-cart" style="color:black;"></i><strong> Your cart is empty!</strong></h1></div>');
     updateTotal();
   }
 
@@ -223,7 +223,7 @@ let updateTotal = function(){
   $("#TotalOfCart").empty();
 
   if(tot.value !== 0){
-    let toAppend = "Total: " + tot.value.toFixed(2).toString() + " " + tot.currency;
+    let toAppend = tot.value.toFixed(2).toString() + " " + tot.currency;
     $("#TotalOfCart").append(toAppend);
   }
 }
