@@ -1,5 +1,3 @@
-let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
-
 const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"];
 

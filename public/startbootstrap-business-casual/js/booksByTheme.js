@@ -1,5 +1,3 @@
-let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
-
 $(document).ready(function(){
   //Creating loading animation
   $(".row.cta-inner-border").parent().hide();

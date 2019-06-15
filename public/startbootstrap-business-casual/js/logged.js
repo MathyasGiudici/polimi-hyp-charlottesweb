@@ -1,3 +1,5 @@
+let baseUrl = "https://polimi-hyp-charlottesweb.herokuapp.com/api/";
+
 $(document).ready(function() {
 
   var promise = new Promise((resolve, reject) => {
