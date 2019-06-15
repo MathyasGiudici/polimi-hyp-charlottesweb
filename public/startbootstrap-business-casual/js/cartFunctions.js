@@ -81,7 +81,7 @@ let createBookLine = function(book,quantity){
 
   //Creating book's photo
   let photoCol = '<div class="product-image"><img src="';
-  let photoColEnd = '" alt="image of book: ' + book.isbn +'"></div>';
+  let photoColEnd = '" alt="image of book: ' + book.isbn +'" onclick="handleBookClick(\'' + book.isbn + '\')" ></div>';
   toAppend = toAppend.concat(photoCol).concat(book.photo).concat(photoColEnd);
 
 
