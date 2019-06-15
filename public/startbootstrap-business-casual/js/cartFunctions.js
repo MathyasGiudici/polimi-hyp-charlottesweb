@@ -69,10 +69,9 @@ let showCart = function(){
   });
 
   //Sequential schedule
-  promise.then( v => {
+  promise.then(async function() {
     //Updating the total
     updateTotal();
-    return v;
   });
 }
 
