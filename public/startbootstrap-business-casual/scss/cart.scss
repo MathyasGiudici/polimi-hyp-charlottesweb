@@ -87,6 +87,9 @@ label {
     .product-title {
       margin-right: 20px;
     }
+    .product-title > a:hover{
+        text-decoration: underline;
+    }
     .product-description {
       margin: 5px 20px 5px 0;
       line-height: 1.4em;

@@ -294,7 +294,7 @@ let authorsToString = function(authors, isHeader){
 }
 
 let authorTitleToAppend = function(author){
-  return '<a href="#" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>";
+  return '<a href="#"  class="standard-link" onclick="handleAuthorClick(' + "'" + author.id + "')" + '">' + author.name + " " + author.surname + "</a>";
 }
 
 let handleBookClick = function(isbn){
