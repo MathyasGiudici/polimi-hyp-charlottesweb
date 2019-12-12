@@ -3,7 +3,7 @@ _Charlotte's Web_ is an e-commerce website developed for the Hypermedia Applicat
 
 ## Overview
 * [Website](https://polimi-hyp-charlottesweb.herokuapp.com/index.html);
-* [Backend documentation] (https://polimi-hyp-charlottesweb.herokuapp.com/backend/main.html).
+* [Backend documentation](https://polimi-hyp-charlottesweb.herokuapp.com/backend/main.html).
 
 ## Authors
 * [chiaracriscuolo](https://github.com/chiaracriscuolo);
