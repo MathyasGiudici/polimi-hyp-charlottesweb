@@ -1,5 +1,5 @@
 # Charlotte's Web
-_Charlotte's Web_ is an e-commerce website developed for the Hypermedia Application (Web and Multimedia) of Prof.ssa Garzotto.
+_Charlotte's Web_ is an e-commerce website developed for the Hypermedia Application (Web and Multimedia) course of Prof.ssa Garzotto.
 
 ## Overview
 * [Website](https://polimi-hyp-charlottesweb.herokuapp.com/index.html);
